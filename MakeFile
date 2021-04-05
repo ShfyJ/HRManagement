@@ -1,0 +1,14 @@
+#Project Variables
+
+PROJECT_NAME ?= HRManagement
+ORG_NAME ?= HRManagement
+REPO_NAME ?= HRManagement
+
+.PHONY: migrations db 
+
+migrations: 
+	cd ./HRManagement.Data && dotnet ef --startup-project ../HRManagement.Web/ migrations add $(mname) && cd ..
+db:
+	cd ./HRManagement.Data && dotnet ef --startup-project ../HRManagement.Web/ database update && cd ..
+
+
