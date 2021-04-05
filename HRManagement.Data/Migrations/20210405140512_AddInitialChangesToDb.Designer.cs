@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HRManagement.Data.Migrations
 {
     [DbContext(typeof(HRManageDBContext))]
-    [Migration("20210317093813_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20210405140512_AddInitialChangesToDb")]
+    partial class AddInitialChangesToDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -741,6 +741,57 @@ namespace HRManagement.Data.Migrations
                     b.ToTable("UserRelatives");
                 });
 
+            modelBuilder.Entity("HRManagement.Models.Users", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<DateTime>("BirthDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("FIO_short")
+                        .HasColumnType("text");
+
+                    b.Property<string>("FI_short")
+                        .HasColumnType("text");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Gender")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsDismissed")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("text");
+
+                    b.Property<string>("MiddleName")
+                        .HasColumnType("text");
+
+                    b.Property<string>("OrderUrl")
+                        .HasColumnType("text");
+
+                    b.Property<string>("PhotoUrl")
+                        .HasColumnType("text");
+
+                    b.Property<string>("STIRUrl")
+                        .HasColumnType("text");
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("text");
+
+                    b.Property<string>("WorkbookURL")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("User");
+                });
+
             modelBuilder.Entity("HRManagement.Models.Vacancy", b =>
                 {
                     b.Property<int>("VacancyId")
@@ -1034,13 +1085,16 @@ namespace HRManagement.Data.Migrations
                     b.Property<int?>("CountryId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("DisabilityId")
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int?>("DisabilityId")
                         .HasColumnType("integer");
 
                     b.Property<int?>("DistrictId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("EdInformationId")
+                    b.Property<int?>("EdInformationId")
                         .HasColumnType("integer");
 
                     b.Property<string>("FIO_short")
@@ -1053,6 +1107,9 @@ namespace HRManagement.Data.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("FullAddress")
+                        .HasColumnType("text");
+
                     b.Property<string>("Gender")
                         .HasColumnType("text");
 
@@ -1062,44 +1119,50 @@ namespace HRManagement.Data.Migrations
                     b.Property<int?>("IndependentSectionId")
                         .HasColumnType("integer");
 
+                    b.Property<bool>("IsDismissed")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("LastName")
                         .HasColumnType("text");
 
                     b.Property<string>("MiddleName")
                         .HasColumnType("text");
 
-                    b.Property<int>("MilitaryServiceStatusId")
+                    b.Property<int?>("MilitaryServiceStatusId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("MilitaryTitleId")
+                    b.Property<int?>("MilitaryTitleId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("NationalityId")
+                    b.Property<int?>("NationalityId")
                         .HasColumnType("integer");
 
                     b.Property<string>("OrderUrl")
                         .HasColumnType("text");
 
-                    b.Property<int>("PartisanshipId")
+                    b.Property<int?>("PartisanshipId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("PassportId")
+                    b.Property<int?>("PassportId")
                         .HasColumnType("integer");
 
                     b.Property<string>("PhotoUrl")
                         .HasColumnType("text");
 
-                    b.Property<int>("PositionId")
+                    b.Property<int?>("PositionId")
                         .HasColumnType("integer");
 
                     b.Property<string>("STIRUrl")
                         .HasColumnType("text");
 
-                    b.Property<int>("ScienceDegreeId")
+                    b.Property<int?>("ScienceDegreeId")
                         .HasColumnType("integer");
 
                     b.Property<int?>("SectionId")
                         .HasColumnType("integer");
+
+                    b.Property<DateTime>("UpdatedOn")
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("WorkbookURL")
                         .HasColumnType("text");
@@ -1201,7 +1264,7 @@ namespace HRManagement.Data.Migrations
                         .HasForeignKey("EdInformationId");
 
                     b.HasOne("HRManagement.Models.ApplicationUser", "User")
-                        .WithMany()
+                        .WithMany("Educations")
                         .HasForeignKey("EmployeeId");
 
                     b.HasOne("HRManagement.Models.ScienceDegree", "ScienceDegree")
@@ -1379,7 +1442,7 @@ namespace HRManagement.Data.Migrations
             modelBuilder.Entity("HRManagement.Models.WorkingActivity", b =>
                 {
                     b.HasOne("HRManagement.Models.ApplicationUser", "User")
-                        .WithMany()
+                        .WithMany("WorkingActivities")
                         .HasForeignKey("EmployeeId");
 
                     b.Navigation("User");
@@ -1444,9 +1507,7 @@ namespace HRManagement.Data.Migrations
 
                     b.HasOne("HRManagement.Models.Disability", "Disability")
                         .WithMany()
-                        .HasForeignKey("DisabilityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("DisabilityId");
 
                     b.HasOne("HRManagement.Models.District", "BirthDistrict")
                         .WithMany()
@@ -1454,9 +1515,7 @@ namespace HRManagement.Data.Migrations
 
                     b.HasOne("HRManagement.Models.EdInformation", "EdInformation")
                         .WithMany()
-                        .HasForeignKey("EdInformationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("EdInformationId");
 
                     b.HasOne("HRManagement.Models.Group", "Group")
                         .WithMany()
@@ -1468,45 +1527,31 @@ namespace HRManagement.Data.Migrations
 
                     b.HasOne("HRManagement.Models.MilitaryServiceStatus", "MilitaryServiceStatus")
                         .WithMany()
-                        .HasForeignKey("MilitaryServiceStatusId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("MilitaryServiceStatusId");
 
                     b.HasOne("HRManagement.Models.MilitaryTitle", "MilitaryTitle")
                         .WithMany()
-                        .HasForeignKey("MilitaryTitleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("MilitaryTitleId");
 
                     b.HasOne("HRManagement.Models.Nationality", "Nationality")
                         .WithMany()
-                        .HasForeignKey("NationalityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("NationalityId");
 
                     b.HasOne("HRManagement.Models.Partisanship", "Partisanship")
                         .WithMany()
-                        .HasForeignKey("PartisanshipId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PartisanshipId");
 
                     b.HasOne("HRManagement.Models.Passport", "Passport")
                         .WithMany()
-                        .HasForeignKey("PassportId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PassportId");
 
                     b.HasOne("HRManagement.Models.Position", "Position")
                         .WithMany()
-                        .HasForeignKey("PositionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PositionId");
 
                     b.HasOne("HRManagement.Models.ScienceDegree", "ScienceDegree")
                         .WithMany()
-                        .HasForeignKey("ScienceDegreeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ScienceDegreeId");
 
                     b.HasOne("HRManagement.Models.Section", "Section")
                         .WithMany()
@@ -1539,6 +1584,13 @@ namespace HRManagement.Data.Migrations
                     b.Navigation("ScienceDegree");
 
                     b.Navigation("Section");
+                });
+
+            modelBuilder.Entity("HRManagement.Models.ApplicationUser", b =>
+                {
+                    b.Navigation("Educations");
+
+                    b.Navigation("WorkingActivities");
                 });
 #pragma warning restore 612, 618
         }

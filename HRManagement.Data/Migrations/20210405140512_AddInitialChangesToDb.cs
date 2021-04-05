@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace HRManagement.Data.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class AddInitialChangesToDb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -242,6 +242,31 @@ namespace HRManagement.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "User",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    UserName = table.Column<string>(type: "text", nullable: true),
+                    FirstName = table.Column<string>(type: "text", nullable: true),
+                    MiddleName = table.Column<string>(type: "text", nullable: true),
+                    LastName = table.Column<string>(type: "text", nullable: true),
+                    FIO_short = table.Column<string>(type: "text", nullable: true),
+                    FI_short = table.Column<string>(type: "text", nullable: true),
+                    Gender = table.Column<string>(type: "text", nullable: true),
+                    BirthDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    PhotoUrl = table.Column<string>(type: "text", nullable: true),
+                    WorkbookURL = table.Column<string>(type: "text", nullable: true),
+                    STIRUrl = table.Column<string>(type: "text", nullable: true),
+                    OrderUrl = table.Column<string>(type: "text", nullable: true),
+                    IsDismissed = table.Column<bool>(type: "boolean", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_User", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "VacationTypes",
                 columns: table => new
                 {
@@ -441,6 +466,10 @@ namespace HRManagement.Data.Migrations
                     WorkbookURL = table.Column<string>(type: "text", nullable: true),
                     STIRUrl = table.Column<string>(type: "text", nullable: true),
                     OrderUrl = table.Column<string>(type: "text", nullable: true),
+                    IsDismissed = table.Column<bool>(type: "boolean", nullable: true),
+                    CreatedOn = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
+                    UpdatedOn = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
+                    FullAddress = table.Column<string>(type: "text", nullable: true),
                     PassportId = table.Column<int>(type: "integer", nullable: true),
                     CountryId = table.Column<int>(type: "integer", nullable: true),
                     DistrictId = table.Column<int>(type: "integer", nullable: true),
@@ -484,7 +513,7 @@ namespace HRManagement.Data.Migrations
                         column: x => x.DisabilityId,
                         principalTable: "Disabilities",
                         principalColumn: "DisabilityId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_AspNetUsers_Districts_DistrictId",
                         column: x => x.DistrictId,
@@ -496,7 +525,7 @@ namespace HRManagement.Data.Migrations
                         column: x => x.EdInformationId,
                         principalTable: "EdInformations",
                         principalColumn: "EdInformationId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_AspNetUsers_Groups_GroupId",
                         column: x => x.GroupId,
@@ -514,43 +543,43 @@ namespace HRManagement.Data.Migrations
                         column: x => x.MilitaryServiceStatusId,
                         principalTable: "MilitaryServiceStatuses",
                         principalColumn: "MilitaryServiceStatusId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_AspNetUsers_MilitaryTitles_MilitaryTitleId",
                         column: x => x.MilitaryTitleId,
                         principalTable: "MilitaryTitles",
                         principalColumn: "MilitaryTitleId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_AspNetUsers_Nationalities_NationalityId",
                         column: x => x.NationalityId,
                         principalTable: "Nationalities",
                         principalColumn: "NationalityId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_AspNetUsers_Partisanships_PartisanshipId",
                         column: x => x.PartisanshipId,
                         principalTable: "Partisanships",
                         principalColumn: "PartisanshipId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_AspNetUsers_Passports_PassportId",
                         column: x => x.PassportId,
                         principalTable: "Passports",
                         principalColumn: "PassportId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_AspNetUsers_Positions_PositionId",
                         column: x => x.PositionId,
                         principalTable: "Positions",
                         principalColumn: "PositionId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_AspNetUsers_ScienceDegrees_ScienceDegreeId",
                         column: x => x.ScienceDegreeId,
                         principalTable: "ScienceDegrees",
                         principalColumn: "ScienceDegreeId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_AspNetUsers_Sections_SectionId",
                         column: x => x.SectionId,
@@ -1226,6 +1255,9 @@ namespace HRManagement.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Languages");
+
+            migrationBuilder.DropTable(
+                name: "User");
 
             migrationBuilder.DropTable(
                 name: "UserRelatives");
