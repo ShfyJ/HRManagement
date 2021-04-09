@@ -10,9 +10,20 @@ import Dropdown from '../views/dropdown.vue'
 import List_contact from '../views/list_contact.vue'
 import Profile_assistant_info from '../views/profile-assistant-info.vue'
 import User_info from "../views/user_info.vue";
+import Add_tashkilot from "../views/add_tashkilot.vue";
+import AddTuzilma from '../views/add_tuzilma.vue'
+import AddLavozim from '../views/add_lavozim.vue'
+import MehnatFaoliyat from '../views/mehnat_faoliyat.vue'
+
+
 Vue.use(VueRouter);
 
 const routes = [
+  {
+    path: "/mehnat_faoliyat",
+    name: "mehnat_faoliyat",
+    component: MehnatFaoliyat
+  },
   {
     path: "/",
     name: "dashboard",
@@ -33,6 +44,10 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     //component: () =>
     //import(/* webpackChunkName: "about" */ "../views/About.vue")
+  },
+  {
+    path: "/projects/:id",
+    component: Add_tashkilot
   },
   {
     path: "/team",
@@ -61,6 +76,16 @@ const routes = [
     path: "/addUser",
     name: "addUser",
     component: AddUser
+  },
+  {
+    path: "/addTuzilma",
+    name: "addTuzilma",
+    component: AddTuzilma
+  },
+  {
+    path: "/addLavozim",
+    name: "addLavozim",
+    component: AddLavozim
   },
   {
     path: '/login',

@@ -22,7 +22,7 @@
     <v-navigation-drawer  :width="300" v-model="drawer" dark app color="#1a8cff" :elevation="10">
       <v-layout column align-center>
         <v-flex class="mt-5">
-          <v-avatar size="100" @click="profileChange" >
+          <v-avatar style="cursor: pointer;" size="100"  @click.stop="drawer = !drawer" @click="profileChange" >
             <v-img  src="/img3.jpg"></v-img>
           </v-avatar>
           <p class="white--text subheading mt-7 text-center" >Aziz Bohidjonov</p>
@@ -100,6 +100,7 @@ export default {
   methods: {
     profileChange(){
       this.$router.push({ name: 'profile_assistant_info' });
+      
     }
   },
 
@@ -115,7 +116,7 @@ data: () => ({
     links: [
       { icon: "mdi-home", text: "Asosiy Menu", route: "/" },
       {
-        icon: "mdi-store-24-hour",
+        icon: "mdi-sitemap",
         text: "Tashkiliy tuzilma",
         route: "/projects"
       },
