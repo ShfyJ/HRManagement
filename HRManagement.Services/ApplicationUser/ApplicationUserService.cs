@@ -42,6 +42,21 @@ namespace HRManagement.Services.ApplicationUser
                     var userCreateResult = await _userManager.CreateAsync(userToCreate, password);
                     await _userManager.AddToRoleAsync(userToCreate, Roles.Basic.ToString());
 
+                    //var newuser = await _userManager.FindByEmailAsync(userToCreate.UserName);
+                    ////adding passport values to db and user
+                    ////await _db.Passports.AddAsync(userToCreate.Passport);
+                    ////var passport = await _db.Passports.FirstOrDefaultAsync(passport => passport.PassportSeries == userToCreate.Passport.PassportSeries);
+                    ////newuser.PassportId = passport.PassportId;
+
+                    ////adding education values to db and user
+                    //foreach(var education in userToCreate.Educations)
+                    //{
+                    //    await _db.Educations.AddAsync(education);
+                    //    education.EmployeeId = newuser.Id;
+                    //}
+                    
+                    //await _db.SaveChangesAsync();
+
                     if (userCreateResult.Succeeded)
                     {
                         return new ServiceResponse<IdentityResult>

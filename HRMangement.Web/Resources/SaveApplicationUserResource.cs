@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HRManagement.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -30,6 +31,29 @@ namespace HRManagement.Web.Resources
         public DateTime UpdatedOn { get; set; } //Foydalanuvchi shaxsiy malumotlari o'zgartirilgan vaqti
         public string FullAddress { get; set; } //Agar Uz dan boshqa mamlakatdan bo'lsa, to'liq tug'ilgan joyi kiritiladi
 
+        //public ICollection<Education> Educations { get; set; }
+        //public Passport Passport { get; set; }
+        public int? CountryId { get; set; }
+        public int? DistrictId { get; set; }
+        public int? NationalityId { get; set; }
+        public int? PartisanshipId { get; set; }
+        public int? ScienceDegreeId { get; set; }
+        public int? EdInformationId { get; set; }
+        public int? MilitaryServiceStatusId { get; set; }
+        public int? MilitaryTitleId { get; set; }
+        public int? DisabilityId { get; set; }
+        //public int? SectionId { get; set; } //bo'lim Id 
+        //public int? IndependentSectionId { get; set; }
+        //public int? GroupId { get; set; }
+        //public int? PositionId { get; set; } //Lavozim Id
+
         //Need more properties
+
+        public SaveApplicationUserResource()
+        {
+            EmailConfirmed = true;
+            PhoneNumberConfirmed = true;
+            IsDismissed = false;
+        }
     }
 }

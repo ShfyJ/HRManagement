@@ -69,6 +69,7 @@ namespace HRMangement.Web.Controllers
 
             var serviceResponce = await _applicationUserService.SignUpUser(userToCreate, saveApplicationUserResource.Password);
 
+
             if (serviceResponce.Message.Equals("Yangi xodim qo'shildi"))
 
             {
