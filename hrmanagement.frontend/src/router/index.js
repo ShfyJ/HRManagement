@@ -13,17 +13,15 @@ import User_info from "../views/user_info.vue";
 import Add_tashkilot from "../views/add_tashkilot.vue";
 import AddTuzilma from '../views/add_tuzilma.vue'
 import AddLavozim from '../views/add_lavozim.vue'
-import MehnatFaoliyat from '../views/mehnat_faoliyat.vue'
+import UmumiyMalumot from '../views/umumiy_malumot.vue'
+import MehnatFaoliyati from '../views/mehnat_faoliyati.vue'
+import AddQarindosh from '../views/add_qarindosh.vue'
 
 
 Vue.use(VueRouter);
 
 const routes = [
-  {
-    path: "/mehnat_faoliyat",
-    name: "mehnat_faoliyat",
-    component: MehnatFaoliyat
-  },
+
   {
     path: "/",
     name: "dashboard",
@@ -38,7 +36,6 @@ const routes = [
     path: "/projects",
     name: "projects",
     component: Projects
-
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
@@ -56,7 +53,12 @@ const routes = [
   },
   {
     path: "/team/:id",
-    component: User_info
+    component: User_info,
+    children: [
+      { path: '/team/:id/umumiy_malumot', component: UmumiyMalumot, name: "umumiy_malumot"  },
+      { path: '/team/:id/mehnat_faoliyati', component: MehnatFaoliyati, name: "mehnat_faoliyati"  },
+      { path: '/team/:id/add_relatives', component: AddQarindosh, name: "add_relatives"  }
+    ]
   },
   {
     path: "/profile_assistant_info",
