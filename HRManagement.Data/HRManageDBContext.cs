@@ -17,8 +17,7 @@ namespace HRManagement.Data
         {
         }
 
-        public virtual DbSet<ApplicationUser> ApplicationUsers { get; set; }
-        public virtual DbSet<Users> User { get; set; }
+        public virtual DbSet<Models.Auth.ApplicationUser> ApplicationUsers { get; set; }
         public virtual DbSet<BusinessTrip> BusinessTrips { get; set; }
         public virtual DbSet<EmployeeVacation> EmployeeVacations { get; set; }
         public virtual DbSet<EmployeeDisciplinaryAction> EmployeeDisciplinaryActions { get; set; }

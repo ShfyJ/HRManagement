@@ -10,7 +10,13 @@ namespace HRManagement.Services
     {
         public bool IsSuccess { get; set; }
         public string Message { get; set; }
+        public IList<string> Items { get; set; }
         public DateTime Time { get; set; }
         public T Data { get; set; }
+
+        public ServiceResponse()
+        {
+            Items = null;
+        }
     }
 }

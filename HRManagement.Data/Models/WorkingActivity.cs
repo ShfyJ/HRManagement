@@ -21,6 +21,6 @@ namespace HRManagement.Models
         public string EmployeeId { get; set; }
 
         [ForeignKey("EmployeeId")]
-        public ApplicationUser User { get; set; }
+        public Data.Models.Auth.ApplicationUser User { get; set; }
     }
 }

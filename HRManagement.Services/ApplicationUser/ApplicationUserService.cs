@@ -8,18 +8,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore;
+using Microsoft.AspNetCore.Mvc;
+using HRManagement.Constants;
 
 namespace HRManagement.Services.ApplicationUser
 {
     public class ApplicationUserService : IApplicationUserService
     {
         private readonly HRManageDBContext _db;
-       
+        private readonly UserManager<Data.Models.Auth.ApplicationUser> _userManager;
 
-        public ApplicationUserService(HRManageDBContext db)
+        public ApplicationUserService(HRManageDBContext db, UserManager<Data.Models.Auth.ApplicationUser> userManager)
         {
             _db = db;
-            
+            _userManager = userManager;
+
+
         }
 
         /// <summary>
@@ -27,33 +32,117 @@ namespace HRManagement.Services.ApplicationUser
         /// </summary>
         /// <param name="applicationUser"></param>
         /// <returns></returns>
-        public async Task<ServiceResponse<Models.ApplicationUser>> CreateUser(Models.ApplicationUser applicationUser)
+        public async Task<ServiceResponse<IdentityResult>> SignUpUser(Data.Models.Auth.ApplicationUser userToCreate, string password)
         {
             try
             {
-               // await _userManager.CreateAsync(applicationUser);
-                await _db.ApplicationUsers.AddAsync(applicationUser);
-                await _db.SaveChangesAsync();
-
-                return new ServiceResponse<Models.ApplicationUser>
+                var user = await _userManager.FindByEmailAsync(userToCreate.UserName);
+                if(user == null)
                 {
-                    Data = applicationUser,
+                    var userCreateResult = await _userManager.CreateAsync(userToCreate, password);
+                    await _userManager.AddToRoleAsync(userToCreate, Roles.Basic.ToString());
+
+                    if (userCreateResult.Succeeded)
+                    {
+                        return new ServiceResponse<IdentityResult>
+                        {
+                            Data = userCreateResult,
+                            Time = DateTime.Now,
+                            Message = "Yangi xodim qo'shildi",
+                            IsSuccess = true
+                        };
+                    }
+                    return new ServiceResponse<IdentityResult>
+                    {
+                        Data = null,
+                        Time = DateTime.Now,
+                        Message = "Yangi xodim qo'shilmadi",
+                        IsSuccess = false
+                    };
+                }
+
+                return new ServiceResponse<IdentityResult>
+                {
+                    Data = null,
                     Time = DateTime.Now,
-                    Message = "Yangi xodim qo'shildi",
-                    IsSuccess = true
+                    Message = "Bu login foydalanilgan",
+                    IsSuccess = false
                 };
+
             }
             catch (Exception e)
             {
-                return new ServiceResponse<Models.ApplicationUser>
+                return new ServiceResponse<IdentityResult>
                 {
-                    Data = applicationUser,
+                    Data = null,
                     Time = DateTime.Now,
                     Message = e.StackTrace,
                     IsSuccess = false
                 };
             }
 
+
+
+        }
+        /// <summary>
+        /// Sign In User
+        /// </summary>
+        /// <param name="applicationUser"></param>
+        /// <returns></returns>
+        public async Task<ServiceResponse<Data.Models.Auth.ApplicationUser>> SignInUser(string userName, string password)
+        {
+            var user = _userManager.Users.SingleOrDefault(u => u.UserName == userName);
+
+
+            if (user is null)
+            {
+                return new ServiceResponse<Data.Models.Auth.ApplicationUser>
+                {
+                    Time = DateTime.Now,
+                    IsSuccess = false,
+                    Message = "Foydalanuvchi topilmadi!",
+                    Data = null
+                };
+            }
+
+            try
+            {
+                var userSigninResult = await _userManager.CheckPasswordAsync(user, password);
+
+                if (userSigninResult)
+                {
+                    var roles = await _userManager.GetRolesAsync(user);
+
+                    return new ServiceResponse<Data.Models.Auth.ApplicationUser>
+                    {
+                        Time = DateTime.Now,
+                        IsSuccess = true,
+                        Message = "Foydalanuvchi va roli",
+                        Items = roles,
+                        Data = user
+                    };
+                    
+                }
+                else 
+                    return new ServiceResponse<Data.Models.Auth.ApplicationUser>
+                {
+                    Time = DateTime.Now,
+                    IsSuccess = true,
+                    Message = "Email or password incorrect.",
+                    Data = user
+                };
+            }
+            catch (Exception e)
+            {
+                return new ServiceResponse<Data.Models.Auth.ApplicationUser>
+                {
+                    Data = null,
+                    Time = DateTime.Now,
+                    Message = e.StackTrace,
+                    IsSuccess = false
+                };
+            }
+            
         }
 
         /// <summary>
@@ -61,13 +150,13 @@ namespace HRManagement.Services.ApplicationUser
         /// </summary>
         /// <param name="applicationUser"></param>
         /// <returns></returns>
-        public async Task<ServiceResponse<Models.ApplicationUser>> DismissUser(string id)
+        public async Task<ServiceResponse<Data.Models.Auth.ApplicationUser>> DismissUser(string id)
         {
             var applicationUser = _db.ApplicationUsers.Find(id);
 
             if(applicationUser == null)
             {
-                return new ServiceResponse<Models.ApplicationUser>
+                return new ServiceResponse<Data.Models.Auth.ApplicationUser>
                 {
                     Time = DateTime.Now,
                     IsSuccess = false,
@@ -81,7 +170,7 @@ namespace HRManagement.Services.ApplicationUser
                 applicationUser.IsDismissed = true;
                 await _db.SaveChangesAsync();
 
-                return new ServiceResponse<Models.ApplicationUser>
+                return new ServiceResponse<Data.Models.Auth.ApplicationUser>
                 {
                     Data = applicationUser,
                     Time = DateTime.Now,
@@ -91,7 +180,7 @@ namespace HRManagement.Services.ApplicationUser
             }
             catch(Exception e)
             {
-                return new ServiceResponse<Models.ApplicationUser>
+                return new ServiceResponse<Data.Models.Auth.ApplicationUser>
                 {
                     Data = null,
                     Time = DateTime.Now,
@@ -106,7 +195,7 @@ namespace HRManagement.Services.ApplicationUser
         /// Retrieves all users from database
         /// </summary>
         /// <returns>List<Users></returns>
-        public async Task<IEnumerable<Models.ApplicationUser>> GetAllUsersWithAllInfos()
+        public async Task<IEnumerable<Data.Models.Auth.ApplicationUser>> GetAllUsersWithAllInfos()
         {
             return await _db.ApplicationUsers
                 .ToListAsync();
@@ -131,7 +220,7 @@ namespace HRManagement.Services.ApplicationUser
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<Models.ApplicationUser> GetUserById(string id)
+        public async Task<Data.Models.Auth.ApplicationUser> GetUserById(string id)
         {
             //Need more values to add
             return await _db.ApplicationUsers
@@ -146,12 +235,12 @@ namespace HRManagement.Services.ApplicationUser
         }
 
 
-        public async Task<ServiceResponse<Models.ApplicationUser>> UpdateUser(Models.ApplicationUser userToBeUpdated, Models.ApplicationUser applicationUser)
+        public async Task<ServiceResponse<Data.Models.Auth.ApplicationUser>> UpdateUser(Data.Models.Auth.ApplicationUser userToBeUpdated, Data.Models.Auth.ApplicationUser applicationUser)
         {
 
             if (userToBeUpdated == null)
             {
-                return new ServiceResponse<Models.ApplicationUser>
+                return new ServiceResponse<Data.Models.Auth.ApplicationUser>
                 {
                     Time = DateTime.Now,
                     IsSuccess = false,
@@ -167,7 +256,7 @@ namespace HRManagement.Services.ApplicationUser
                 //need more implementation
                 await _db.SaveChangesAsync();
 
-                return new ServiceResponse<Models.ApplicationUser>
+                return new ServiceResponse<Data.Models.Auth.ApplicationUser>
                 {
                     Data = userToBeUpdated,
                     Time = DateTime.Now,
@@ -177,7 +266,7 @@ namespace HRManagement.Services.ApplicationUser
             }
             catch (Exception e)
             {
-                return new ServiceResponse<Models.ApplicationUser>
+                return new ServiceResponse<Data.Models.Auth.ApplicationUser>
                 {
                     Data = null,
                     Time = DateTime.Now,
@@ -186,5 +275,7 @@ namespace HRManagement.Services.ApplicationUser
                 };
             }
         }
+
+        
     }
 }
