@@ -30,10 +30,10 @@ namespace HRManagement.Models
         public District BusinessTripDistrict { get; set; }
 
         [ForeignKey("SubstituteEmployeeId")]
-        public ApplicationUser SubstituteEmployee { get; set; }
+        public Data.Models.Auth.ApplicationUser SubstituteEmployee { get; set; }
 
         [ForeignKey("EmployeeId")]
-        public ApplicationUser Employee { get; set; }
+        public Data.Models.Auth.ApplicationUser Employee { get; set; }
 
     }
 }

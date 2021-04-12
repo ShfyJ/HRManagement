@@ -21,6 +21,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using AutoMapper;
+using HRManagement.Web.Settings;
+using HRManagement.Web.Extentions;
 
 namespace HRMangement.Web
 {
@@ -54,10 +56,14 @@ namespace HRMangement.Web
             services.AddAutoMapper(typeof(Startup));
             services.AddHttpClient();
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
+            services.AddIdentity<HRManagement.Data.Models.Auth.ApplicationUser, IdentityRole>()
                     .AddEntityFrameworkStores<HRManageDBContext>()
             .AddDefaultTokenProviders();
             services.AddControllersWithViews();
+
+            services.Configure<JwtSettings>(Configuration.GetSection("Jwt"));
+            var jwtSettings = Configuration.GetSection("Jwt").Get<JwtSettings>();
+            services.AddAuth(jwtSettings);
 
             //services.AddAuthentication("BasicAuthentication")
             //    .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
@@ -66,6 +72,32 @@ namespace HRMangement.Web
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "HRMangement.Web", Version = "v1" });
+
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Description = "JWT containing userid claim",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.ApiKey,
+                });
+
+                var security =
+                    new OpenApiSecurityRequirement
+                    {
+                        {
+                            new OpenApiSecurityScheme
+                            {
+                                Reference = new OpenApiReference
+                                {
+                                    Id = "Bearer",
+                                    Type = ReferenceType.SecurityScheme
+                                },
+                                UnresolvedReference = true
+                            },
+                            new List<string>()
+                        }
+                    };
+                c.AddSecurityRequirement(security);
             });
         }
 
@@ -95,8 +127,8 @@ namespace HRMangement.Web
                  );
 
             app.UseAuthentication();
-
-           // app.UseAuthorization();
+            app.UseAuth();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

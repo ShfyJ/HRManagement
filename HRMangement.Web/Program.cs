@@ -35,7 +35,7 @@ namespace HRMangement.Web
              
                 try
                 {
-                    var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
+                    var userManager = services.GetRequiredService<UserManager<HRManagement.Data.Models.Auth.ApplicationUser>>();
                     var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
                     await HRManagement.Data.Seeds.DefaultRoles.SeedAsync(userManager, roleManager);
                     await HRManagement.Data.Seeds.DefaultUsers.SeedBasicUserAsync(userManager, roleManager);

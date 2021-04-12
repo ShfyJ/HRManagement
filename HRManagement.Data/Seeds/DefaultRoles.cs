@@ -9,7 +9,7 @@ namespace HRManagement.Data.Seeds
 {
     public static class DefaultRoles
     {
-        public static async Task SeedAsync(UserManager<Models.ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
+        public static async Task SeedAsync(UserManager<Models.Auth.ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             //Seed Roles
             await roleManager.CreateAsync(new IdentityRole(Roles.SuperAdmin.ToString()));

@@ -11,10 +11,10 @@ namespace HRManagement.Data.Seeds
 {
     public static class DefaultUsers
     {
-        public static async Task SeedBasicUserAsync(UserManager<Models.ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
+        public static async Task SeedBasicUserAsync(UserManager<Models.Auth.ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             //Seed Default User
-            var defaultUser = new Models.ApplicationUser
+            var defaultUser = new Models.Auth.ApplicationUser
             {
                 UserName = "basicuser@gmail.com",
                 Email = "basicuser@gmail.com",
@@ -35,10 +35,10 @@ namespace HRManagement.Data.Seeds
             }
         }
 
-        public static async Task SeedSuperAdminAsync(UserManager<Models.ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
+        public static async Task SeedSuperAdminAsync(UserManager<Models.Auth.ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             //Seed Default User
-            var defaultUser = new Models.ApplicationUser
+            var defaultUser = new Models.Auth.ApplicationUser
             {
                 UserName = "superadmin@gmail.com",
                 Email = "superadmin@gmail.com",

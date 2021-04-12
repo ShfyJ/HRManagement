@@ -13,11 +13,11 @@ namespace HRManagement.Web.Mapping
         public MappingProfile()
         {
             //Domain To Resource
-            CreateMap<ApplicationUser, ApplicationUserResource>();
+            CreateMap<Data.Models.Auth.ApplicationUser, ApplicationUserResource>();
 
             //Resource To Domain
-            CreateMap<ApplicationUserResource, ApplicationUser>();
-            CreateMap<SaveApplicationUserResource, ApplicationUser>();
+            CreateMap<ApplicationUserResource, Data.Models.Auth.ApplicationUser>();
+            CreateMap<SaveApplicationUserResource, Data.Models.Auth.ApplicationUser>();
             
             //CreateMap<UserSignUpResource, User>()
             //    .ForMember(u => u.UserName, opt => opt.MapFrom(ur => ur.Email));

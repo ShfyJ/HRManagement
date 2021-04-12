@@ -23,6 +23,6 @@ namespace HRManagement.Models
         public VacationType Vacationtype { get; set; }
 
         [ForeignKey("EmployeeId")]
-        public ApplicationUser Employee { get; set; }
+        public Data.Models.Auth.ApplicationUser Employee { get; set; }
     }
 }
