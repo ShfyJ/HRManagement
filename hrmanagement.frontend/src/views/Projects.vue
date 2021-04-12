@@ -15,9 +15,7 @@
           hide-details
       ></v-text-field>
     </v-card-title>
-    
   <v-data-table
-  
     :headers="headers"
     :items="desserts"
     sort-by="calories"
@@ -39,11 +37,11 @@
         ></v-divider>
         <v-spacer></v-spacer>
           <v-btn
-          @click="addCategory" color="success" dark class="mb-2 mr-2" v-on="on" text
-            ><v-icon left>mdi-plus</v-icon>Bo'linma qo'shish</v-btn
+          @click="addTuzilma" color="success" dark class="mb-2 mr-2" v-on="on" text
+            ><v-icon left>mdi-plus</v-icon>Bo'linma qoshish</v-btn
           >
           <v-btn
-          @click="addCategory" color="success" dark class="mb-2 mr-2" v-on="on" text
+          @click="addLavozim" color="success" dark class="mb-2 mr-2" v-on="on" text
             ><v-icon left>mdi-plus</v-icon>Lavozim qo'shish</v-btn
           >
           <v-btn
@@ -54,7 +52,6 @@
           @click="dialog2 = true"
           color="success" dark class="mb-2 mr-2" v-on="on" text
           >
-          
           <v-icon left>mdi-fullscreen</v-icon>{{$t('extended_view')}}
           </v-btn>
           <v-dialog
@@ -215,9 +212,34 @@
         mdi-delete
       </v-icon>
     </template>
-    <template justify-center
-        v-slot:item.calories="{ item }">
-        <img :class="`rounded-t-xl rounded-b-xl`" class="mt-5 mb-5" height="60px" :src="item.calories"/>
+      <template justify-center
+        v-slot:item.tuzilma_nomi="{ item }">
+        <router-link style="text-decoration: none; color: inherit;" :to="`/projects/${ item.ID}`" :key="item.ID"><td class="myTitle">{{ item.tuzilma_nomi }}</td>
+        </router-link>
+      </template>
+      <template justify-center
+        v-slot:item.shtat="{ item }">
+        <td class="myTitle">{{ item.shtat }}</td>
+      </template>
+      <template justify-center
+        v-slot:item.ID="{ item }">
+        <td class="myTitle">{{ item.ID }}</td>
+      </template>
+      <template justify-center
+        v-slot:item.hodimlar_soni="{ item }">
+        <td class="myTitle">{{ item.hodimlar_soni }}</td>
+      </template>
+      <template justify-center
+        v-slot:item.foiz="{ item }">
+        <td class="myTitle">{{ item.foiz }}</td>
+      </template>
+      <template justify-center
+        v-slot:item.lavozim_soni="{ item }">
+        <td class="myTitle">{{ item.lavozim_soni }}</td>
+      </template>
+      <template justify-center
+        v-slot:item.foizda="{ item }">
+        <td class="myTitle">{{ item.foizda }}</td>
       </template>
 
     <template v-slot:no-data>
@@ -254,7 +276,6 @@
         { text: "Vakant lavozimlar soni", value: "lavozim_soni" },
         { text: "%", value: "foizda" },
         { text: 'Actions', value: 'actions', sortable: false },
-
       ],
       desserts: [],
 
@@ -303,8 +324,11 @@
     },
 
     methods: {
-      addCategory() {
-      this.$router.push("addUser")
+      addTuzilma() {
+      this.$router.push("addTuzilma")
+      },
+      addLavozim(){
+        this.$router.push("addLavozim")
       },
       initialize () {
         this.desserts = [
@@ -367,3 +391,9 @@
     ////// end crud
   }
 </script>
+<style scoped>
+.myTitle{
+  font-size: 20px !important; 
+  font-family: 'Trocchi', serif;
+}
+</style>

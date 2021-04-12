@@ -1,327 +1,3 @@
-<!--<template>
-  <v-card>
-    <v-card-title>
-      <v-spacer></v-spacer>
-      <v-text-field 
-          v-model="search"
-          append-icon="mdi-magnify"
-          label="Qidirish"
-          single-line
-          hide-details
-      ></v-text-field>
-    </v-card-title>
-    <v-data-table :headers="headers" :items="desserts" :search="search" fixed-header height="600">
-      <template v-slot:top>
-        <v-toolbar flat color="white">
-          <v-toolbar-title>
-            Xodimlar ro'yhati
-          </v-toolbar-title>
-          <v-divider class="mx-4" inset vertical=""></v-divider>
-          <v-spacer></v-spacer>
-          <v-btn
-            class="nf-bor-radius white--text"
-            color="grey lighten-1"
-            large
-            dark
-            v-on="on"
-            text
-          >
-            <v-icon left>mdi-arrow-collapse-down</v-icon>
-            <download-excel
-              :data="desserts"
-              :fields="xls_fields"
-              :name="'users_info' + '.xls'"
-              class="download_excel_btn"
-            >
-              Excell
-            </download-excel>
-          </v-btn>
-
-          
-
-          <v-btn
-          @click="addCategory" color="success" dark class="mb-2 mr-2" v-on="on" text
-            ><v-icon left>mdi-plus</v-icon>Xodim qo'shish</v-btn
-          >
-          <v-btn
-          @click="dialog = true"
-          color="success" dark class="mb-2 mr-2" v-on="on" text
-          >
-          <v-icon left>mdi-fullscreen</v-icon>Kengaytirilgan ko'rinish
-          </v-btn>
-          <v-dialog
-            v-model="dialog"
-            fullscreen
-            hide-overlay
-            transition="dialog-bottom-transition"
-            scrollable
-          >
-        <v-card tile>
-          <v-toolbar
-            flat
-            dark
-            color="red"
-            class="mb-n15"  
-          >
-            <v-btn
-              icon
-              dark
-              @click="dialog = false"
-            >
-              <v-icon>mdi-close</v-icon>
-            </v-btn>
-            <v-spacer></v-spacer>
-          </v-toolbar>
-      <v-data-table overflow-x scroll  :headers="headers" :items="desserts" :search="search" fixed-header height="600">
-      <template v-slot:top>
-        <v-toolbar  flat color="white">
-          <v-toolbar-title>
-            Xodimlar ro'yhati
-          </v-toolbar-title>
-          <v-divider class="mx-4" inset vertical=""></v-divider>
-          <v-spacer></v-spacer>
-          
-          
-
-         <v-btn
-            class="nf-bor-radius white--text"
-            color="grey lighten-1"
-            large
-            dark
-            v-on="on"
-            text
-            @click="getApi"
-          >
-            <v-icon left>mdi-arrow-collapse-down</v-icon>
-            Get Api
-          </v-btn>
-        </v-toolbar>
-      </template>
-      <template justify-center
-        v-slot:item.calories="{ item }">
-        <v-avatar class="d-flex p-2" size="40px" small ><img :src="item.calories"/></v-avatar>
-      </template>
-      <template v-slot:no-data>
-        <v-btn color="primary" @click="initialize"> Reset</v-btn>
-      </template>
-    </v-data-table>
-    <div style="flex: 1 1 auto;"></div>    
-  </v-card>
-</v-dialog>
-</v-toolbar>
-</template>
-      <template justify-center
-        v-slot:item.calories="{ item }">
-        <v-avatar class="d-flex p-2" size="40px" small ><img :src="item.calories"/></v-avatar>
-      </template>
-      <template v-slot:no-data>
-        <v-btn color="primary" @click="initialize"> Reset</v-btn>
-      </template>
-    </v-data-table>
-  </v-card>
-</template>
-
--->
-<!--
-<script>
-import axios from "axios"
-export default {
-  methods:{
-    addCategory() {
-      this.$router.push("addUser")
-    },
-    getApi(){
-        axios.post('http://localhost:5001/api/applicationuser', {
-
-        })
-        .then((response) => {
-          console.log(response)
-
-        }, (error) => {
-          console.log(error)              
-        });
-      }
-  },
-  data() {
-    return {
-      dialog: false,
-
-
-
-      search: "",
-      headers: [
-        {
-          text: "ID",
-          align: "start",
-          sortable: false,
-          value: "name"
-        },
-        { text: "Fotosurat", value: "calories" },
-        { text: "F.I.SH", value: "fat" },
-        { text: "Ushbu sanadan", value: "ushbu_sanadan" },
-        { text: "Joriy Lavozimi", value: "carbs" },
-        { text: "Yoshi", value: "age" },
-        { text: "Tarmoqda", value: "tarmoqda" },
-        { text: "Umumiy staji", value: "staj" },
-        { text: "Mutahasisligi", value: "mutahasislik" },
-      ],
-      xls_fields: {
-        "ID": "name",
-        "F.I.SH": "fat",
-        "Ushbu sanadan": "ushbu_sanadan",
-        "Joriy Lavozimi": "carbs",
-        "Yoshi": "age",
-        "Tarmoqda":"tarmoqda",
-        "Umumiy staji": "staj",
-        "Mutahasisligi": "mutahasislik"
-
-      },
-      desserts: [
-        {
-          name: "1",
-          calories: "/img3.jpg",
-          fat: "Aziz Bohidjonov",
-          ushbu_sanadan: "02.06.2020",
-          carbs: "1-toifali mutaxasis",
-          age: "23",
-          tarmoqda: "9oy 3kun",
-          staj: "28й 1о 1к",
-          mutahasislik: "электр алоқа муҳандиси	"
-        },
-        {
-          name: "2",
-          calories: "/img1.jpg",
-          fat: "Dilmurod ubaydullayev",
-          ushbu_sanadan: "02.06.2020",
-          carbs: "Yetakchi mutahasis",
-          age: "22",
-          tarmoqda: "8oy 20kun",
-          staj: "36й 11о 25к",
-          mutahasislik: "геология, минералогия, патрология	"
-        },
-        {
-          name: "3",
-          calories: "/img2.jpg",
-          fat: "Jamshid Bohidjonov",
-          ushbu_sanadan: "02.06.2020",
-          carbs: "1-toifali mutaxasis",
-          age: "24",
-          tarmoqda: "5oy 3kun",
-          staj: "25й 4о 10к",
-          mutahasislik: "автомобиллар ва автомобиллар хўжалиги	"
-        },
-        {
-          name: "4",
-          calories: "/img3.jpg",
-          fat: "Aziz Bohidjonov",
-          ushbu_sanadan: "02.06.2020",
-          carbs: "1-toifali mutaxasis",
-          age: "23",
-          tarmoqda: "9oy 3kun",
-          staj: "28й 1о 1к",
-          mutahasislik: "электр алоқа муҳандиси	"
-        },
-        {
-          name: "5",
-          calories: "/img1.jpg",
-          fat: "Dilmurod ubaydullayev",
-          ushbu_sanadan: "02.06.2020",
-          carbs: "Yetakchi mutahasis",
-          age: "22",
-          tarmoqda: "8oy 20kun",
-          staj: "36й 11о 25к",
-          mutahasislik: "геология, минералогия, патрология	"
-        },
-        {
-          name: "6",
-          calories: "/img2.jpg",
-          fat: "Jamshid Bohidjonov",
-          ushbu_sanadan: "02.06.2020",
-          carbs: "1-toifali mutaxasis",
-          age: "24",
-          tarmoqda: "5oy 3kun",
-          staj: "25й 4о 10к",
-          mutahasislik: "автомобиллар ва автомобиллар хўжалиги	"
-        },
-        {
-          name: "7",
-          calories: "/img3.jpg",
-          fat: "Aziz Bohidjonov",
-          ushbu_sanadan: "02.06.2020",
-          carbs: "1-toifali mutaxasis",
-          age: "23",
-          tarmoqda: "9oy 3kun",
-          staj: "28й 1о 1к",
-          mutahasislik: "электр алоқа муҳандиси	"
-        },
-        {
-          name: "8",
-          calories: "/img1.jpg",
-          fat: "Dilmurod ubaydullayev",
-          ushbu_sanadan: "02.06.2020",
-          carbs: "Yetakchi mutahasis",
-          age: "22",
-          tarmoqda: "8oy 20kun",
-          staj: "36й 11о 25к",
-          mutahasislik: "геология, минералогия, патрология	"
-        },
-        {
-          name: "9",
-          calories: "/img2.jpg",
-          fat: "Jamshid Bohidjonov",
-          ushbu_sanadan: "02.06.2020",
-          carbs: "1-toifali mutaxasis",
-          age: "24",
-          tarmoqda: "5oy 3kun",
-          staj: "25й 4о 10к",
-          mutahasislik: "автомобиллар ва автомобиллар хўжалиги	"
-        },
-        {
-          name: "10",
-          calories: "/img3.jpg",
-          fat: "Aziz Bohidjonov",
-          ushbu_sanadan: "02.06.2020",
-          carbs: "1-toifali mutaxasis",
-          age: "23",
-          tarmoqda: "9oy 3kun",
-          staj: "28й 1о 1к",
-          mutahasislik: "электр алоқа муҳандиси	"
-        },
-        {
-          name: "11",
-          calories: "/img1.jpg",
-          fat: "Dilmurod ubaydullayev",
-          ushbu_sanadan: "02.06.2020",
-          carbs: "Yetakchi mutahasis",
-          age: "22",
-          tarmoqda: "8oy 20kun",
-          staj: "36й 11о 25к",
-          mutahasislik: "геология, минералогия, патрология	"
-        },
-        {
-          name: "12",
-          calories: "/img2.jpg",
-          fat: "Jamshid Bohidjonov",
-          ushbu_sanadan: "02.06.2020",
-          carbs: "1-toifali mutaxasis",
-          age: "24",
-          tarmoqda: "5oy 3kun",
-          staj: "25й 4о 10к",
-          mutahasislik: "автомобиллар ва автомобиллар хўжалиги	"
-        }
-      ]
-    };
-  }
-};
-</script>
--->
-<!--<template>
-  <div>
-    <h1 class="subheading grey--text">Tashkiliy tuzilma</h1>
-  </div>
-</template>-->
-
-
 <template>
 <v-card>
 <v-card-title>
@@ -355,18 +31,6 @@ export default {
           vertical
         ></v-divider>
         <v-spacer></v-spacer>
-        <v-btn
-            class="nf-bor-radius white--text"
-            color="grey lighten-1"
-            large
-            dark
-            v-on="on"
-            text
-            @click="getApi"
-          >
-            <v-icon left>mdi-arrow-collapse-down</v-icon>
-            Get Api
-          </v-btn>
         <v-btn
             class="nf-bor-radius white--text"
             color="grey lighten-1"
@@ -589,7 +253,7 @@ export default {
     </template>
     <template justify-center
         v-slot:item.calories="{ item }">
-        <img  :class="`rounded-t-xl rounded-b-xl`" class="mt-5 mb-5 zoom" height="60px" :src="item.calories"/>
+        <img  :class="`rounded-circle`" class="mt-1 mb-1 zoom" height="50px" :src="item.calories"/>
       </template>
       <template justify-center
         v-slot:item.age="{ item }">
@@ -637,8 +301,6 @@ export default {
 <script>
 import jsPDF from 'jspdf'
 import 'jspdf-autotable'
-import axios from 'axios'
-
   export default {
     name: 'pdf',
     data: () => ({
@@ -653,7 +315,7 @@ import axios from 'axios'
           sortable: false,
           value: "name"
         },
-        { text: "Fotosurat", value: "calories" },
+        { text: "Fotosurat", sortable: false, value: "calories" },
         { text: "F.I.SH", value: "fat" },
         { text: "Ushbu sanadan", value: "ushbu_sanadan" },
         { text: "Joriy Lavozimi", value: "carbs" },
@@ -712,17 +374,6 @@ import axios from 'axios'
     },
 
     methods: {
-      getApi(){
-        axios.get('https://localhost:5001/api/applicationuser', {
-
-        })
-        .then((response) => {
-          console.log(response)
-
-        }, (error) => {
-          console.log(error)              
-        });
-      },
     downloadPDF(){
       var pdf=new jsPDF();
       pdf.autoTable({html: '#pdf'})

@@ -1,6 +1,5 @@
 <template>
   <nav>
-    
     <v-app-bar :elevation="5" color="#4da6ff" dark app>
       <v-app-bar-nav-icon 
           @click.stop="mini = !mini"> </v-app-bar-nav-icon>
@@ -11,15 +10,13 @@
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <LocaleSwitcher/>
-      <Kirish/>
-      
-      
+      <Kirish/>      
     </v-app-bar>
     <v-navigation-drawer 
       v-model="drawer"
       :mini-variant.sync="mini"
       permanent
-      :width="330" 
+      :width="300" 
       height="100%"
       dark app :elevation="5" color="#1a8cff" class="darken-0"
     >
@@ -38,52 +35,52 @@
         </v-list-item>
 
         <v-list-item
-          
           class="mt-30"
         >
           <v-list-item-icon class="myTitle">
             <v-icon>mdi-account-search</v-icon>
           </v-list-item-icon>
-  <v-card
-    class="mx-auto"
-    max-width="400"
-  >
-    <v-sheet  class="pa-4 dodger blue">
-      <v-text-field
-        v-model="search"
-        :label="$t('search')"
-        dark
-        flat
-        solo-inverted
-        hide-details
-        clearable
-        clear-icon="mdi-close-circle-outline"
-      ></v-text-field>
-    </v-sheet>
-    
-    <v-card-text class="dodger blue">
-      <v-treeview
-        :items="items"
-        :search="search"
-        :filter="filter"
-        rounded
-        hoverable
-        class="myTitle"
-      >
-        <template v-slot:prepend="{ item }">
-          
-          <v-icon
-            v-if="item.children"
-            v-text="`mdi-${item.id === 1 ? 'book-open' : 'folder-network'}`"
-          ></v-icon>
-        </template>
-        <template  slot="label" slot-scope="props">
-                <router-link style="text-decoration: none; color: inherit;" :to="props.item.route" v-if="props.item.route">{{ props.item.name }}</router-link>
-                <span v-else>{{ props.item.name }}</span>
-            </template>
-      </v-treeview>
-    </v-card-text>
-  </v-card>
+          <v-card
+            class="mx-auto"
+            max-width="400"
+            width="210"
+          >
+            <v-sheet  class="pa-4 dodger blue">
+              <v-text-field
+                v-model="search"
+                :label="$t('search')"
+                dark
+                flat
+                solo-inverted
+                hide-details
+                clearable
+                clear-icon="mdi-close-circle-outline"
+              ></v-text-field>
+            </v-sheet>
+            
+            <v-card-text class="dodger blue">
+              <v-treeview
+                :items="items"
+                :search="search"
+                :filter="filter"
+                rounded
+                hoverable
+                class="myTitle"
+              >
+                <template v-slot:prepend="{ item }">
+                  
+                  <v-icon
+                    v-if="item.children"
+                    v-text="`mdi-${item.id === 1 ? 'book-open' : 'folder-network'}`"
+                  ></v-icon>
+                </template>
+                <template  slot="label" slot-scope="props">
+                        <router-link style="text-decoration: none; color: inherit;" :to="props.item.route" v-if="props.item.route">{{ props.item.name }}</router-link>
+                        <span v-else>{{ props.item.name }}</span>
+                    </template>
+              </v-treeview>
+            </v-card-text>
+          </v-card>
         </v-list-item>
 
       </v-list>
