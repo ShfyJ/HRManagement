@@ -9,6 +9,26 @@
     >
         Ortga
     </v-btn>
+    <v-row>
+      <v-col cols="12" md12>
+        <div  md6>
+        <v-list-item>
+          <v-list-item-avatar size="50px">
+            <v-img src="../../public/img3.jpg"></v-img>
+          </v-list-item-avatar>
+          <v-list-item-content>
+            <v-list-item-title >Aziz Bohidjonov</v-list-item-title>
+            <v-list-item-subtitle>Alisher o'g'li</v-list-item-subtitle>
+          </v-list-item-content>
+          <v-list-item-content class="text-right align-self-start">
+            <v-list-item-title >Ikt departamenti Bo'lim nomi</v-list-item-title>
+            <v-list-item-subtitle>Lavozimi</v-list-item-subtitle>
+          </v-list-item-content>
+        </v-list-item>
+        </div>
+        <v-divider ></v-divider>
+      </v-col>
+    </v-row>
     <v-row class="mb-n5">
         <v-col cols="12" sm="9">
           <div v-if="hide">
@@ -704,7 +724,8 @@
           </div>
         </v-col>
         <v-col cols="12" sm="3">
-                    <v-card class="rounded-xl">
+          <div class="mt-5">
+            <v-card class="rounded-xl">
                        <v-toolbar align="center" flat>
                          <v-toolbar-title>Menyu</v-toolbar-title>
                          <v-spacer></v-spacer>
@@ -812,6 +833,7 @@
                          </v-icon></v-btn>
                        </v-app-bar>
                      </v-card>
+          </div>
         </v-col>
     </v-row>
 

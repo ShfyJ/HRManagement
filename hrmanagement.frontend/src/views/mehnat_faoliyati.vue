@@ -8,11 +8,11 @@
                             cols="12"
                             md="12"
                         >
+                        <v-container>
                                 <v-data-table
                                     :headers="headers"
                                     :items="desserts"
                                     sort-by="calories"
-                                    class="elevation-1"
                                     
                                     hide-default-footer: true
                                 >
@@ -22,7 +22,7 @@
                                     >
                                         <v-dialog
                                         v-model="dialog"
-                                        max-width="500px"
+                                        max-width="1000px"
                                         >
                                         <template v-slot:activator="{ on, attrs }">
                                             <v-btn
@@ -153,7 +153,7 @@
                                     </v-btn>
                                     </template>
                                 </v-data-table>
-
+                        </v-container>
                         </v-col>
                         <v-col
                             cols="12"
@@ -173,32 +173,32 @@
       dialogDelete: false,
       headers: [
         {
-          text: 'санадан',
+          text: 'Sanadan',
           align: 'start',
           sortable: false,
           value: 'sanadan',
         },
-        { text: 'санагача', value: 'sanagacha' },
-        { text: 'ташкилот номи	', value: 'tashkilot_nomi' },
-        { text: 'лавозим номи	', value: 'lavozim_nomi' },
-        { text: 'стажи', value: 'staji' },
+        { text: 'Sanagacha', value: 'sanagacha', sortable: false, },
+        { text: 'Tashkilot nomi	', value: 'tashkilot_nomi', sortable: false, },
+        { text: 'Lavozim nomi	', value: 'lavozim_nomi', sortable: false, },
+        { text: 'Staji', value: 'staji', sortable: false, },
         { text: 'Actions', value: 'actions', sortable: false },
       ],
       desserts: [],
       editedIndex: -1,
       editedItem: {
-        name: '',
-        calories: 0,
-        fat: 0,
-        carbs: 0,
-        protein: 0,
+        sanadan: '',
+        sanagacha: "",
+        tashkilot_nomi: "",
+        lavozim_nomi: "",
+        staji: "",
       },
       defaultItem: {
-        name: '',
-        calories: 0,
-        fat: 0,
-        carbs: 0,
-        protein: 0,
+        sanadan: '',
+        sanagacha: "",
+        tashkilot_nomi: "",
+        lavozim_nomi: "",
+        staji: "",
       },
     }),
 

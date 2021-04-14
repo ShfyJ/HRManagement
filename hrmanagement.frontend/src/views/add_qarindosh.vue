@@ -105,7 +105,8 @@
                                                 
 
                                                         </v-col>
-                                                        <v-col                                                                       cols="12"
+                                                        <v-col     
+                                                            cols="12"
                                                             sm="6"
                                                             md="2">
                                                             <v-select
@@ -118,7 +119,8 @@
                                                             single-line
                                                             ></v-select>
                                                         </v-col>
-                                                        <v-col                                                                       cols="12"
+                                                        <v-col                                                                       
+                                                            cols="12"
                                                             sm="6"
                                                             md="2">
                                                             <v-select
@@ -130,7 +132,8 @@
                                                             single-line
                                                             ></v-select>
                                                         </v-col>
-                                                        <v-col                                                                       cols="12"
+                                                        <v-col                                                                       
+                                                            cols="12"
                                                             sm="6"
                                                             md="2">
                                                             <v-select
@@ -142,7 +145,8 @@
                                                             single-line
                                                             ></v-select>
                                                         </v-col>
-                                                        <v-col                                                                       cols="12"
+                                                        <v-col                                                                       
+                                                            cols="12"
                                                             sm="6"
                                                             md="3">
                                                             <v-select
@@ -187,7 +191,8 @@
                                                 
 
                                                         </v-col>
-                                                        <v-col                                                                       cols="12"
+                                                        <v-col                                                                       
+                                                            cols="12"
                                                             sm="6"
                                                             md="4">
                                                             <v-select
@@ -212,7 +217,8 @@
                                                         </v-col>
                                                         </v-row>
                                                         <v-row>
-                                                        <v-col                                                                       cols="12"
+                                                        <v-col                                                                       
+                                                            cols="12"
                                                             sm="6"
                                                             md="3">
                                                             <v-select
@@ -225,7 +231,8 @@
                                                             single-line
                                                             ></v-select>
                                                         </v-col>
-                                                        <v-col                                                                       cols="12"
+                                                        <v-col                                                                       
+                                                            cols="12"
                                                             sm="6"
                                                             md="3">
                                                             <v-select
@@ -237,7 +244,8 @@
                                                             single-line
                                                             ></v-select>
                                                         </v-col>
-                                                        <v-col                                                                       cols="12"
+                                                        <v-col                                                                       
+                                                            cols="12"
                                                             sm="6"
                                                             md="3">
                                                             <v-select
@@ -249,7 +257,8 @@
                                                             single-line
                                                             ></v-select>
                                                         </v-col>
-                                                        <v-col                                                                       cols="12"
+                                                        <v-col                                                                       
+                                                            cols="12"
                                                             sm="6"
                                                             md="3">
                                                             <v-select
