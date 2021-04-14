@@ -1034,6 +1034,28 @@
               </v-row>-->
             </v-container>
           </v-form>
+          <v-snackbar
+            v-model="snackbar"
+            :timeout="timeout"
+            :value="true"
+            absolute
+            bottom
+            color="primary"
+            outlined
+          >
+      {{ text }}
+
+      <template v-slot:action="{ attrs }">
+        <v-btn
+          color="blue"
+          text
+          v-bind="attrs"
+          @click="snackbar = false"
+        >
+          Yopish
+        </v-btn>
+      </template>
+    </v-snackbar>
       </v-col>
     </v-row>
   </v-container>
@@ -1044,6 +1066,9 @@ import PictureInput from 'vue-picture-input'
 import axios from "axios"
   export default {
     data: () => ({
+      snackbar: false,
+      text: 'Muvaffaqiyatli xodim yaratildi',
+      timeout: 2000,
       valid: true,
       passport: '',
       passportRules: [
@@ -1148,14 +1173,16 @@ import axios from "axios"
   methods: {
     reset () {
             this.$refs.form.reset()
-            this.$refs.pictureInput.removeImage()
-            
+            this.$refs.pictureInput.removeImage()   
     },
 
     chiqish(){
       this.$router.push({ name: 'team' });
+
     },
     submit(){
+      this.snackbar=true
+      this.reset() 
 
 
       axios
@@ -1171,7 +1198,7 @@ import axios from "axios"
         fiO_short: this.fio_qisqa,
         fI_short: this.fi_qisqa,
         gender: this.radios,
-        birthDate: "2021-04-13T05:40:09.549Z",
+        birthDate: this.date2+"T06:33:32.593Z",
         photoUrl: this.image,
         workbookURL: "kajndjan",
         stirUrl: "dsdasdad",

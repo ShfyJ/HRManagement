@@ -1,6 +1,6 @@
 <template>
 <div>
-        <v-card class="rounded-xl ">
+        <v-card class="rounded-xl mt-5">
                 <v-toolbar align="center" flat>
                     <v-toolbar-title>Asosiy ma'lumot</v-toolbar-title>
                 </v-toolbar>
@@ -202,61 +202,45 @@
             </v-container>
         </v-card>
 
-        <v-card class="rounded-xl mt-5 ">
+        <v-card class="rounded-xl mt-2">
                 <v-toolbar align="center" flat>
                         <v-toolbar-title>Umumiy ma'lumot</v-toolbar-title>
                 </v-toolbar>
-            <v-container
-                id="user-profile"
-                fluid
-                tag="section"
-            >
-                <v-row justify="center">
-                <v-col
+                <v-container class="py-0">
+                  <v-row class="ml-10 mr-10">
+                  <v-col cols="12" md="4">
+                  <v-select
+                            v-model="Uzbekistan"
+                            :items="countries"
+                            menu-props="auto"
+                            label="Tug'ilgan joyi"
+                            hide-details
+                            prepend-icon="mdi-map"
+                            single-line
+                          ></v-select>
+                  </v-col>
+                  <v-col cols="12" md="4">
+                    <v-select
+                      v-model="tuman"
+                      :items="tumanlar"
+                      menu-props="auto"
+                      label="Viloyati"
+                      hide-details
+                      single-line
+                    ></v-select>
+                  </v-col>
+                  <v-col
                     cols="12"
-                    md="11"
-                >
-                    <base-material-card>
-                    <v-form        
-                    ref="form"
-                    v-model="valid"
-                    lazy-validation
-            >
-                            <v-container class="py-0">
-                            <v-row class="mt-n8">
-
-      <v-col cols="12" md="4">
-      <v-select
-                v-model="Uzbekistan"
-                :items="countries"
-                menu-props="auto"
-                label="Tug'ilgan joyi"
-                hide-details
-                prepend-icon="mdi-map"
-                single-line
-              ></v-select>
-      </v-col>
-      <v-col cols="12" md="4">
-        <v-select
-          v-model="tuman"
-          :items="tumanlar"
-          menu-props="auto"
-          label="Viloyati"
-          hide-details
-          single-line
-        ></v-select>
-      </v-col>
-                <v-col
-                  cols="12"
-                  md="4"
-                >
-                  <v-text-field
-                    label="Tuman/Shahar"
-                    class="purple-input"
-                  />
-                </v-col>
-                
-                <v-col
+                    md="4"
+                  >
+                    <v-text-field
+                      label="Tuman/Shahar"
+                      class="purple-input"
+                    />
+                  </v-col>
+                  </v-row>
+                  <v-row class="mt-n8 ml-10 mr-10">
+                  <v-col
                   cols="12"
                   md="4"
                 >
@@ -281,11 +265,11 @@
                   >
                   <v-radio
                   label="Erkak"
-                  value="radio-1"
+                  value="Male"
                   ></v-radio>
                   <v-radio
                   label="Ayol"
-                  value="radio-2"
+                  value="Female"
                   ></v-radio>
                   </v-radio-group>
                   </v-row>
@@ -303,12 +287,9 @@
                   single-line
                   ></v-select>
                 </v-col>
-                <!--<v-text-field
-                    class="red-input"
-                    label="Postal Code"
-                    type="number"
-                  />-->
-                <v-col
+                  </v-row>
+                  <v-row class="mt-n3 ml-10 mr-10">
+                  <v-col
                   cols="12"
                   md="3"
                 >
@@ -344,43 +325,47 @@
                     class="purple-input"
                   />
                 </v-col>
-
-                <v-col cols="12" md="4">
-                <v-combobox
-                clearable
-                v-model="language"
-                :items="languages"
-                label="Chet tillarini bilishi"
-                multiple
-                chips
-                >
-          <template v-slot:selection="data">
-            <v-chip
-              :key="JSON.stringify(data.item)"
-              v-bind="data.attrs"
-              :input-value="data.selected"
-              :disabled="data.disabled"
-              @click:close="data.parent.selectItem(data.item)"
-            >
-              <v-avatar
-                class="accent white--text"
-                left
-                v-text="data.item.slice(0, 1).toUpperCase()"
-              ></v-avatar>
-              {{ data.item }}
-            </v-chip>
-          </template>
-        </v-combobox>
-                </v-col>
-                <v-col
-                  cols="12"
-                  md="8"
-                >
-                  <v-text-field 
-                    label="Mukofotlari"
-                    class="purple-input mt-3"
-                  />
-                </v-col>
+                  </v-row>
+                  <v-row class="mt-n10 ml-10 mr-10">
+                    
+                    <v-col cols="12" md="4">
+                    <v-combobox
+                    clearable
+                    v-model="language"
+                    :items="languages"
+                    label="Chet tillarini bilishi"
+                    multiple
+                    chips
+                    >
+                      <template v-slot:selection="data">
+                        <v-chip
+                          :key="JSON.stringify(data.item)"
+                          v-bind="data.attrs"
+                          :input-value="data.selected"
+                          :disabled="data.disabled"
+                          @click:close="data.parent.selectItem(data.item)"
+                        >
+                          <v-avatar
+                            class="accent white--text"
+                            left
+                            v-text="data.item.slice(0, 1).toUpperCase()"
+                          ></v-avatar>
+                          {{ data.item }}
+                        </v-chip>
+                      </template>
+                    </v-combobox>
+                    </v-col>
+                    <v-col
+                      cols="12"
+                      md="8"
+                    >
+                      <v-text-field 
+                        label="Mukofotlari"
+                        class="purple-input mt-3"
+                      />
+                    </v-col>
+                  </v-row>
+                  <v-row class="mt-n8 ml-10 mr-10">
                 <v-col
                   cols="12"
                   md="4"
@@ -418,7 +403,9 @@
                   single-line
                   ></v-select>
                 </v-col>
-                <v-col
+                  </v-row>
+                  <v-row class="mt-n8 ml-10 mr-10"> 
+                    <v-col
                   cols="12"
                   md="6"
                 >
@@ -442,19 +429,9 @@
                   single-line
                   ></v-select>
                 </v-col>
-                </v-row>
+                  </v-row>
                 </v-container>
-                </v-form>
-                    </base-material-card>
-                </v-col>
-                <v-col
-                    cols="12"
-                    md="4"
-                >
-                </v-col>
-                </v-row>
-            </v-container>
-        </v-card>
+              </v-card>
 
         <v-card class="rounded-xl mt-5">
             <v-toolbar align="center" flat>
@@ -551,7 +528,7 @@
             </v-container>
         </v-card>
 
-        <v-card class="rounded-xl mt-5">
+        <v-card class="rounded-xl mt-2">
             <v-container
                 id="user-profile"
                 fluid
@@ -692,7 +669,13 @@
 import PictureInput from 'vue-picture-input'
 
 export default {
-      components: {
+  data(){
+    return{
+      id: this.$route.params['id'],
+    }
+  },
+
+  components: {
     PictureInput
     },
 }

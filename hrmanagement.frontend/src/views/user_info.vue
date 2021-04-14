@@ -16,20 +16,26 @@
           <v-list-item-avatar size="50px">
             <v-img src="../../public/img3.jpg"></v-img>
           </v-list-item-avatar>
-          <v-list-item-content>
-            <v-list-item-title >Aziz Bohidjonov</v-list-item-title>
-            <v-list-item-subtitle>Alisher o'g'li</v-list-item-subtitle>
-          </v-list-item-content>
-          <v-list-item-content class="text-right align-self-start">
-            <v-list-item-title >Ikt departamenti Bo'lim nomi</v-list-item-title>
-            <v-list-item-subtitle>Lavozimi</v-list-item-subtitle>
-          </v-list-item-content>
+          <v-row>
+            <v-col cols="12" md="2">
+              <v-list-item-content>
+                <v-list-item-title >Aziz Bohidjonov</v-list-item-title>
+                <v-list-item-subtitle>Alisher o'g'li</v-list-item-subtitle>
+              </v-list-item-content>
+            </v-col>
+            <v-col cols="12" md="2">
+              <v-list-item-content class="text-left align-self-start">
+                <v-list-item-title >Ikt departamenti Bo'lim nomi</v-list-item-title>
+                <v-list-item-subtitle>Lavozimi</v-list-item-subtitle>
+              </v-list-item-content>
+            </v-col>
+          </v-row>
         </v-list-item>
         </div>
         <v-divider ></v-divider>
       </v-col>
     </v-row>
-    <v-row class="mb-n5">
+    <v-row class="mb-n5 mt-n6">
         <v-col cols="12" sm="9">
           <div v-if="hide">
         <v-card class="rounded-xl ">
@@ -845,57 +851,9 @@ export default {
     data(){
         return{
             id: this.$route.params['id'],
-            hide: false,
-            headers: [
-          {
-            text: 'Dessert (100g serving)',
-            align: 'start',
-            value: 'name',
-          },
-          { text: 'Category', value: 'category' },
-        ],
-        desserts: [
-          {
-            name: 'Frozen Yogurt',
-            category: 'Ice cream',
-          },
-          {
-            name: 'Ice cream sandwich',
-            category: 'Ice cream',
-          },
-          {
-            name: 'Eclair',
-            category: 'Cookie',
-          },
-          {
-            name: 'Cupcake',
-            category: 'Pastry',
-          },
-          {
-            name: 'Gingerbread',
-            category: 'Cookie',
-          },
-          {
-            name: 'Jelly bean',
-            category: 'Candy',
-          },
-          {
-            name: 'Lollipop',
-            category: 'Candy',
-          },
-          {
-            name: 'Honeycomb',
-            category: 'Toffee',
-          },
-          {
-            name: 'Donut',
-            category: 'Pastry',
-          },
-          {
-            name: 'KitKat',
-            category: 'Candy',
-          },
-        ],
+            hide: this.$store.state.hide,
+
+
         
         }
     },

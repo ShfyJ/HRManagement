@@ -8,22 +8,18 @@
                             cols="12"
                             md="12"
                         >
-                                <v-data-table
+                        <v-container>
+                            <v-data-table
                                     :headers="headers"
                                     :items="desserts"
-                                    sort-by="calories"
-                                    class="elevation-1"
-                                    
-                                    hide-default-footer: true
                                 >
                                     <template v-slot:top>
                                     <v-toolbar
                                         flat
                                     >
-
                                         <v-dialog
                                         v-model="dialog"
-                                        max-width="1800px"
+                                        max-width="1200px"
                                         persistent
                                         >
                                         <template v-slot:activator="{ on, attrs }">
@@ -45,11 +41,11 @@
                                             <v-card-text>
                                             <v-container>
                                                     <v-col>
-                                                        <v-row>
+                                                        <v-row class="mr-5 ml-5">
                                                             <v-col
                                                                 cols="12"
                                                                 sm="6"
-                                                                md="6"
+                                                                md="4"
                                                             >
                                                             <v-select
                                                             :items="items"
@@ -61,24 +57,18 @@
                                                             <v-col
                                                                 cols="12"
                                                                 sm="6"
-                                                                md="6"
+                                                                md="4"
                                                             >
                                                                 <v-text-field
                                                                 v-model="editedItem.fio_ota_ona"
                                                                 label="фамилияси, исми ва отасининг исми"
                                                                 ></v-text-field>
                                                             </v-col>
-                                                        </v-row>
-                                                        <v-row>
-                                                        <v-col
+                                                            <v-col
                                                             cols="12"
                                                             sm="6"
-                                                            md="3"
+                                                            md="4"
                                                         >
-                                                            <!--<v-text-field
-                                                            v-model="editedItem.date_of_birth"
-                                                            label="туғилган йили ва жойи"
-                                                            ></v-text-field>-->
                                                             <v-menu
                                                             v-model="menu2"
                                                             :close-on-content-click="false"
@@ -102,13 +92,21 @@
                                                             @input="menu2 = false"
                                                             ></v-date-picker>
                                                         </v-menu>
-                                                
-
                                                         </v-col>
+                                                        </v-row>
+                                                        <v-row>
+                                                        <v-toolbar  :elevation="2"  flat>
+                                                          <v-toolbar-title class="flex text-center">
+                                                            Tug'ilgan joyi
+                                                          </v-toolbar-title>
+                                                          </v-toolbar>
+                                                        </v-row>
+                                                        
+                                                        <v-row>
                                                         <v-col     
                                                             cols="12"
                                                             sm="6"
-                                                            md="2">
+                                                            md="3">
                                                             <v-select
                                                             v-model="current_country"
                                                             :items="countries"
@@ -122,7 +120,7 @@
                                                         <v-col                                                                       
                                                             cols="12"
                                                             sm="6"
-                                                            md="2">
+                                                            md="3">
                                                             <v-select
                                                             v-model="current_country"
                                                             :items="countries"
@@ -135,7 +133,7 @@
                                                         <v-col                                                                       
                                                             cols="12"
                                                             sm="6"
-                                                            md="2">
+                                                            md="3">
                                                             <v-select
                                                             v-model="current_country"
                                                             :items="countries"
@@ -158,6 +156,13 @@
                                                             single-line
                                                             ></v-select>
                                                         </v-col>
+                                                        </v-row>
+                                                        <v-row>
+                                                        <v-toolbar :elevation="2"  flat>
+                                                          <v-toolbar-title class="flex text-center">
+                                                            Ish joyi va lavozimi
+                                                          </v-toolbar-title>
+                                                          </v-toolbar>
                                                         </v-row>
                                                         <v-row>
                                                         <v-col
@@ -215,6 +220,13 @@
                                                             label="иш жойи ва лавозими"
                                                             ></v-text-field>
                                                         </v-col>
+                                                        </v-row>
+                                                        <v-row>
+                                                        <v-toolbar :elevation="2"  flat>
+                                                          <v-toolbar-title class="flex text-center">
+                                                            Yashash joyi
+                                                          </v-toolbar-title>
+                                                          </v-toolbar>
                                                         </v-row>
                                                         <v-row>
                                                         <v-col                                                                       
@@ -344,12 +356,7 @@
                                     </v-btn>
                                     </template>
                                 </v-data-table>
-
-                        </v-col>
-                        <v-col
-                            cols="12"
-                            md="4"
-                        >
+                        </v-container>
                         </v-col>
                         </v-row>
                     
@@ -367,15 +374,15 @@
       dialogDelete: false,
       headers: [
         {
-          text: 'қариндошлиги',
+          text: 'Qarindoshligi',
           align: 'start',
           sortable: false,
           value: 'qarindoshligi',
         },
-        { text: 'фамилияси, исми ва отасининг исми', sortable: false, value: 'fio_ota_ona' },
-        { text: 'туғилган йили ва жойи', sortable: false, value: 'date_of_birth' },
-        { text: 'иш жойи ва лавозими', sortable: false, value: 'ish_joyi' },
-        { text: 'турар жойи', sortable: false, value: 'turar_joyi' },
+        { text: 'Familiyasi, ismi va otasining ismi', sortable: false, value: 'fio_ota_ona' },
+        { text: 'Tug\'ilgan yili va joyi', sortable: false, value: 'date_of_birth' },
+        { text: 'Ish joyi va lavozimi', sortable: false, value: 'ish_joyi' },
+        { text: 'Turar joyi', sortable: false, value: 'turar_joyi' },
         { text: 'Actions', value: 'actions', sortable: false },
       ],
       desserts: [],

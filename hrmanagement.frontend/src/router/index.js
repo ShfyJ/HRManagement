@@ -16,7 +16,7 @@ import AddLavozim from '../views/add_lavozim.vue'
 import UmumiyMalumot from '../views/umumiy_malumot.vue'
 import MehnatFaoliyati from '../views/mehnat_faoliyati.vue'
 import AddQarindosh from '../views/add_qarindosh.vue'
-
+import PageNotFound from '../components/PageNotFound.vue'
 
 Vue.use(VueRouter);
 
@@ -26,6 +26,11 @@ const routes = [
     path: "/",
     name: "dashboard",
     component: Dashboard
+  },
+  {
+    path: "/page_not_found",
+    alias: "*",
+    component: PageNotFound
   },
   {
     path: "/dropdown",
@@ -54,6 +59,7 @@ const routes = [
   {
     path: "/team/:id",
     component: User_info,
+    props: true,
     children: [
       { path: '/team/:id/umumiy_malumot', component: UmumiyMalumot, name: "umumiy_malumot"  },
       { path: '/team/:id/mehnat_faoliyati', component: MehnatFaoliyati, name: "mehnat_faoliyati"  },
