@@ -1,6 +1,6 @@
 <template>
 <div>
-        <v-card class="rounded-xl mt-5">
+        <v-card class="rounded-xl mt-5" :elevation="4">
                 <v-toolbar align="center" flat>
                     <v-toolbar-title>Asosiy ma'lumot</v-toolbar-title>
                 </v-toolbar>
@@ -202,7 +202,7 @@
             </v-container>
         </v-card>
 
-        <v-card class="rounded-xl mt-2">
+        <v-card class="rounded-xl mt-2" :elevation="4">
                 <v-toolbar align="center" flat>
                         <v-toolbar-title>Umumiy ma'lumot</v-toolbar-title>
                 </v-toolbar>
@@ -433,7 +433,7 @@
                 </v-container>
               </v-card>
 
-        <v-card class="rounded-xl mt-5">
+        <v-card class="rounded-xl mt-5" :elevation="4">
             <v-toolbar align="center" flat>
                         <v-toolbar-title>Yashash joyi va aloqalar</v-toolbar-title>
             </v-toolbar>
@@ -528,7 +528,7 @@
             </v-container>
         </v-card>
 
-        <v-card class="rounded-xl mt-2">
+        <v-card class="rounded-xl mt-2" :elevation="4">
             <v-container
                 id="user-profile"
                 fluid

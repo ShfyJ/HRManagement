@@ -1,5 +1,5 @@
 <template>
-        <v-card class="rounded-xl mt-5 ">
+        <v-card class="rounded-xl mt-5" :elevation="4">
                 <v-toolbar align="center" flat>
                     <v-toolbar-title>Yaqin qarindoshlari</v-toolbar-title>
                 </v-toolbar>
@@ -24,13 +24,16 @@
                                         >
                                         <template v-slot:activator="{ on, attrs }">
                                             <v-btn
-                                            color="primary"
+                                            color="#47a3ff"
+                                            rounded
                                             dark
                                             class="mb-2"
                                             v-bind="attrs"
                                             v-on="on"
+                                            :elevation="4"
                                             >
-                                            Qarindoshlar qo'shish
+                                            <v-icon class="mr-3">mdi-family-tree</v-icon>
+                                                Qarindoshlar qo'shish
                                             </v-btn>
                                         </template>
                                         <v-card>
@@ -321,11 +324,11 @@
                                         </v-dialog>
                                         <v-dialog v-model="dialogDelete" max-width="500px">
                                         <v-card>
-                                            <v-card-title class="headline">Are you sure you want to delete this item?</v-card-title>
+                                            <v-card-title class="headline">Rostdan ham o'chirmoxchimisz?</v-card-title>
                                             <v-card-actions>
                                             <v-spacer></v-spacer>
-                                            <v-btn color="blue darken-1" text @click="closeDelete">Cancel</v-btn>
-                                            <v-btn color="blue darken-1" text @click="deleteItemConfirm">OK</v-btn>
+                                            <v-btn color="blue darken-1" text @click="closeDelete">Yopish</v-btn>
+                                            <v-btn color="blue darken-1" text @click="deleteItemConfirm">XA</v-btn>
                                             <v-spacer></v-spacer>
                                             </v-card-actions>
                                         </v-card>
@@ -490,3 +493,6 @@
     },
   }
 </script>
+
+<style scoped>
+</style>

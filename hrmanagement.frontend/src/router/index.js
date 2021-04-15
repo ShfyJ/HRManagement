@@ -17,7 +17,7 @@ import UmumiyMalumot from '../views/umumiy_malumot.vue'
 import MehnatFaoliyati from '../views/mehnat_faoliyati.vue'
 import AddQarindosh from '../views/add_qarindosh.vue'
 import PageNotFound from '../components/PageNotFound.vue'
-
+import Malumoti from '../views/ma\'lumoti.vue'
 Vue.use(VueRouter);
 
 const routes = [
@@ -63,7 +63,8 @@ const routes = [
     children: [
       { path: '/team/:id/umumiy_malumot', component: UmumiyMalumot, name: "umumiy_malumot"  },
       { path: '/team/:id/mehnat_faoliyati', component: MehnatFaoliyati, name: "mehnat_faoliyati"  },
-      { path: '/team/:id/add_relatives', component: AddQarindosh, name: "add_relatives"  }
+      { path: '/team/:id/add_relatives', component: AddQarindosh, name: "add_relatives"  },
+      { path: '/team/:id/malumoti', component: Malumoti, name: "malumoti"  }
     ]
   },
   {
