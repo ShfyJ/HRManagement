@@ -1,4 +1,5 @@
 <template>
+
         <v-card class="rounded-xl mt-5" :elevation="4">
                 <v-toolbar align="center" flat>
                     <v-toolbar-title>Yaqin qarindoshlari</v-toolbar-title>
@@ -364,6 +365,7 @@
                         </v-row>
                     
         </v-card>
+
 </template>
 
 

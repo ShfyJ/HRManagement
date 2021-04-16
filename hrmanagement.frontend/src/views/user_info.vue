@@ -726,7 +726,9 @@
         </v-card>
           </div>
           <div v-else>
+            <transition name="fade" mode="out-in">
             <router-view></router-view>
+            </transition>
           </div>
         </v-col>
         <v-col cols="12" sm="3">
@@ -895,5 +897,17 @@ border-radius: 50px 0px 50px 0px !important;
 }
 .border{
   border: 2px solid white !important;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition-duration: 0.3s;
+  transition-property: opacity;
+  transition-timing-function: ease;
+}
+
+.fade-enter,
+.fade-leave-active {
+  opacity: 0
 }
 </style>
