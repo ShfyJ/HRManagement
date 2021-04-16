@@ -18,6 +18,7 @@ import MehnatFaoliyati from '../views/mehnat_faoliyati.vue'
 import AddQarindosh from '../views/add_qarindosh.vue'
 import PageNotFound from '../components/PageNotFound.vue'
 import Malumoti from '../views/ma\'lumoti.vue'
+import Tatil from '../views/add_tatil.vue'
 Vue.use(VueRouter);
 
 const routes = [
@@ -64,6 +65,7 @@ const routes = [
       { path: '/team/:id/umumiy_malumot', component: UmumiyMalumot, name: "umumiy_malumot"  },
       { path: '/team/:id/mehnat_faoliyati', component: MehnatFaoliyati, name: "mehnat_faoliyati"  },
       { path: '/team/:id/add_relatives', component: AddQarindosh, name: "add_relatives"  },
+      { path: '/team/:id/add_tatil', component: Tatil, name: "add_tatil"  },
       { path: '/team/:id/malumoti', component: Malumoti, name: "malumoti"  }
     ]
   },

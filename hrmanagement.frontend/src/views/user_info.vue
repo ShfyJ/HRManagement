@@ -18,20 +18,16 @@
           </v-list-item-avatar>
           <v-row>
             <v-col cols="12" md="2">
-              <div>
                 <v-list-item-content>
                 <v-list-item-title >Aziz Bohidjonov</v-list-item-title>
                 <v-list-item-subtitle>Alisher o'g'li</v-list-item-subtitle>
               </v-list-item-content>
-              </div>
             </v-col>
             <v-col class="ml-n16" cols="12" md="2">
-              <div>
                 <v-list-item-content class="text-left align-self-start">
                 <v-list-item-title >Ikt departamenti Bo'lim nomi</v-list-item-title>
                 <v-list-item-subtitle>Lavozimi</v-list-item-subtitle>
               </v-list-item-content>
-              </div>
             </v-col>
           </v-row>
         </v-list-item>
@@ -812,9 +808,13 @@
                          </v-icon>
                          <strong>Ta'tillar</strong>
                          <v-spacer></v-spacer>
-                         <v-btn text color="cyan"><v-icon right class="mr-5">
+                         <v-btn text color="cyan">
+                           <router-link style="text-decoration: none"  :to="{ name: 'add_tatil'}" >
+                           <v-icon right class="mr-5">
                            mdi-plus
-                         </v-icon></v-btn>
+                         </v-icon>
+                         </router-link>
+                         </v-btn>
                        </v-app-bar>
                        <v-app-bar flat color="rgba(0,0,0,0)">
                          <v-icon right class="mr-5">

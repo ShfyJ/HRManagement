@@ -1067,7 +1067,7 @@ import axios from "axios"
   export default {
     data: () => ({
       snackbar: false,
-      text: 'Muvaffaqiyatli xodim yaratildi',
+      text: 'Xodim muvaffaqiyatli qo\'shildi',
       timeout: 2000,
       valid: true,
       passport: '',

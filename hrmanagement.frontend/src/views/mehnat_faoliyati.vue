@@ -219,14 +219,14 @@
                                                 text
                                                 @click="close"
                                             >
-                                                Cancel
+                                                Yopish
                                             </v-btn>
                                             <v-btn
                                                 color="blue darken-1"
                                                 text
                                                 @click="save"
                                             >
-                                                Save
+                                                Saqlash
                                             </v-btn>
                                             </v-card-actions>
                                         </v-card>
