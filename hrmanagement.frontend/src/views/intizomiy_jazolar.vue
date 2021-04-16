@@ -1,7 +1,7 @@
 <template>
         <v-card class="rounded-xl mt-5 " :elevation="4">
                 <v-toolbar align="center" flat>
-                    <v-toolbar-title>Mehnat ta'tillari</v-toolbar-title>
+                    <v-toolbar-title>Intizomiy jazolari</v-toolbar-title>
                 </v-toolbar>
                         <v-row justify="center">
                         <v-col
@@ -31,8 +31,8 @@
                                             v-on="on"
                                             :elevation="4"
                                             >
-                                            <v-icon class="mr-3">mdi-calendar</v-icon>
-                                                Ta'til qo'shish
+                                            <v-icon class="mr-3">mdi-alert-circle</v-icon>
+                                                Jazo qo'shish
                                             </v-btn>
                                     </template>
                                     <v-card>
@@ -45,15 +45,62 @@
                                             <v-row>
                                                 <v-col>
                                                    <v-row>
+                                                        <v-col
+                                                        cols="12"
+                                                        sm="6"
+                                                        md="3"
+                                                    >
+                                                        <v-menu
+                                                            ref="menu1"
+                                                            v-model="menu1"
+                                                            :close-on-content-click="false"
+                                                            :return-value.sync="date"
+                                                            transition="scale-transition"
+                                                            offset-y
+                                                            min-width="auto"
+                                                        >
+                                                            <template v-slot:activator="{ on, attrs }">
+                                                            <v-text-field
+                                                                v-model="editedItem.buyruq_sanasi"
+                                                                label="Buyruq sanasi"
+                                                                prepend-icon="mdi-calendar"
+                                                                readonly
+                                                                v-bind="attrs"
+                                                                v-on="on"
+                                                            ></v-text-field>
+                                                            </template>
+                                                            <v-date-picker
+                                                            v-model="editedItem.buyr"
+                                                            no-title
+                                                            scrollable
+                                                            >
+                                                            <v-spacer></v-spacer>
+                                                            <v-btn
+                                                                text
+                                                                color="primary"
+                                                                @click="menu1 = false"
+                                                            >
+                                                                Yopish
+                                                            </v-btn>
+                                                            <v-btn
+                                                                text
+                                                                color="primary"
+                                                                @click="$refs.menu1.save(editedItem.sanagacha)"
+                                                            >
+                                                                Ok
+                                                            </v-btn>
+                                                            </v-date-picker>
+                                                        </v-menu>
+                                                    </v-col>
                                                     <v-col
                                                     cols="12"
                                                     sm="6"
                                                     md="3"
                                                     >
                                                     <v-text-field
-                                                        v-model="editedItem.tatil_davri"
+                                                        v-model="editedItem.buyruq_raqami"
                                                         :rules="nameRules"
-                                                        label="Ta'til davri"
+                                                        label="Buyruq raqami"
                                                         required
                                                     ></v-text-field>
                                                 </v-col>
@@ -63,123 +110,15 @@
                                                     md="3"
                                                 >
                                                     <v-select
-                                                    v-model="editedItem.tatil_turi"
+                                                    v-model="editedItem.jazo_turi"
                                                     :items="tatil_turi"
-                                                    label="Ta'til turi"
+                                                    label="Jazoni tanlang"
                                                     ></v-select>
                                                 </v-col>
-
                                                 <v-col
                                                     cols="12"
                                                     sm="6"
                                                     md="3"
-                                                >
-                                                <v-menu
-                                                        ref="menu"
-                                                        v-model="menu"
-                                                        :close-on-content-click="false"
-                                                        :return-value.sync="date"
-                                                        transition="scale-transition"
-                                                        offset-y
-                                                        min-width="auto"
-                                                    >
-                                                        <template v-slot:activator="{ on, attrs }">
-                                                        <v-text-field
-                                                            v-model="editedItem.sanadan"
-                                                            label="Sanadan"
-                                                            prepend-icon="mdi-calendar"
-                                                            readonly
-                                                            v-bind="attrs"
-                                                            v-on="on"
-                                                        ></v-text-field>
-                                                        </template>
-                                                        <v-date-picker
-                                                        v-model="editedItem.sanadan"
-                                                        no-title
-                                                        scrollable
-                                                        >
-                                                        <v-spacer></v-spacer>
-                                                        <v-btn
-                                                            text
-                                                            color="primary"
-                                                            @click="menu = false"
-                                                        >
-                                                            Yopish
-                                                        </v-btn>
-                                                        <v-btn
-                                                            text
-                                                            color="primary"
-                                                            @click="$refs.menu.save(editedItem.sanadan)"
-                                                        >
-                                                            Ok
-                                                        </v-btn>
-                                                        </v-date-picker>
-                                                    </v-menu>
-                                                </v-col>
-                                                <v-col
-                                                    cols="12"
-                                                    sm="6"
-                                                    md="3"
-                                                >
-                                                    <v-menu
-                                                        ref="menu1"
-                                                        v-model="menu1"
-                                                        :close-on-content-click="false"
-                                                        :return-value.sync="date"
-                                                        transition="scale-transition"
-                                                        offset-y
-                                                        min-width="auto"
-                                                    >
-                                                        <template v-slot:activator="{ on, attrs }">
-                                                        <v-text-field
-                                                            v-model="editedItem.sanagacha"
-                                                            label="Sanagacha"
-                                                            prepend-icon="mdi-calendar"
-                                                            readonly
-                                                            v-bind="attrs"
-                                                            v-on="on"
-                                                        ></v-text-field>
-                                                        </template>
-                                                        <v-date-picker
-                                                        v-model="editedItem.sanagacha"
-                                                        no-title
-                                                        scrollable
-                                                        >
-                                                        <v-spacer></v-spacer>
-                                                        <v-btn
-                                                            text
-                                                            color="primary"
-                                                            @click="menu1 = false"
-                                                        >
-                                                            Yopish
-                                                        </v-btn>
-                                                        <v-btn
-                                                            text
-                                                            color="primary"
-                                                            @click="$refs.menu1.save(editedItem.sanagacha)"
-                                                        >
-                                                            Ok
-                                                        </v-btn>
-                                                        </v-date-picker>
-                                                    </v-menu>
-                                                </v-col>
-                                            </v-row>
-                                            <v-row>
-                                                <v-col
-                                                    cols="12"
-                                                    sm="6"
-                                                    md="4"
-                                                >
-                                                    <v-text-field
-                                                    v-model="editedItem.kun"
-                                                    label="Kun"
-                                                    ></v-text-field>
-                                                </v-col>
-
-                                                <v-col
-                                                    cols="12"
-                                                    sm="6"
-                                                    md="8"
                                                 >
                                                 <v-file-input
                                                     v-model="files"
@@ -198,18 +137,18 @@
                                                     </template>
                                                 </v-file-input>
                                                 </v-col>
-                                            </v-row>
 
-                                            <v-row class="mt-n7">
+                                            </v-row>
+                                            <v-row >
                                             <v-col
                                                 cols="12"
                                                 md="12"
                                             >
                                                 <v-textarea
-                                                v-model="editedItem.Izoh"
+                                                v-model="editedItem.qisqacha_sababi"
                                                 filled
                                                 auto-grow
-                                                label="Izoh"
+                                                label="Qisqacha sababi"
                                                 rows="4"
                                                 row-height="30"
                                                 shaped
@@ -217,16 +156,6 @@
                                             </v-col>
                                             </v-row>
                                         </v-col>
-                                            <!--<v-col
-                                                cols="12"
-                                                sm="6"
-                                                md="4"
-                                            >
-                                                <v-text-field
-                                                v-model="editedItem.mamlakat"
-                                                label="mamlakat"
-                                                ></v-text-field>
-                                            </v-col>-->
                                         </v-row>
                                         </v-container>
                                         </v-card-text>
@@ -301,7 +230,7 @@
       menu1: false,
       dialog: false,
       dialogDelete: false,
-      tatil_turi: ['Oliy', "O'rta-maxsus", "O'rta"],
+      tatil_turi: ['Xayfsan', "Jarima", "Ishdan bo'shatish"],
       headers: [
         {
           text: 'No',
@@ -309,39 +238,32 @@
           sortable: false,
           value: 'id',
         },
-        { text: "Ta'til davri", value: 'tatil_davri', sortable: false  },
-        { text: "Ta'til turi", value: 'tatil_turi', sortable: false  },
-        { text: 'Sanadan', value: 'sanadan', sortable: false  },
-        { text: 'Sanagacha', value: 'sanagacha', sortable: false  },
-        { text: 'Kun', value: 'kun', sortable: false  },
-        { text: 'Izoh', value: 'Izoh', sortable: false  },
+        { text: "Buyruq sanasi va raqami", value: 'buyruq_sanasi', sortable: false  },
+        { text: "Jazo_turi", value: 'jazo_turi', sortable: false  },
+        { text: 'Qisqacha sababi', value: 'qisqacha_sababi', sortable: false  },
         { text: 'Actions', value: 'actions', sortable: false },
       ],
       desserts: [],
       editedIndex: -1,
       editedItem: {
         id: '',
-        sanadan: new Date().toISOString().substr(0, 10),
-        sanagacha: new Date().toISOString().substr(0, 10),
-        tatil_davri: '',
-        tatil_turi: '',
-        kuni: '',
-        izoh: '',
+        buyruq_sanasi: new Date().toISOString().substr(0, 10),
+        buyruq_raqami: '',
+        jazo_turi: '',
+        qisqacha_sababi: '',
       },
       defaultItem: {
         id: '',
-        sanadan: '',
-        sanagacha: '',
-        tatil_davri: '',
-        tatil_turi: '',
-        kuni: '',
-        izoh: '',
+        buyruq_sanasi: new Date().toISOString().substr(0, 10),
+        buyruq_raqami: '',
+        jazo_turi: '',
+        qisqacha_sababi: '',
       },
     }),
 
     computed: {
       formTitle () {
-        return this.editedIndex === -1 ? "Mehnat ta'tili qo'shish" : 'Tahrirlash'
+        return this.editedIndex === -1 ? "Intizomiy jazo qo'shish" : 'Tahrirlash'
       },
     },
 
@@ -363,12 +285,9 @@
         this.desserts = [
           {
             id: '1',
-            sanadan: new Date().toISOString().substr(0, 10),
-            sanagacha: new Date().toISOString().substr(0, 10),
-            tatil_davri: "2019-2020",
-            tatil_turi: "Tarjimonlik (ingliz va nemis tillari)",
-            kun: "yo'q",
-            Izoh: "O'zbekiston",
+            buyruq_sanasi: "2019-2020",
+            jazo_turi: "Xayfsan",
+            qisqacha_sababi: "yo'q",
           },
         ]
       },

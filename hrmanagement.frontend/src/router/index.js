@@ -19,6 +19,9 @@ import AddQarindosh from '../views/add_qarindosh.vue'
 import PageNotFound from '../components/PageNotFound.vue'
 import Malumoti from '../views/ma\'lumoti.vue'
 import Tatil from '../views/add_tatil.vue'
+import IntizomiyJazolar from '../views/intizomiy_jazolar.vue'
+import YigmaJild from '../views/yig\'ma_jild.vue'
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -66,7 +69,9 @@ const routes = [
       { path: '/team/:id/mehnat_faoliyati', component: MehnatFaoliyati, name: "mehnat_faoliyati"  },
       { path: '/team/:id/add_relatives', component: AddQarindosh, name: "add_relatives"  },
       { path: '/team/:id/add_tatil', component: Tatil, name: "add_tatil"  },
-      { path: '/team/:id/malumoti', component: Malumoti, name: "malumoti"  }
+      { path: '/team/:id/malumoti', component: Malumoti, name: "malumoti"  },
+      { path: '/team/:id/intizomiy_jazolar', component: IntizomiyJazolar, name: "intizomiy_jazolar"  },
+      { path: '/team/:id/yigma_jild', component: YigmaJild, name: "yigma_jild"  }
     ]
   },
   {

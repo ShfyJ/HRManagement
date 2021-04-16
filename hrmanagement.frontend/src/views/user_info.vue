@@ -822,9 +822,13 @@
                          </v-icon>
                          <strong>Intizomiy jazolar</strong>
                          <v-spacer></v-spacer>
-                         <v-btn text color="cyan"><v-icon right class="mr-5">
+                         <v-btn text color="cyan">
+                           <router-link style="text-decoration: none"  :to="{ name: 'intizomiy_jazolar'}" >
+                           <v-icon right class="mr-5">
                            mdi-plus
-                         </v-icon></v-btn>
+                         </v-icon>
+                           </router-link>
+                         </v-btn>
                        </v-app-bar>
                        <v-app-bar flat color="rgba(0,0,0,0)">
                          <v-icon right class="mr-5">
@@ -842,9 +846,13 @@
                          </v-icon>
                          <strong>Yig'ma jild</strong>
                          <v-spacer></v-spacer>
-                        <v-btn text color="cyan"><v-icon right class="mr-5">
+                        <v-btn text color="cyan">
+                          <router-link style="text-decoration: none"  :to="{ name: 'yigma_jild'}" >
+                          <v-icon right class="mr-5">
                            mdi-plus
-                         </v-icon></v-btn>
+                         </v-icon>
+                          </router-link>
+                         </v-btn>
                        </v-app-bar>
                      </v-card>
           </div>
