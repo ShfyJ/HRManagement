@@ -2,7 +2,7 @@
 <template>
         <v-card class="rounded-xl mt-5 " :elevation="4">
                 <v-toolbar align="center" flat>
-                    <v-toolbar-title>Yig'ma jild</v-toolbar-title>
+                    <v-toolbar-title>Nusxalar</v-toolbar-title>
                 </v-toolbar>
                         <v-row justify="center">
                         <v-col

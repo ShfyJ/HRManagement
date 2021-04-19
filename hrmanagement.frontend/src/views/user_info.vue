@@ -1,24 +1,26 @@
 <template>
     <div>
         <!--<h1> Info about {{id}}</h1>-->
-        <v-btn
-            @click="back" 
-            class="ma-2 btn btn-primary"
-            outlined
-            color="indigo"
-    >
-        Ortga
-    </v-btn>
     <v-row>
       <v-col cols="12" md12>
         <div  md6>
         <v-list-item>
+              <v-btn
+                    @click="back" 
+                    class="ma-2 btn btn-primary"
+                    outlined
+                    color="blue"
+            >
+                <v-icon>
+                  mdi-chevron-left
+                </v-icon>
+            </v-btn>
           <v-list-item-avatar size="50px">
             <v-img src="../../public/img3.jpg"></v-img>
           </v-list-item-avatar>
           <v-row>
             <v-col cols="12" md="2">
-                <v-list-item-content>
+                <v-list-item-content class="ml-5">
                 <v-list-item-title >Aziz Bohidjonov</v-list-item-title>
                 <v-list-item-subtitle>Alisher o'g'li</v-list-item-subtitle>
               </v-list-item-content>
@@ -808,7 +810,7 @@
                          <v-icon right class="mr-5">
                            mdi-calendar
                          </v-icon>
-                         <strong>Ta'tillar</strong>
+                         <strong>Ta'til</strong>
                          <v-spacer></v-spacer>
                          <v-btn text color="cyan">
                            <router-link style="text-decoration: none"  :to="{ name: 'add_tatil'}" >

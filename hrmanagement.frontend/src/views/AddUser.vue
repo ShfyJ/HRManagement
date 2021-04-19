@@ -1184,7 +1184,7 @@ import axios from "axios"
       this.snackbar=true
       this.reset() 
 
-
+//this.date2+"T06:33:32.593Z"
       axios
       .post('https://localhost:44343/api/ApplicationUser/SignUP', {
         username: this.name,

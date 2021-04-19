@@ -588,6 +588,28 @@
                 </v-row>
             </v-container>
         </v-card>
+
+              <v-row class="mt-n1">
+                <v-col
+                  cols="12"
+                  class="text-right"
+                >
+                  <v-btn
+                    color="success"
+                    class="mr-2"
+                    @click="submit"
+                  >
+                    Saqlash
+                  </v-btn>
+                  <v-btn
+                    @click="chiqish"
+                    color="danger"
+                    class="mr-0"
+                  >
+                    Chiqish
+                  </v-btn>
+                </v-col>
+              </v-row>
 </div>
 </template>
 <script>
