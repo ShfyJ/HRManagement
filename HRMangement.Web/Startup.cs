@@ -6,7 +6,7 @@ using HRManagement.Data;
 using HRManagement.Models;
 using HRManagement.Permission;
 using HRManagement.Services.ApplicationUser;
-using HRManagement.Web.Handlers;
+
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -23,6 +23,7 @@ using Microsoft.OpenApi.Models;
 using AutoMapper;
 using HRManagement.Web.Settings;
 using HRManagement.Web.Extentions;
+using HRManagement.Services.DataBook;
 
 namespace HRMangement.Web
 {
@@ -53,6 +54,7 @@ namespace HRMangement.Web
                 });
 
             services.AddScoped<IApplicationUserService, ApplicationUserService>();
+            services.AddScoped<IDataBookService, DataBookService>();
             services.AddAutoMapper(typeof(Startup));
             services.AddHttpClient();
 

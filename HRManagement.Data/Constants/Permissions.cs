@@ -15,7 +15,7 @@ namespace HRManagement.Constants
             };
         }
 
-        public static class Products
+        public static class Applicationusers
         {
             public const string View = "Permissions.ApplicationUsers.View";
             public const string Create = "Permissions.ApplicationUsers.Create";

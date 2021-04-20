@@ -17,7 +17,6 @@ namespace HRManagement.Models
         public bool Status { get; set; }
 
         public int RegionId { get; set; }
-        public int CountryId { get; set; }
 
         [ForeignKey("RegionId")]
         public Region Region { get; set; }

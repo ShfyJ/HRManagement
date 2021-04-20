@@ -86,6 +86,7 @@ namespace HRMangement.Web.Controllers
 
         }
 
+        [AllowAnonymous]
         [HttpPost("SignIn")]
         public async Task<IActionResult> SignIn(UserLoginResource userLoginResource)
         {
@@ -106,13 +107,13 @@ namespace HRMangement.Web.Controllers
         }
 
         [HttpPatch("/api/applicationuser/{id}")]
-        public ActionResult DismissUser(string id)
+        public async Task<ActionResult> DismissUser(string id)
         {
             _logger.LogInformation("Dismiss a user");
 
-            var dismissUser = _applicationUserService.DismissUser(id);
+            await _applicationUserService.DismissUser(id);
 
-            return Ok(dismissUser);
+            return Ok();
         }
 
         private string GenerateJwt(ApplicationUser user, IList<string> roles)
