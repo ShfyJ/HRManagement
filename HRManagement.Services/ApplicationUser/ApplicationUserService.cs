@@ -69,7 +69,7 @@ namespace HRManagement.Services.ApplicationUser
                     }
                     return new ServiceResponse<IdentityResult>
                     {
-                        Data = null,
+                        Data = userCreateResult,
                         Time = DateTime.Now,
                         Message = "Yangi xodim qo'shilmadi",
                         IsSuccess = false

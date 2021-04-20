@@ -27,7 +27,7 @@
           :to="'/login'"
         >
           <v-list-item-icon class="myTitle">
-            <v-icon>mdi-home-city</v-icon>
+            <v-icon>home-city</v-icon>
           </v-list-item-icon>
           <v-list-item-content>
             <v-list-item-title  class="myTitle">{{$t("main_menu")}}</v-list-item-title>

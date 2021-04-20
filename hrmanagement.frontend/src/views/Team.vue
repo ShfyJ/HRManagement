@@ -261,7 +261,7 @@
       </template>
       <template justify-center
         v-slot:item.fat="{ item }">
-        <router-link style="text-decoration: none; color: inherit;" :to="`/team/${ item.fat}`" :key="item.fat"><td class="myTitle">{{ item.fat }}</td>
+        <router-link style="text-decoration: none; color: inherit;" :to="`/team/${ item.fat}/umumiy_malumot`" :key="item.fat"><td class="myTitle">{{ item.fat }}</td>
         </router-link>
       </template>
       <template justify-center

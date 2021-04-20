@@ -9,11 +9,13 @@
     "i18n:report": "vue-cli-service i18n:report --src './src/**/*.?(js|vue)' --locales './src/locales/**/*.json'"
   },
   "dependencies": {
+    "axios": "^0.21.1",
     "core-js": "^3.6.5",
     "digital-clock-vue": "^1.0.6",
     "jspdf": "^2.3.1",
     "jspdf-autotable": "^3.5.14",
     "moment": "^2.29.1",
+    "v-datatable-light": "^0.8.2",
     "vue": "^2.6.11",
     "vue-cookies": "^1.7.4",
     "vue-digital-clock": "^2.0.0",

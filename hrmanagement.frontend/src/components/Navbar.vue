@@ -117,7 +117,7 @@ data: () => ({
       { icon: "mdi-home", text: "Asosiy Menu", route: "/" },
       {
         icon: "mdi-sitemap",
-        text: "Tashkiliy tuzilma",
+        text: "Tarkibiy tuzilma",
         route: "/projects"
       },
       {
