@@ -48,15 +48,15 @@
             </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <!--
+        
         <v-list-group prepend-icon="mdi-book-open" color="white">
           <template v-slot:activator>
-            <v-list-item-title class="myTitle">Telefon kitobi</v-list-item-title>
+            <v-list-item-title class="myTitle">Shtatka</v-list-item-title>
           </template>
           <v-list-group no-action sub-group color="white">
             <template v-slot:activator>
               <v-list-item-content>
-                <v-list-item-title>Departament1</v-list-item-title>
+                <v-list-item-title>Uzbekneftgaz</v-list-item-title>
               </v-list-item-content>
             </template>
             
@@ -77,7 +77,7 @@
           <v-list-group color="white" no-action sub-group>
             <template v-slot:activator>
               <v-list-item-content>
-                <v-list-item-title>Departament2</v-list-item-title>
+                <v-list-item-title>Sho'rtan</v-list-item-title>
               </v-list-item-content>
             </template>
 
@@ -88,7 +88,49 @@
               </v-list-item-icon>
             </v-list-item>
           </v-list-group>
-        </v-list-group>-->
+        </v-list-group>
+
+
+                <v-list-group prepend-icon="mdi-book-open" color="white">
+          <template v-slot:activator>
+            <v-list-item-title class="myTitle">Ishga olish</v-list-item-title>
+          </template>
+          <v-list-group no-action sub-group color="white">
+            <template v-slot:activator>
+              <v-list-item-content>
+                <v-list-item-title>Uzbekneftgaz</v-list-item-title>
+              </v-list-item-content>
+            </template>
+            
+            <v-list-item
+              v-for="admin in admins"
+              :key="admin.text"
+              router
+              :to="admin.route"
+              active-class="border"
+            >
+              <v-list-item-title>{{ admin.text }}</v-list-item-title>
+
+              <v-list-item-icon>
+                <v-icon>{{ admin.icon }}</v-icon>
+              </v-list-item-icon>
+            </v-list-item>
+          </v-list-group>
+          <v-list-group color="white" no-action sub-group>
+            <template v-slot:activator>
+              <v-list-item-content>
+                <v-list-item-title>Sho'rtan</v-list-item-title>
+              </v-list-item-content>
+            </template>
+
+            <v-list-item v-for="([title, icon], i) in cruds" :key="i" link>
+              <v-list-item-title v-text="title"></v-list-item-title>
+              <v-list-item-icon>
+                <v-icon v-text="icon"></v-icon>
+              </v-list-item-icon>
+            </v-list-item>
+          </v-list-group>
+        </v-list-group>
       </v-list>
     </v-navigation-drawer>
   </nav>
@@ -127,8 +169,8 @@ data: () => ({
       }
     ],
     admins: [
-      { text: "Bo'lim1", icon: "mdi-right", route: "/contact" },
-      { text: "Bo'lim2", icon: "mdi-", route: "/contact1" }
+      { text: "Department1", icon: "mdi-right", route: "/hire_employee" },
+      { text: "Department2", icon: "mdi-", route: "/contact1" }
     ],
     cruds: [
       ["Create", "mdi-plus-outline"],

@@ -1040,21 +1040,13 @@
             :value="true"
             absolute
             bottom
+            height="15px"
+            width="30px"
+            :rounded="true"
             color="primary"
             outlined
           >
       {{ text }}
-
-      <template v-slot:action="{ attrs }">
-        <v-btn
-          color="blue"
-          text
-          v-bind="attrs"
-          @click="snackbar = false"
-        >
-          Yopish
-        </v-btn>
-      </template>
     </v-snackbar>
       </v-col>
     </v-row>
@@ -1183,6 +1175,12 @@ import axios from "axios"
     submit(){
       this.snackbar=true
       this.reset() 
+      this.$notify({
+        group: 'foo',
+        type: 'success',
+        title: 'Success',
+        text: 'Xodim muvafaqiyatli qo\'shildi'
+});
 
 //this.date2+"T06:33:32.593Z"
       axios

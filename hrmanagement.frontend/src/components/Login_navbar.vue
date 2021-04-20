@@ -68,7 +68,6 @@
                 class="myTitle"
               >
                 <template v-slot:prepend="{ item }">
-                  
                   <v-icon
                     v-if="item.children"
                     v-text="`mdi-${item.id === 1 ? 'book-open' : 'folder-network'}`"
