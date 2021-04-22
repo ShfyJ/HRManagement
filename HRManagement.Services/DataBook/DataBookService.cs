@@ -469,7 +469,6 @@ namespace HRManagement.Services.DataBook
         {
             daTypeToBeUpdated.DisciplinaryActionName = daType.DisciplinaryActionName;
             daTypeToBeUpdated.Status = daType.Status;
-            daTypeToBeUpdated.DisciplinaryActionTypeId = daType.DisciplinaryActionTypeId;
 
             await _db.SaveChangesAsync();
         }
@@ -478,7 +477,6 @@ namespace HRManagement.Services.DataBook
         {
             disabilityToBeUpdated.DisabilityName = disability.DisabilityName;
             disabilityToBeUpdated.Status = disability.Status;
-            disabilityToBeUpdated.DisabilityId = disability.DisabilityId;
 
             await _db.SaveChangesAsync();
         }
@@ -488,7 +486,6 @@ namespace HRManagement.Services.DataBook
             districtToBeUpdated.DistrictName = district.DistrictName;
             districtToBeUpdated.RegionId = district.RegionId;
             districtToBeUpdated.Status = district.Status;
-            districtToBeUpdated.DisrictId = district.DisrictId;
 
             await _db.SaveChangesAsync();
         }
@@ -497,7 +494,6 @@ namespace HRManagement.Services.DataBook
         {
             edInfoToBeUpdated.EdInformationName = edInfo.EdInformationName;
             edInfoToBeUpdated.Status = edInfo.Status;
-            edInfoToBeUpdated.EdInformationId = edInfo.EdInformationId;
 
             await _db.SaveChangesAsync();
         }
@@ -506,7 +502,6 @@ namespace HRManagement.Services.DataBook
         {
             languageToBeUpdated.LanguageName = language.LanguageName;
             languageToBeUpdated.Status = language.Status;
-            languageToBeUpdated.LanguageId = language.LanguageId;
 
             await _db.SaveChangesAsync();
         }
@@ -515,7 +510,6 @@ namespace HRManagement.Services.DataBook
         {
             militaryTitleToBeUpdated.MilitaryTitleName = militaryTitle.MilitaryTitleName;
             militaryTitleToBeUpdated.Status = militaryTitle.Status;
-            militaryTitleToBeUpdated.MilitaryTitleId = militaryTitle.MilitaryTitleId;
 
             await _db.SaveChangesAsync();
         }
@@ -524,7 +518,6 @@ namespace HRManagement.Services.DataBook
         {
             msStatusToBeUpdated.MilitaryServiceStatusName = msStatus.MilitaryServiceStatusName;
             msStatusToBeUpdated.Status = msStatus.Status;
-            msStatusToBeUpdated.MilitaryServiceStatusId = msStatus.MilitaryServiceStatusId;
 
             await _db.SaveChangesAsync();
         }
@@ -533,7 +526,6 @@ namespace HRManagement.Services.DataBook
         {
             nationalityToBeUpdated.NationalityName = nationality.NationalityName;
             nationalityToBeUpdated.Status = nationality.Status;
-            nationalityToBeUpdated.NationalityId = nationality.NationalityId;
 
             await _db.SaveChangesAsync();
         }
@@ -542,7 +534,6 @@ namespace HRManagement.Services.DataBook
         {
             partisanshipToBeUpdated.PartisanshipName = partisanship.PartisanshipName;
             partisanshipToBeUpdated.Status = partisanship.Status;
-            partisanshipToBeUpdated.PartisanshipId = partisanship.PartisanshipId;
 
             await _db.SaveChangesAsync();
         }
@@ -551,7 +542,6 @@ namespace HRManagement.Services.DataBook
         {
             positionDegreeToBeUpdated.PositionDegreeName = positionDegree.PositionDegreeName;
             positionDegreeToBeUpdated.Status = positionDegree.Status;
-            positionDegreeToBeUpdated.PositionDegreeId = positionDegree.PositionDegreeId;
 
             await _db.SaveChangesAsync();
         }
@@ -561,7 +551,6 @@ namespace HRManagement.Services.DataBook
             regionToBeUpdated.RegionName = region.RegionName;
             regionToBeUpdated.CountryId = region.CountryId;
             regionToBeUpdated.Status = region.Status;
-            regionToBeUpdated.RegionId = region.RegionId;
 
             await _db.SaveChangesAsync();
         }
@@ -570,7 +559,6 @@ namespace HRManagement.Services.DataBook
         {
             relativeToBeUpdated.RelativeName = relative.RelativeName;
             relativeToBeUpdated.Status = relative.Status;
-            relativeToBeUpdated.RelativeId = relative.RelativeId;
 
             await _db.SaveChangesAsync();
         }
@@ -579,7 +567,6 @@ namespace HRManagement.Services.DataBook
         {
             rwStatusToBeUpdated.RelativeWorkingStatusName = rwStatus.RelativeWorkingStatusName;
             rwStatusToBeUpdated.Status = rwStatus.Status;
-            rwStatusToBeUpdated.RelativeWorkingStatusId = rwStatus.RelativeWorkingStatusId;
 
             await _db.SaveChangesAsync();
         }
@@ -588,7 +575,6 @@ namespace HRManagement.Services.DataBook
         {
             scienceDegreeToBeUpdated.ScienceDegreeName = scienceDegree.ScienceDegreeName;
             scienceDegreeToBeUpdated.Status = scienceDegree.Status;
-            scienceDegreeToBeUpdated.ScienceDegreeId = scienceDegree.ScienceDegreeId;
 
             await _db.SaveChangesAsync();
         }
@@ -597,7 +583,6 @@ namespace HRManagement.Services.DataBook
         {
             vacationTypeToBeUpdated.VacationTypeName = vacationType.VacationTypeName;
             vacationTypeToBeUpdated.Status = vacationType.Status;
-            vacationTypeToBeUpdated.VacationtypeId = vacationType.VacationtypeId;
 
             await _db.SaveChangesAsync();
         }
