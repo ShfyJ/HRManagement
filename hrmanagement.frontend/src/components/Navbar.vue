@@ -91,7 +91,7 @@
         </v-list-group>
 
 
-                <v-list-group prepend-icon="mdi-book-open" color="white">
+                <v-list-group prepend-icon="mdi-account-plus" color="white">
           <template v-slot:activator>
             <v-list-item-title class="myTitle">Ishga olish</v-list-item-title>
           </template>

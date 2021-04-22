@@ -9,7 +9,6 @@
         cols="12"
         md="11"
       >
-
         <v-form        
         ref="form"
         v-model="valid"
@@ -204,13 +203,16 @@
                   <v-row class="ml-10 mr-10">
                   <v-col cols="12" md="4">
                   <v-select
-                            v-model="Uzbekistan"
+                            v-model="Uzbekistan.countryId"
                             :items="countries"
                             menu-props="auto"
                             label="Tug'ilgan joyi"
                             hide-details
                             prepend-icon="mdi-map"
                             single-line
+                            item-text='countryName'
+                            item-value='countryId'
+                            rounded: true
                           ></v-select>
                   </v-col>
                   <v-col cols="12" md="4">
@@ -447,13 +449,15 @@
                         <v-row class="mt-n4">
                         <v-col cols="12" md="2">
                         <v-select
-                        v-model="current_country"
+                        v-model="current_country.countryId"
                         :items="countries"
                         menu-props="auto"
                         label="Mamlakat"
                         hide-details
                         prepend-icon="mdi-map"
                         single-line
+                        item-text='countryName'
+                        item-value='countryId'
                         ></v-select>
                         </v-col>
                         <v-col cols="12" md="2">
@@ -1082,23 +1086,8 @@ import axios from "axios"
       ],
       fio_qisqa: '',
       fi_qisqa: '',
-      Uzbekistan:'',
-      countries: [
-                'Uzbekistan', 'Russia', 'American Samoa', 'Arizona',
-                'Qozog\'iston', 'Tojikiston', 'Colorado', 'Connecticut',
-                'Delaware', 'District of Columbia', 'Federated States of Micronesia',
-                'Florida', 'Georgia', 'Guam', 'Hawaii', 'Idaho',
-                'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky',
-                'Louisiana', 'Maine', 'Marshall Islands', 'Maryland',
-                'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi',
-                'Missouri', 'Montana', 'Nebraska', 'Nevada',
-                'New Hampshire', 'New Jersey', 'New Mexico', 'New York',
-                'North Carolina', 'North Dakota', 'Northern Mariana Islands', 'Ohio',
-                'Oklahoma', 'Oregon', 'Palau', 'Pennsylvania', 'Puerto Rico',
-                'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee',
-                'Texas', 'Utah', 'Vermont', 'Virgin Island', 'Virginia',
-                'Washington', 'West Virginia', 'Wisconsin', 'Wyoming',
-      ],
+      Uzbekistan:{ countryName: '', countryId: null },
+      countries: [],
       tuman:'',
       tumanlar:  [
           'Toshkent', 'Namangan', 'Samarqand', 'Buxoro',
@@ -1132,7 +1121,7 @@ import axios from "axios"
         partiyaviyligi: [
                 'Yo\'q', 'UzLiDep azosi', 'UzXDP azosi','Milliy tiklanish demokratik partiyasi a\'zosi', 'Adolat sotsial demokratik partiyasi azosi','Ekologik partiyasi azosi'],
         select_lavozim: '',
-        current_country: '',
+        current_country: { countryName: '', countryId: null },
         current_tuman: '',
         current_city: '',
         current_address: '',
@@ -1170,7 +1159,6 @@ import axios from "axios"
 
     chiqish(){
       this.$router.push({ name: 'team' });
-
     },
     submit(){
       this.snackbar=true
@@ -1180,8 +1168,8 @@ import axios from "axios"
         type: 'success',
         title: 'Success',
         text: 'Xodim muvafaqiyatli qo\'shildi'
-});
 
+});
 //this.date2+"T06:33:32.593Z"
       axios
       .post('https://localhost:44343/api/ApplicationUser/SignUP', {
@@ -1196,8 +1184,8 @@ import axios from "axios"
         fiO_short: this.fio_qisqa,
         fI_short: this.fi_qisqa,
         gender: this.radios,
-        birthDate: this.date2+"T06:33:32.593Z",
-        photoUrl: this.image,
+        birthDate: "2021-04-13T05:40:09.549Z",
+        photoUrl: "this.image",
         workbookURL: "kajndjan",
         stirUrl: "dsdasdad",
         orderUrl: "dadadad",
@@ -1205,7 +1193,7 @@ import axios from "axios"
         createdOn: "2021-04-13T05:40:09.549Z",
         updatedOn: "2021-04-13T05:40:09.549Z",
         fullAddress: this.current_address,
-        countryId: 1,
+        countryId: parseInt(this.Uzbekistan.countryId),
         districtId: 1,
         nationalityId: 1,
         partisanshipId: 1,
@@ -1239,12 +1227,26 @@ import axios from "axios"
   components: {
     PictureInput
   },
-  computed: {
+  mounted() {
+      axios
+      .get('https://localhost:44343/Countries', {
+          },{
+            "headers": {
+            "content-type": "application/json",
+      },
+      })
+      .then(response =>{
+        this.countries=response.data
+        console.log(this.countries)
+      });
+    
+
+    
     
 
   },
 
-      clear () {
+  clear () {
         this.$v.$reset()
         this.name = ''
         this.email = ''
