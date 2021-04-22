@@ -6,6 +6,7 @@
     <v-content class="ma-4">
       <router-view> </router-view>
     </v-content>
+    <notifications classes="my-style" position="bottom right" group="foo" />
     <Footer />
   </v-app>
   </template>
@@ -41,3 +42,6 @@ export default {
   }
 };
 </script>
+<style scoped>
+
+</style>

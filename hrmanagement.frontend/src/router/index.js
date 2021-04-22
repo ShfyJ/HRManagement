@@ -21,6 +21,7 @@ import Malumoti from '../views/ma\'lumoti.vue'
 import Tatil from '../views/add_tatil.vue'
 import IntizomiyJazolar from '../views/intizomiy_jazolar.vue'
 import YigmaJild from '../views/yig\'ma_jild.vue'
+import HireEmployee from '../views/hire_employee.vue'
 
 Vue.use(VueRouter);
 
@@ -115,6 +116,11 @@ const routes = [
     path: "/contact",
     name: "contact",
     component: Contact,
+  },
+  {
+    path: "/hire_employee",
+    name: "hire_employee",
+    component: HireEmployee,
   },
 
 ];

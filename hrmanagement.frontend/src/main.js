@@ -8,11 +8,13 @@ import i18n from "./i18n";
 import moment from 'moment'
 import VueHtmlToPaper from 'vue-html-to-paper';
 import VueCookies from 'vue-cookies';
+import Notifications from 'vue-notification'
 Vue.component("downloadExcel", JsonExcel);
 Vue.prototype.moment = moment
 Vue.config.productionTip = false;
 Vue.use(VueHtmlToPaper);
 Vue.use(VueCookies);
+Vue.use(Notifications)
 
 new Vue({
   router,
