@@ -213,29 +213,40 @@
                             item-text='countryName'
                             item-value='countryId'
                             rounded: true
+                            @input="selectedCountry"
                           ></v-select>
                   </v-col>
                   <v-col cols="12" md="4">
                     <v-select
-                      v-model="tuman"
+                      v-model="tuman.regionId"
                       :items="tumanlar"
                       menu-props="auto"
                       label="Viloyati"
                       hide-details
                       single-line
+                      item-text='regionName'
+                      item-value='regionId'
+                      @input="selectedTuman"
                     ></v-select>
                   </v-col>
                   <v-col
                     cols="12"
                     md="4"
                   >
-                    <v-text-field
-                      label="Tuman/Shahar"
+                    <v-select
                       class="purple-input"
-                    />
+                      v-model="tuman_shaharlar"
+                      :items="tuman_shahar"
+                      menu-props="auto"
+                      label="Tuman/Shahar"
+                      hide-details
+                      single-line
+                      item-text='districtName'
+                      item-value='disrictId'
+                    ></v-select>
                   </v-col>
                   </v-row>
-                  <v-row class="mt-n8 ml-10 mr-10">
+                  <v-row class="mt-n3 ml-10 mr-10">
                   <v-col
                   cols="12"
                   md="4"
@@ -244,7 +255,7 @@
                 v-model="millat"
                 :items="millatlar"
                   menu-props="auto"
-                  label="MIllati"
+                  label="Millati"
                   hide-details
                   single-line
                   ></v-select>
@@ -252,7 +263,7 @@
                 <v-col
                   cols="12"
                   md="4">
-                  <v-row justify="center" >
+                  <v-row class="mt-2" justify="center" >
                   <v-radio-group
                   v-model="radios"
                   mandatory
@@ -1088,11 +1099,15 @@ import axios from "axios"
       fi_qisqa: '',
       Uzbekistan:{ countryName: '', countryId: null },
       countries: [],
-      tuman:'',
-      tumanlar:  [
-          'Toshkent', 'Namangan', 'Samarqand', 'Buxoro',
-          'Xorazm', 'Surxondaryo', 'Navoi', 
-        ],
+      country:null,
+      
+      tuman:{ regionName: '', regionId: null },
+      tumanlar:  [],
+      tuman_id_for_districts: null,
+
+
+      tuman_shaharlar:{ districtName: '', disrictId: null},
+      tuman_shahar: [],
         millat:'',
         millatlar: [
                 'Rus', 'O\'zbek', 'Qozoq', 'Turkman',
@@ -1152,6 +1167,38 @@ import axios from "axios"
       modal: false,
     }),
   methods: {
+    selectedCountry(event){
+       this.country = event;
+      axios
+      .get(`https://localhost:44343/Regions/${this.country}`, {
+          },{
+            "headers": {
+            "content-type": "application/json",
+      },
+      })
+      .then(response =>{
+        this.tumanlar=response.data
+        console.log(this.tumanlar)
+      });
+    },
+
+    selectedTuman(event){
+      this.tuman_id_for_districts = event;
+
+      axios
+      .get(`https://localhost:44343/Districts/${this.tuman_id_for_districts}`, {
+          },{
+            "headers": {
+            "content-type": "application/json",
+      },
+      })
+      .then(response =>{
+        this.tuman_shahar=response.data
+        console.log(this.tuman_shahar)
+      });
+    },
+
+ 
     reset () {
             this.$refs.form.reset()
             this.$refs.pictureInput.removeImage()   
@@ -1161,8 +1208,10 @@ import axios from "axios"
       this.$router.push({ name: 'team' });
     },
     submit(){
+      setInterval(() => {
+                     this.reset() 
+                }, 5000);
       this.snackbar=true
-      this.reset() 
       this.$notify({
         group: 'foo',
         type: 'success',
@@ -1173,7 +1222,7 @@ import axios from "axios"
 //this.date2+"T06:33:32.593Z"
       axios
       .post('https://localhost:44343/api/ApplicationUser/SignUP', {
-        username: this.name,
+        username:  'ABCDEFGdA',
         email: this.email,
         emailConfirmed: true,
         phoneNumberConfirmed: true,
@@ -1184,8 +1233,8 @@ import axios from "axios"
         fiO_short: this.fio_qisqa,
         fI_short: this.fi_qisqa,
         gender: this.radios,
-        birthDate: "2021-04-13T05:40:09.549Z",
-        photoUrl: "this.image",
+        birthDate:  this.date2+"T06:33:32.593Z",
+        photoUrl: this.image,
         workbookURL: "kajndjan",
         stirUrl: "dsdasdad",
         orderUrl: "dadadad",
@@ -1194,7 +1243,7 @@ import axios from "axios"
         updatedOn: "2021-04-13T05:40:09.549Z",
         fullAddress: this.current_address,
         countryId: parseInt(this.Uzbekistan.countryId),
-        districtId: 1,
+        districtId: parseInt(this.tuman.regionId),
         nationalityId: 1,
         partisanshipId: 1,
         scienceDegreeId: 1,
@@ -1237,13 +1286,7 @@ import axios from "axios"
       })
       .then(response =>{
         this.countries=response.data
-        console.log(this.countries)
       });
-    
-
-    
-    
-
   },
 
   clear () {
