@@ -1203,14 +1203,11 @@ import axios from "axios"
             this.$refs.form.reset()
             this.$refs.pictureInput.removeImage()   
     },
-
     chiqish(){
       this.$router.push({ name: 'team' });
     },
     submit(){
-      setInterval(() => {
-                     this.reset() 
-                }, 5000);
+      //this.reset()
       this.snackbar=true
       this.$notify({
         group: 'foo',
@@ -1218,11 +1215,12 @@ import axios from "axios"
         title: 'Success',
         text: 'Xodim muvafaqiyatli qo\'shildi'
 
-});
+}); 
 //this.date2+"T06:33:32.593Z"
+console.log(this.image)
       axios
       .post('https://localhost:44343/api/ApplicationUser/SignUP', {
-        username:  'ABCDEFGdA',
+        username:  'ABCDEFGdAfd',
         email: this.email,
         emailConfirmed: true,
         phoneNumberConfirmed: true,
@@ -1261,12 +1259,12 @@ import axios from "axios"
 
 
 
-      onChange (image) {
+      onChange () {
       console.log('New picture selected!')
-      if (image) {
+      if (this.$refs.pictureInput.file) {
         console.log('Picture loaded.')
-        console.log(image)
-        this.image = image
+        console.log(this.$refs.pictureInput.file.name)
+        this.image = this.$refs.pictureInput.file.name
       } else {
         console.log('FileReader API not supported: use the <form>, Luke!')
       }
@@ -1276,7 +1274,7 @@ import axios from "axios"
   components: {
     PictureInput
   },
-  mounted() {
+  created() {
       axios
       .get('https://localhost:44343/Countries', {
           },{
