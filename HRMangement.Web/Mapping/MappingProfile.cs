@@ -17,6 +17,21 @@ namespace HRManagement.Web.Mapping
             CreateMap<Country, CountryResource>();
             CreateMap<Region, RegionResource>();
             CreateMap<District, DistrictResource>();
+            CreateMap<Disability, DisabilityResource>();
+            CreateMap<Language, LanguageResource>();
+            CreateMap<MilitaryServiceStatus, MilitaryServiceStatusResource>();
+            CreateMap<MilitaryTitle, MilitaryTitleResource>();
+            CreateMap<Nationality, NationalityResource>();
+            CreateMap<Partisanship, PartisanshipResource>();
+            CreateMap<PositionDegree, PositionDegreeResource>();
+            CreateMap<Relative, RelativeResource>();
+            CreateMap<RelativeWorkingStatus, RelativeWorkingStatusResource>();
+            CreateMap<ScienceDegree, ScienceDegreeResource>();
+            CreateMap<VacationType, VacationTypeResource>();
+            CreateMap<DisciplinaryActionType, DisciplinaryActionTypeResource>();
+            CreateMap<EdInformation, EdInformationResource>();
+            CreateMap<EdInformation, EdInformationResource>();
+
 
             //Resource To Domain
             CreateMap<ApplicationUserResource, Data.Models.Auth.ApplicationUser>();
@@ -27,6 +42,32 @@ namespace HRManagement.Web.Mapping
             CreateMap<SaveRegionResource, Region>();
             CreateMap<DistrictResource, District >();
             CreateMap<SaveDistrictResource, District>();
+            CreateMap<DisabilityResource, Disability>();
+            CreateMap<SaveDisabilityResource, Disability>();
+            CreateMap<LanguageResource, Language>();
+            CreateMap<SaveLanguageResource, Language>();
+            CreateMap<MilitaryServiceStatusResource, MilitaryServiceStatus>();
+            CreateMap<SaveMilitaryServiceResource, MilitaryServiceStatus>();
+            CreateMap<MilitaryTitleResource, MilitaryTitle>();
+            CreateMap<SaveMilitaryTitleResource, MilitaryTitle>();
+            CreateMap<NationalityResource, Nationality>();
+            CreateMap<SaveNationalityResource, Nationality>();
+            CreateMap<PartisanshipResource, Partisanship>();
+            CreateMap<SavePartisanshipResource, Partisanship>();
+            CreateMap<PositionDegreeResource, PositionDegree>();
+            CreateMap<SavePositionDegree, PositionDegree>();
+            CreateMap<RelativeResource, Relative>();
+            CreateMap<SaveRelativeResource, Relative>();
+            CreateMap<RelativeWorkingStatusResource, RelativeWorkingStatus>();
+            CreateMap<SaveRelativeWorkingStatusResource, RelativeWorkingStatus>();
+            CreateMap<ScienceDegreeResource, ScienceDegree>();
+            CreateMap<SaveScienceDegreeResource, ScienceDegree>();
+            CreateMap<VacationTypeResource, VacationType>();
+            CreateMap<SaveVacationTypeResource, VacationType>();
+            CreateMap<DisciplinaryActionTypeResource, DisciplinaryActionType>();
+            CreateMap<SaveDisciplinaryActionTypeResource, DisciplinaryActionType>();
+            CreateMap<EdInformationResource, EdInformation>();
+            CreateMap<SaveEdInformationResource, EdInformation>();
 
             //CreateMap<UserSignUpResource, User>()
             //    .ForMember(u => u.UserName, opt => opt.MapFrom(ur => ur.Email));
