@@ -320,7 +320,7 @@ namespace HRManagement.Web.Controllers
             return Ok(edInformationResource);
         }
 
-        [HttpPut("Disability/{id}")]
+        [HttpPut("EdInfo/{id}")]
         public async Task<ActionResult<EdInformationResource>> UpdateEdInfo(int id, [FromBody] SaveEdInformationResource saveEdInformationResource)
         {
             _logger.LogInformation("Editing a EdInfo");
@@ -533,7 +533,7 @@ namespace HRManagement.Web.Controllers
             return Ok(nationalityResource);
         }
 
-        [HttpPost("MilitaryTitle")]
+        [HttpPost("Nationality")]
         public async Task<ActionResult<NationalityResource>> AddNationality([FromBody] SaveNationalityResource saveNationalityResource)
         {
             _logger.LogInformation("Adding new nationality to DB");
