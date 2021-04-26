@@ -9,7 +9,6 @@
         cols="12"
         md="11"
       >
-
         <v-form        
         ref="form"
         v-model="valid"
@@ -204,36 +203,50 @@
                   <v-row class="ml-10 mr-10">
                   <v-col cols="12" md="4">
                   <v-select
-                            v-model="Uzbekistan"
+                            v-model="Uzbekistan.countryId"
                             :items="countries"
                             menu-props="auto"
                             label="Tug'ilgan joyi"
                             hide-details
                             prepend-icon="mdi-map"
                             single-line
+                            item-text='countryName'
+                            item-value='countryId'
+                            rounded: true
+                            @input="selectedCountry"
                           ></v-select>
                   </v-col>
                   <v-col cols="12" md="4">
                     <v-select
-                      v-model="tuman"
+                      v-model="tuman.regionId"
                       :items="tumanlar"
                       menu-props="auto"
                       label="Viloyati"
                       hide-details
                       single-line
+                      item-text='regionName'
+                      item-value='regionId'
+                      @input="selectedTuman"
                     ></v-select>
                   </v-col>
                   <v-col
                     cols="12"
                     md="4"
                   >
-                    <v-text-field
-                      label="Tuman/Shahar"
+                    <v-select
                       class="purple-input"
-                    />
+                      v-model="tuman_shaharlar"
+                      :items="tuman_shahar"
+                      menu-props="auto"
+                      label="Tuman/Shahar"
+                      hide-details
+                      single-line
+                      item-text='districtName'
+                      item-value='disrictId'
+                    ></v-select>
                   </v-col>
                   </v-row>
-                  <v-row class="mt-n8 ml-10 mr-10">
+                  <v-row class="mt-n3 ml-10 mr-10">
                   <v-col
                   cols="12"
                   md="4"
@@ -242,7 +255,7 @@
                 v-model="millat"
                 :items="millatlar"
                   menu-props="auto"
-                  label="MIllati"
+                  label="Millati"
                   hide-details
                   single-line
                   ></v-select>
@@ -250,7 +263,7 @@
                 <v-col
                   cols="12"
                   md="4">
-                  <v-row justify="center" >
+                  <v-row class="mt-2" justify="center" >
                   <v-radio-group
                   v-model="radios"
                   mandatory
@@ -447,13 +460,15 @@
                         <v-row class="mt-n4">
                         <v-col cols="12" md="2">
                         <v-select
-                        v-model="current_country"
+                        v-model="current_country.countryId"
                         :items="countries"
                         menu-props="auto"
                         label="Mamlakat"
                         hide-details
                         prepend-icon="mdi-map"
                         single-line
+                        item-text='countryName'
+                        item-value='countryId'
                         ></v-select>
                         </v-col>
                         <v-col cols="12" md="2">
@@ -1082,28 +1097,17 @@ import axios from "axios"
       ],
       fio_qisqa: '',
       fi_qisqa: '',
-      Uzbekistan:'',
-      countries: [
-                'Uzbekistan', 'Russia', 'American Samoa', 'Arizona',
-                'Qozog\'iston', 'Tojikiston', 'Colorado', 'Connecticut',
-                'Delaware', 'District of Columbia', 'Federated States of Micronesia',
-                'Florida', 'Georgia', 'Guam', 'Hawaii', 'Idaho',
-                'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky',
-                'Louisiana', 'Maine', 'Marshall Islands', 'Maryland',
-                'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi',
-                'Missouri', 'Montana', 'Nebraska', 'Nevada',
-                'New Hampshire', 'New Jersey', 'New Mexico', 'New York',
-                'North Carolina', 'North Dakota', 'Northern Mariana Islands', 'Ohio',
-                'Oklahoma', 'Oregon', 'Palau', 'Pennsylvania', 'Puerto Rico',
-                'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee',
-                'Texas', 'Utah', 'Vermont', 'Virgin Island', 'Virginia',
-                'Washington', 'West Virginia', 'Wisconsin', 'Wyoming',
-      ],
-      tuman:'',
-      tumanlar:  [
-          'Toshkent', 'Namangan', 'Samarqand', 'Buxoro',
-          'Xorazm', 'Surxondaryo', 'Navoi', 
-        ],
+      Uzbekistan:{ countryName: '', countryId: null },
+      countries: [],
+      country:null,
+      
+      tuman:{ regionName: '', regionId: null },
+      tumanlar:  [],
+      tuman_id_for_districts: null,
+
+
+      tuman_shaharlar:{ districtName: '', disrictId: null},
+      tuman_shahar: [],
         millat:'',
         millatlar: [
                 'Rus', 'O\'zbek', 'Qozoq', 'Turkman',
@@ -1132,7 +1136,7 @@ import axios from "axios"
         partiyaviyligi: [
                 'Yo\'q', 'UzLiDep azosi', 'UzXDP azosi','Milliy tiklanish demokratik partiyasi a\'zosi', 'Adolat sotsial demokratik partiyasi azosi','Ekologik partiyasi azosi'],
         select_lavozim: '',
-        current_country: '',
+        current_country: { countryName: '', countryId: null },
         current_tuman: '',
         current_city: '',
         current_address: '',
@@ -1163,29 +1167,60 @@ import axios from "axios"
       modal: false,
     }),
   methods: {
+    selectedCountry(event){
+       this.country = event;
+      axios
+      .get(`https://localhost:44343/Regions/${this.country}`, {
+          },{
+            "headers": {
+            "content-type": "application/json",
+      },
+      })
+      .then(response =>{
+        this.tumanlar=response.data
+        console.log(this.tumanlar)
+      });
+    },
+
+    selectedTuman(event){
+      this.tuman_id_for_districts = event;
+
+      axios
+      .get(`https://localhost:44343/Districts/${this.tuman_id_for_districts}`, {
+          },{
+            "headers": {
+            "content-type": "application/json",
+      },
+      })
+      .then(response =>{
+        this.tuman_shahar=response.data
+        console.log(this.tuman_shahar)
+      });
+    },
+
+ 
     reset () {
             this.$refs.form.reset()
             this.$refs.pictureInput.removeImage()   
     },
-
     chiqish(){
       this.$router.push({ name: 'team' });
-
     },
     submit(){
+      //this.reset()
       this.snackbar=true
-      this.reset() 
       this.$notify({
         group: 'foo',
         type: 'success',
         title: 'Success',
         text: 'Xodim muvafaqiyatli qo\'shildi'
-});
 
+}); 
 //this.date2+"T06:33:32.593Z"
+console.log(this.image)
       axios
       .post('https://localhost:44343/api/ApplicationUser/SignUP', {
-        username: this.name,
+        username:  'ABCDEFGdAfd',
         email: this.email,
         emailConfirmed: true,
         phoneNumberConfirmed: true,
@@ -1196,7 +1231,7 @@ import axios from "axios"
         fiO_short: this.fio_qisqa,
         fI_short: this.fi_qisqa,
         gender: this.radios,
-        birthDate: this.date2+"T06:33:32.593Z",
+        birthDate:  this.date2+"T06:33:32.593Z",
         photoUrl: this.image,
         workbookURL: "kajndjan",
         stirUrl: "dsdasdad",
@@ -1205,8 +1240,8 @@ import axios from "axios"
         createdOn: "2021-04-13T05:40:09.549Z",
         updatedOn: "2021-04-13T05:40:09.549Z",
         fullAddress: this.current_address,
-        countryId: 1,
-        districtId: 1,
+        countryId: parseInt(this.Uzbekistan.countryId),
+        districtId: parseInt(this.tuman.regionId),
         nationalityId: 1,
         partisanshipId: 1,
         scienceDegreeId: 1,
@@ -1224,12 +1259,12 @@ import axios from "axios"
 
 
 
-      onChange (image) {
+      onChange () {
       console.log('New picture selected!')
-      if (image) {
+      if (this.$refs.pictureInput.file) {
         console.log('Picture loaded.')
-        console.log(image)
-        this.image = image
+        console.log(this.$refs.pictureInput.file.name)
+        this.image = this.$refs.pictureInput.file.name
       } else {
         console.log('FileReader API not supported: use the <form>, Luke!')
       }
@@ -1239,12 +1274,20 @@ import axios from "axios"
   components: {
     PictureInput
   },
-  computed: {
-    
-
+  created() {
+      axios
+      .get('https://localhost:44343/Countries', {
+          },{
+            "headers": {
+            "content-type": "application/json",
+      },
+      })
+      .then(response =>{
+        this.countries=response.data
+      });
   },
 
-      clear () {
+  clear () {
         this.$v.$reset()
         this.name = ''
         this.email = ''
