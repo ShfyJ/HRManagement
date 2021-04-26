@@ -245,25 +245,26 @@ namespace HRManagement.Services.DataBook
 
         public async Task<IEnumerable<Country>> GetAllCountries()
         {
-            return await _db.Countries
+            return await _db.Countries.Where(c => c.Status == true)
                  .ToListAsync();
         }
 
         public async Task<IEnumerable<DisciplinaryActionType>> GetAllDATypes()
         {
-            return await _db.DisciplinaryActionTypes
+            return await _db.DisciplinaryActionTypes.Where(c => c.Status == true)
                  .ToListAsync();
         }
 
         public async Task<IEnumerable<Disability>> GetAllDisabilities()
         {
-            return await _db.Disabilities
+            return await _db.Disabilities.Where(c => c.Status == true)
                 .ToListAsync();
         }
 
         public async Task<IEnumerable<District>> GetAllDistricts()
         {
             return await _db.Districts
+                .Where(c => c.Status == true)
                 .Include(d => d.Region)
                 .ThenInclude(r => r.Country)
                 .ToListAsync();
@@ -272,48 +273,56 @@ namespace HRManagement.Services.DataBook
         public async Task<IEnumerable<EdInformation>> GetAllEdInfos()
         {
             return await _db.EdInformations
+                .Where(c => c.Status == true)
                 .ToListAsync();
         }
 
         public async Task<IEnumerable<Language>> GetAllLanguages()
         {
             return await _db.Languages
+                .Where(c => c.Status == true)
                 .ToListAsync();
         }
 
         public async Task<IEnumerable<MilitaryTitle>> GetAllMilitaryTitles()
         {
             return await _db.MilitaryTitles
+                .Where(c => c.Status == true)
                 .ToListAsync();
         }
 
         public async Task<IEnumerable<MilitaryServiceStatus>> GetAllMSStatuses()
         {
             return await _db.MilitaryServiceStatuses
+                .Where(c => c.Status == true)
                 .ToListAsync();
         }
 
         public async Task<IEnumerable<Nationality>> GetAllNationalities()
         {
             return await _db.Nationalities
+                .Where(c => c.Status == true)
                 .ToListAsync();
         }
 
         public async Task<IEnumerable<Partisanship>> GetAllPartisanships()
         {
             return await _db.Partisanships
+                .Where(c => c.Status == true)
                 .ToListAsync();
         }
 
         public async Task<IEnumerable<PositionDegree>> GetAllPositionDegrees()
         {
             return await _db.PositionDegrees
+                .Where(c => c.Status == true)
                 .ToListAsync();
         }
 
         public async Task<IEnumerable<Region>> GetAllRegions()
         {
             return await _db.Regions
+                .Where(c => c.Status == true)
                 .Include(r => r.Country)
                 .ToListAsync();
         }
@@ -321,24 +330,28 @@ namespace HRManagement.Services.DataBook
         public async Task<IEnumerable<Relative>> GetAllRelatives()
         {
             return await _db.Relatives
+                .Where(c => c.Status == true)
                 .ToListAsync();
         }
 
         public async Task<IEnumerable<RelativeWorkingStatus>> GetAllRWStatuses()
         {
             return await _db.RelativeWorkingStatuses
+                .Where(c => c.Status == true)
                 .ToListAsync();
         }
 
         public async Task<IEnumerable<ScienceDegree>> GetAllScienceDegrees()
         {
             return await _db.ScienceDegrees
+                .Where(c => c.Status == true)
                  .ToListAsync();
         }
 
         public async Task<IEnumerable<VacationType>> GetAllVacationtypes()
         {
             return await _db.VacationTypes
+                .Where(c => c.Status == true)
                 .ToListAsync();
         }
 
