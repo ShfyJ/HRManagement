@@ -281,6 +281,7 @@ namespace HRManagement.Services.DataBook
         {
             return await _db.Languages
                 .Where(c => c.Status == true)
+                .OrderBy(c => c.LanguageId)
                 .ToListAsync();
         }
 

@@ -44,8 +44,8 @@ namespace HRManagement.Data.Models.Auth
         public int? CurrentDistrictId { get; set; }
         public int? NationalityId { get; set; }
         public int? PartisanshipId { get; set; }
-        public int? ScienceDegreeId { get; set; }
-        public int? EdInformationId { get; set; }
+        //public int? ScienceDegreeId { get; set; }
+        //public int? EdInformationId { get; set; }
         public int? MilitaryServiceStatusId { get; set; }
         public int? MilitaryTitleId { get; set; }
         public int? DisabilityId { get; set; }
@@ -90,12 +90,12 @@ namespace HRManagement.Data.Models.Auth
         public Partisanship Partisanship { get; set; }
 
         //ilmiy darajasi        
-        [ForeignKey("ScienceDegreeId")]
-        public ScienceDegree ScienceDegree { get; set; }
+        //[ForeignKey("ScienceDegreeId")]
+        //public ScienceDegree ScienceDegree { get; set; }
 
-        //ma'lumoti (oliy, o'rta, ..)
-        [ForeignKey("EdInformationId")]
-        public EdInformation EdInformation { get; set; }
+        ////ma'lumoti (oliy, o'rta, ..)
+        //[ForeignKey("EdInformationId")]
+        //public EdInformation EdInformation { get; set; }
         //harbiy xizmat o'taganligi
         
         [ForeignKey("MilitaryServiceStatusId")]
