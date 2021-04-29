@@ -10,6 +10,7 @@ namespace HRManagement.Web.Resources
     {
         public string UserName { get; set; }
         public string Email { get; set; }
+        public string PhoneNumber { get; set; }
         public bool EmailConfirmed { get; set; }
         public bool PhoneNumberConfirmed { get; set; }
         public string Password { get; set; }
@@ -29,12 +30,16 @@ namespace HRManagement.Web.Resources
         public bool IsDismissed { get; set; } //Ishdan bo'shatilgan yoki yo'q
         public DateTime CreatedOn { get; set; } //Foydalanuvchini sistemaga kiritilgan vaqti
         public DateTime UpdatedOn { get; set; } //Foydalanuvchi shaxsiy malumotlari o'zgartirilgan vaqti
-        public string FullAddress { get; set; } //Agar Uz dan boshqa mamlakatdan bo'lsa, to'liq tug'ilgan joyi kiritiladi
+        public string FullBirthAddress { get; set; } //Agar Uz dan boshqa mamlakatdan bo'lsa, to'liq tug'ilgan joyi kiritiladi
+        public string CurrentAddress { get; set; }
 
         //public ICollection<Education> Educations { get; set; }
-        //public Passport Passport { get; set; }
-        public int? CountryId { get; set; }
-        public int? DistrictId { get; set; }
+        public SavePassportResource Passport { get; set; }
+        public ICollection<SaveEducationResource> Educations { get; set; }
+        public int? BirthCountryId { get; set; }
+        public int? BirthDistrictId { get; set; }
+        public int? CurrentCountryId { get; set; }
+        public int? CurrentDistrictId { get; set; }
         public int? NationalityId { get; set; }
         public int? PartisanshipId { get; set; }
         public int? ScienceDegreeId { get; set; }

@@ -401,6 +401,14 @@ namespace HRManagement.Services.DataBook
                 .SingleOrDefaultAsync(l => l.LanguageId == id);
         }
 
+        public async Task<IEnumerable<Language>> GetLanguagesByUserId(string userId)
+        {
+            return await _db.Languages
+               .Include(d => d.ApplicationUser)
+               .Where(d => d.UserId == userId)
+               .ToListAsync();
+        }
+
         public async Task<MilitaryTitle> GetMilitaryTitleById(int id)
         {
             return await _db.MilitaryTitles

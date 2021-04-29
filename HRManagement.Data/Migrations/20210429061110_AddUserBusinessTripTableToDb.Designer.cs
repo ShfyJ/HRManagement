@@ -3,15 +3,17 @@ using System;
 using HRManagement.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace HRManagement.Data.Migrations
 {
     [DbContext(typeof(HRManageDBContext))]
-    partial class HRManageDBContextModelSnapshot : ModelSnapshot
+    [Migration("20210429061110_AddUserBusinessTripTableToDb")]
+    partial class AddUserBusinessTripTableToDb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -211,10 +213,10 @@ namespace HRManagement.Data.Migrations
                     b.Property<string>("EmployeeId")
                         .HasColumnType("text");
 
-                    b.Property<DateTime?>("EnteredDate")
+                    b.Property<DateTime>("EnteredDate")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<DateTime?>("GraduatedDate")
+                    b.Property<DateTime>("GraduatedDate")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<int?>("ScienceDegreeId")
@@ -668,7 +670,7 @@ namespace HRManagement.Data.Migrations
 
             modelBuilder.Entity("HRManagement.Models.UserBusinessTrips", b =>
                 {
-                    b.Property<string>("EmployeeId")
+                    b.Property<string>("ApplicationUserId")
                         .HasColumnType("text");
 
                     b.Property<int>("BusinessTripId")
@@ -677,7 +679,7 @@ namespace HRManagement.Data.Migrations
                     b.Property<bool>("IsSubstitute")
                         .HasColumnType("boolean");
 
-                    b.HasKey("EmployeeId", "BusinessTripId");
+                    b.HasKey("ApplicationUserId", "BusinessTripId");
 
                     b.HasIndex("BusinessTripId");
 
@@ -1336,15 +1338,15 @@ namespace HRManagement.Data.Migrations
 
             modelBuilder.Entity("HRManagement.Models.UserBusinessTrips", b =>
                 {
-                    b.HasOne("HRManagement.Models.BusinessTrip", "BusinessTrip")
+                    b.HasOne("HRManagement.Data.Models.Auth.ApplicationUser", "Employee")
                         .WithMany("UserBusinessTrips")
-                        .HasForeignKey("BusinessTripId")
+                        .HasForeignKey("ApplicationUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("HRManagement.Data.Models.Auth.ApplicationUser", "Employee")
+                    b.HasOne("HRManagement.Models.BusinessTrip", "BusinessTrip")
                         .WithMany("UserBusinessTrips")
-                        .HasForeignKey("EmployeeId")
+                        .HasForeignKey("BusinessTripId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

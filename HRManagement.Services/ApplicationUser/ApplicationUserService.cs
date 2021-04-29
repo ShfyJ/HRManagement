@@ -36,7 +36,9 @@ namespace HRManagement.Services.ApplicationUser
         {
             try
             {
-                var user = await _userManager.FindByEmailAsync(userToCreate.UserName);
+                userToCreate.NormalizedEmail = userToCreate.Email.ToUpper();
+                var user = await _userManager.FindByEmailAsync(userToCreate.NormalizedEmail);
+                
                 if(user == null)
                 {
                     var userCreateResult = await _userManager.CreateAsync(userToCreate, password);
@@ -58,7 +60,9 @@ namespace HRManagement.Services.ApplicationUser
                     //await _db.SaveChangesAsync();
 
                     if (userCreateResult.Succeeded)
-                    {
+                    {  
+
+
                         return new ServiceResponse<IdentityResult>
                         {
                             Data = userCreateResult,
@@ -80,7 +84,7 @@ namespace HRManagement.Services.ApplicationUser
                 {
                     Data = null,
                     Time = DateTime.Now,
-                    Message = "Bu login foydalanilgan",
+                    Message = "Bu login mavjud",
                     IsSuccess = false
                 };
 

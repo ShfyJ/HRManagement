@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HRManagement.Data.Migrations
 {
     [DbContext(typeof(HRManageDBContext))]
-    [Migration("20210405140512_AddInitialChangesToDb")]
-    partial class AddInitialChangesToDb
+    [Migration("20210429052653_ChangestoUserTable")]
+    partial class ChangestoUserTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -152,9 +152,6 @@ namespace HRManagement.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<int>("CountryId")
-                        .HasColumnType("integer");
 
                     b.Property<string>("DistrictName")
                         .IsRequired()
@@ -378,7 +375,12 @@ namespace HRManagement.Data.Migrations
                     b.Property<bool>("Status")
                         .HasColumnType("boolean");
 
+                    b.Property<string>("UserId")
+                        .HasColumnType("text");
+
                     b.HasKey("LanguageId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Languages");
                 });
@@ -741,57 +743,6 @@ namespace HRManagement.Data.Migrations
                     b.ToTable("UserRelatives");
                 });
 
-            modelBuilder.Entity("HRManagement.Models.Users", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<DateTime>("BirthDate")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<string>("FIO_short")
-                        .HasColumnType("text");
-
-                    b.Property<string>("FI_short")
-                        .HasColumnType("text");
-
-                    b.Property<string>("FirstName")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Gender")
-                        .HasColumnType("text");
-
-                    b.Property<bool>("IsDismissed")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("LastName")
-                        .HasColumnType("text");
-
-                    b.Property<string>("MiddleName")
-                        .HasColumnType("text");
-
-                    b.Property<string>("OrderUrl")
-                        .HasColumnType("text");
-
-                    b.Property<string>("PhotoUrl")
-                        .HasColumnType("text");
-
-                    b.Property<string>("STIRUrl")
-                        .HasColumnType("text");
-
-                    b.Property<string>("UserName")
-                        .HasColumnType("text");
-
-                    b.Property<string>("WorkbookURL")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("User");
-                });
-
             modelBuilder.Entity("HRManagement.Models.Vacancy", b =>
                 {
                     b.Property<int>("VacancyId")
@@ -1075,23 +1026,32 @@ namespace HRManagement.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("HRManagement.Models.ApplicationUser", b =>
+            modelBuilder.Entity("HRManagement.Data.Models.Auth.ApplicationUser", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
+
+                    b.Property<int?>("BirthCountryId")
+                        .HasColumnType("integer");
 
                     b.Property<DateTime>("BirthDate")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<int?>("CountryId")
+                    b.Property<int?>("BirthDistrictId")
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<int?>("DisabilityId")
+                    b.Property<string>("CurrentAddress")
+                        .HasColumnType("text");
+
+                    b.Property<int?>("CurrentCountryId")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("DistrictId")
+                    b.Property<int?>("CurrentDistrictId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("DisabilityId")
                         .HasColumnType("integer");
 
                     b.Property<int?>("EdInformationId")
@@ -1107,7 +1067,7 @@ namespace HRManagement.Data.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("FullAddress")
+                    b.Property<string>("FullBirthAddress")
                         .HasColumnType("text");
 
                     b.Property<string>("Gender")
@@ -1167,11 +1127,15 @@ namespace HRManagement.Data.Migrations
                     b.Property<string>("WorkbookURL")
                         .HasColumnType("text");
 
-                    b.HasIndex("CountryId");
+                    b.HasIndex("BirthCountryId");
+
+                    b.HasIndex("BirthDistrictId");
+
+                    b.HasIndex("CurrentCountryId");
+
+                    b.HasIndex("CurrentDistrictId");
 
                     b.HasIndex("DisabilityId");
-
-                    b.HasIndex("DistrictId");
 
                     b.HasIndex("EdInformationId");
 
@@ -1210,11 +1174,11 @@ namespace HRManagement.Data.Migrations
                         .WithMany()
                         .HasForeignKey("BusinessTripDistrictId");
 
-                    b.HasOne("HRManagement.Models.ApplicationUser", "Employee")
+                    b.HasOne("HRManagement.Data.Models.Auth.ApplicationUser", "Employee")
                         .WithMany()
                         .HasForeignKey("EmployeeId");
 
-                    b.HasOne("HRManagement.Models.ApplicationUser", "SubstituteEmployee")
+                    b.HasOne("HRManagement.Data.Models.Auth.ApplicationUser", "SubstituteEmployee")
                         .WithMany()
                         .HasForeignKey("SubstituteEmployeeId");
 
@@ -1263,7 +1227,7 @@ namespace HRManagement.Data.Migrations
                         .WithMany()
                         .HasForeignKey("EdInformationId");
 
-                    b.HasOne("HRManagement.Models.ApplicationUser", "User")
+                    b.HasOne("HRManagement.Data.Models.Auth.ApplicationUser", "User")
                         .WithMany("Educations")
                         .HasForeignKey("EmployeeId");
 
@@ -1290,8 +1254,8 @@ namespace HRManagement.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("HRManagement.Models.ApplicationUser", "Employee")
-                        .WithMany()
+                    b.HasOne("HRManagement.Data.Models.Auth.ApplicationUser", "Employee")
+                        .WithMany("DisciplinaryActions")
                         .HasForeignKey("EmployeeId");
 
                     b.Navigation("DisciplinaryActionType");
@@ -1301,8 +1265,8 @@ namespace HRManagement.Data.Migrations
 
             modelBuilder.Entity("HRManagement.Models.EmployeeVacation", b =>
                 {
-                    b.HasOne("HRManagement.Models.ApplicationUser", "Employee")
-                        .WithMany()
+                    b.HasOne("HRManagement.Data.Models.Auth.ApplicationUser", "Employee")
+                        .WithMany("Vacations")
                         .HasForeignKey("EmployeeId");
 
                     b.HasOne("HRManagement.Models.VacationType", "Vacationtype")
@@ -1334,6 +1298,15 @@ namespace HRManagement.Data.Migrations
                         .HasForeignKey("OrganizationId");
 
                     b.Navigation("Organization");
+                });
+
+            modelBuilder.Entity("HRManagement.Models.Language", b =>
+                {
+                    b.HasOne("HRManagement.Data.Models.Auth.ApplicationUser", "ApplicationUser")
+                        .WithMany("Languages")
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("ApplicationUser");
                 });
 
             modelBuilder.Entity("HRManagement.Models.Position", b =>
@@ -1377,7 +1350,7 @@ namespace HRManagement.Data.Migrations
                         .WithMany()
                         .HasForeignKey("BirthDistrictId");
 
-                    b.HasOne("HRManagement.Models.ApplicationUser", "Employee")
+                    b.HasOne("HRManagement.Data.Models.Auth.ApplicationUser", "Employee")
                         .WithMany()
                         .HasForeignKey("EmployeeId");
 
@@ -1441,7 +1414,7 @@ namespace HRManagement.Data.Migrations
 
             modelBuilder.Entity("HRManagement.Models.WorkingActivity", b =>
                 {
-                    b.HasOne("HRManagement.Models.ApplicationUser", "User")
+                    b.HasOne("HRManagement.Data.Models.Auth.ApplicationUser", "User")
                         .WithMany("WorkingActivities")
                         .HasForeignKey("EmployeeId");
 
@@ -1499,19 +1472,27 @@ namespace HRManagement.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("HRManagement.Models.ApplicationUser", b =>
+            modelBuilder.Entity("HRManagement.Data.Models.Auth.ApplicationUser", b =>
                 {
                     b.HasOne("HRManagement.Models.Country", "BirthCountry")
                         .WithMany()
-                        .HasForeignKey("CountryId");
+                        .HasForeignKey("BirthCountryId");
+
+                    b.HasOne("HRManagement.Models.District", "BirthDistrict")
+                        .WithMany()
+                        .HasForeignKey("BirthDistrictId");
+
+                    b.HasOne("HRManagement.Models.Country", "CurrentCountry")
+                        .WithMany()
+                        .HasForeignKey("CurrentCountryId");
+
+                    b.HasOne("HRManagement.Models.District", "CurrentDistrict")
+                        .WithMany()
+                        .HasForeignKey("CurrentDistrictId");
 
                     b.HasOne("HRManagement.Models.Disability", "Disability")
                         .WithMany()
                         .HasForeignKey("DisabilityId");
-
-                    b.HasOne("HRManagement.Models.District", "BirthDistrict")
-                        .WithMany()
-                        .HasForeignKey("DistrictId");
 
                     b.HasOne("HRManagement.Models.EdInformation", "EdInformation")
                         .WithMany()
@@ -1561,6 +1542,10 @@ namespace HRManagement.Data.Migrations
 
                     b.Navigation("BirthDistrict");
 
+                    b.Navigation("CurrentCountry");
+
+                    b.Navigation("CurrentDistrict");
+
                     b.Navigation("Disability");
 
                     b.Navigation("EdInformation");
@@ -1586,9 +1571,15 @@ namespace HRManagement.Data.Migrations
                     b.Navigation("Section");
                 });
 
-            modelBuilder.Entity("HRManagement.Models.ApplicationUser", b =>
+            modelBuilder.Entity("HRManagement.Data.Models.Auth.ApplicationUser", b =>
                 {
+                    b.Navigation("DisciplinaryActions");
+
                     b.Navigation("Educations");
+
+                    b.Navigation("Languages");
+
+                    b.Navigation("Vacations");
 
                     b.Navigation("WorkingActivities");
                 });

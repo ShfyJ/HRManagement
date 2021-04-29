@@ -20,21 +20,28 @@ namespace HRManagement.Data.Models.Auth
         public string Gender { get; set; }
         public DateTime BirthDate { get; set; }
        // public string PassportUrl { get; set; }
-        public string PhotoUrl { get; set; }
-        public string WorkbookURL { get; set; } //Mehnat daftarcha  
+        public string? PhotoUrl { get; set; }
+        public string? WorkbookURL { get; set; } //Mehnat daftarcha  
         //public int STIR { get; set; }         //INN
-        public string STIRUrl { get; set; }      
-        public string OrderUrl { get; set; }  //Ishga olinishga buyruq
+        public string? STIRUrl { get; set; }      
+        public string? OrderUrl { get; set; }  //Ishga olinishga buyruq
         public bool IsDismissed { get; set; } //Ishdan bo'shatilgan yoki yo'q
         public DateTime CreatedOn { get; set; } //Foydalanuvchini sistemaga kiritilgan vaqti
         public DateTime UpdatedOn { get; set; } //Foydalanuvchi shaxsiy malumotlari o'zgartirilgan vaqti
         public ICollection<Education> Educations { get; set; }
         public ICollection<WorkingActivity> WorkingActivities{ get; set; }
-        public string? FullAddress { get; set; } //Agar Uz dan boshqa mamlakatdan bo'lsa, to'liq tug'ilgan joyi kiritiladi
+        public ICollection<Language> Languages { get; set; }
+        public ICollection<EmployeeDisciplinaryAction> DisciplinaryActions { get; set; }
+        public ICollection<EmployeeVacation> Vacations { get; set; }
+        public IList<UserBusinessTrips> UserBusinessTrips { get; set; }
 
+        public string? FullBirthAddress { get; set; } //Agar Uz dan boshqa mamlakatdan bo'lsa, to'liq tug'ilgan joyi kiritiladi
+        public string? CurrentAddress { get; set; } //Hozirgi yashash manzili: ko'cha, uy, xonadon kiritiladi
         public int? PassportId { get; set; }
-        public int? CountryId { get; set; }
-        public int? DistrictId { get; set; }
+        public int? BirthCountryId { get; set; }
+        public int? BirthDistrictId { get; set; }
+        public int? CurrentCountryId { get; set; }
+        public int? CurrentDistrictId { get; set; }
         public int? NationalityId { get; set; }
         public int? PartisanshipId { get; set; }
         public int? ScienceDegreeId { get; set; }
@@ -64,12 +71,18 @@ namespace HRManagement.Data.Models.Auth
         [ForeignKey("PassportId")]
         public Passport Passport { get; set; }
 
-        [ForeignKey("CountryId")]
+        [ForeignKey("BirthCountryId")]
         public Country BirthCountry { get; set; }
         
-        [ForeignKey("DistrictId")]
+        [ForeignKey("BirthDistrictId")]
         public District BirthDistrict { get; set; }
-        
+
+        [ForeignKey("CurrentCountryId")]
+        public Country CurrentCountry { get; set; }
+
+        [ForeignKey("CurrentDistrictId")]
+        public District CurrentDistrict { get; set; }
+
         [ForeignKey("NationalityId")]
         public Nationality Nationality { get; set; }
         
@@ -94,6 +107,8 @@ namespace HRManagement.Data.Models.Auth
         
         [ForeignKey("DisabilityId")]
         public Disability Disability { get; set; }
+
+       
 
         [NotMapped]
         public string Role { get; set; }

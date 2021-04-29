@@ -15,10 +15,20 @@ namespace HRManagement.Data
         public HRManageDBContext(DbContextOptions<HRManageDBContext> options)
             : base(options)
         {
+
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<UserBusinessTrips>()
+                .HasKey(sc => new { sc.EmployeeId, sc.BusinessTripId } ) ;
+            base.OnModelCreating(modelBuilder);
+
         }
 
         public virtual DbSet<Models.Auth.ApplicationUser> ApplicationUsers { get; set; }
         public virtual DbSet<BusinessTrip> BusinessTrips { get; set; }
+        public virtual DbSet<UserBusinessTrips> UserBusinessTrips { get; set; }
         public virtual DbSet<EmployeeVacation> EmployeeVacations { get; set; }
         public virtual DbSet<EmployeeDisciplinaryAction> EmployeeDisciplinaryActions { get; set; }
         public virtual DbSet<Country> Countries { get; set; }

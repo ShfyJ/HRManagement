@@ -41,6 +41,7 @@ namespace HRManagement.Services.DataBook
         //Languages databook actions
         Task<IEnumerable<Models.Language>> GetAllLanguages();
         Task<Models.Language> GetLanguageById(int id);
+        Task<IEnumerable<Models.Language>> GetLanguagesByUserId(string userId);
         Task<Models.Language> AddLanguage(Models.Language newLanguage);
         Task UpdateLanguage(Models.Language languageToBeUpdated, Models.Language language);
         Task DeleteLanguage(int id);
@@ -121,5 +122,6 @@ namespace HRManagement.Services.DataBook
         Task<Models.EdInformation> AddEdInfo(Models.EdInformation newEdInfo);
         Task UpdateEdInfo(Models.EdInformation edInfoToBeUpdated, Models.EdInformation edInfo);
         Task DeleteEdInfo(int id);
+        
     }
 }

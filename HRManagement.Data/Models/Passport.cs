@@ -20,6 +20,7 @@ namespace HRManagement.Models
         public DateTime ExpirationDate { get; set; }
         [Required]
         public string GivenBy { get; set; } //Kim tomonidan berilgan
+
     }
     
 }

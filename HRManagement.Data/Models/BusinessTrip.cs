@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HRManagement.Data.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -20,8 +21,7 @@ namespace HRManagement.Models
         public int BusinessTripCountryId { get; set; }
         
         public int? BusinessTripDistrictId { get; set; }
-        public string SubstituteEmployeeId { get; set; } //o'rnini bosadigan xodim
-        public string EmployeeId { get; set; } //Kamandirovkaga ketadigan xodim
+        public IList<UserBusinessTrips> UserBusinessTrips { get; set; }
 
         [ForeignKey("BusinessTripCountryId")]
         public Country BusinessTripCountry { get; set; }
@@ -29,11 +29,6 @@ namespace HRManagement.Models
         [ForeignKey("BusinessTripDistrictId")]
         public District BusinessTripDistrict { get; set; }
 
-        [ForeignKey("SubstituteEmployeeId")]
-        public Data.Models.Auth.ApplicationUser SubstituteEmployee { get; set; }
-
-        [ForeignKey("EmployeeId")]
-        public Data.Models.Auth.ApplicationUser Employee { get; set; }
 
     }
 }

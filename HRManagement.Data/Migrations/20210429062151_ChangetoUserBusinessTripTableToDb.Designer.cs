@@ -3,15 +3,17 @@ using System;
 using HRManagement.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace HRManagement.Data.Migrations
 {
     [DbContext(typeof(HRManageDBContext))]
-    partial class HRManageDBContextModelSnapshot : ModelSnapshot
+    [Migration("20210429062151_ChangetoUserBusinessTripTableToDb")]
+    partial class ChangetoUserBusinessTripTableToDb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -211,10 +213,10 @@ namespace HRManagement.Data.Migrations
                     b.Property<string>("EmployeeId")
                         .HasColumnType("text");
 
-                    b.Property<DateTime?>("EnteredDate")
+                    b.Property<DateTime>("EnteredDate")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<DateTime?>("GraduatedDate")
+                    b.Property<DateTime>("GraduatedDate")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<int?>("ScienceDegreeId")

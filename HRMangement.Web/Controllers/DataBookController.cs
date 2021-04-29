@@ -121,9 +121,9 @@ namespace HRManagement.Web.Controllers
         {
             _logger.LogInformation("Getting region by CountryId");
             var regions = await _dataBookService.GetRegionsByCountryId(id);
-            var regionResource = _mapper.Map<IEnumerable<Models.Region>, IEnumerable<RegionResource>>(regions);
+            var regionResources = _mapper.Map<IEnumerable<Models.Region>, IEnumerable<RegionResource>>(regions);
 
-            return Ok(regionResource);
+            return Ok(regionResources);
         }
 
         [HttpPost("Region")]
@@ -187,8 +187,8 @@ namespace HRManagement.Web.Controllers
         {
             _logger.LogInformation("Getting districts by regionId");
             var districts = await _dataBookService.GetDistrictsByRegionId(id);
-            var regionResource = _mapper.Map<IEnumerable<Models.District>, IEnumerable<DistrictResource>>(districts);
-            return Ok(districts);
+            var districtResources = _mapper.Map<IEnumerable<Models.District>, IEnumerable<DistrictResource>>(districts);
+            return Ok(districtResources);
         }
 
         [HttpPost("District")]
@@ -360,6 +360,15 @@ namespace HRManagement.Web.Controllers
             var languageResource = _mapper.Map<Models.Language, LanguageResource>(language);
 
             return Ok(languageResource);
+        }
+
+        [HttpGet("Languages/{id}")]
+        public async Task<ActionResult<IEnumerable<LanguageResource>>> GetLanguagesByUserId(string id)
+        {
+            _logger.LogInformation("Getting languages by userId");
+            var languages = await _dataBookService.GetLanguagesByUserId(id);
+            var languageResources = _mapper.Map<IEnumerable<Models.Language>, IEnumerable<LanguageResource>>(languages);
+            return Ok(languageResources);
         }
 
         [HttpPost("Language")]

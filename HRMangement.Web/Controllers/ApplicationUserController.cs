@@ -70,10 +70,15 @@ namespace HRMangement.Web.Controllers
             var serviceResponce = await _applicationUserService.SignUpUser(userToCreate, saveApplicationUserResource.Password);
 
 
-            if (serviceResponce.Message.Equals("Yangi xodim qo'shildi"))
+            if (serviceResponce.IsSuccess)
 
             {
                 return Created(string.Empty, string.Empty);
+            }
+
+            if(serviceResponce.Message.Equals("Bu login mavjud"))
+            {
+                return BadRequest("Bu login bilan foydalanuvchi bazada mavjud!");
             }
 
             return Problem(serviceResponce.Data.Errors.First().Description, null, 500);

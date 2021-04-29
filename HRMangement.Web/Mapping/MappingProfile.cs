@@ -31,6 +31,8 @@ namespace HRManagement.Web.Mapping
             CreateMap<DisciplinaryActionType, DisciplinaryActionTypeResource>();
             CreateMap<EdInformation, EdInformationResource>();
             CreateMap<EdInformation, EdInformationResource>();
+            CreateMap<Passport, PassportResource>();
+            CreateMap<Education, EducationResource>();
 
 
             //Resource To Domain
@@ -68,6 +70,10 @@ namespace HRManagement.Web.Mapping
             CreateMap<SaveDisciplinaryActionTypeResource, DisciplinaryActionType>();
             CreateMap<EdInformationResource, EdInformation>();
             CreateMap<SaveEdInformationResource, EdInformation>();
+            CreateMap<PassportResource, Passport>();
+            CreateMap<SavePassportResource, Passport>();
+            CreateMap<EducationResource, Education>();
+            CreateMap<SaveEducationResource, Education>();
 
             //CreateMap<UserSignUpResource, User>()
             //    .ForMember(u => u.UserName, opt => opt.MapFrom(ur => ur.Email));

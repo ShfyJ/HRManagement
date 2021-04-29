@@ -16,8 +16,8 @@ namespace HRManagement.Models
         public string Speciality { get; set; }
         public string? DiplomaUrl { get; set; }
         public string? EdOrgAddress { get; set; }
-        public DateTime EnteredDate { get; set; }
-        public DateTime GraduatedDate { get; set; }
+        public DateTime? EnteredDate { get; set; }
+        public DateTime? GraduatedDate { get; set; }
         public int? ScienceDegreeId { get; set; }
         public int? EdInformationId { get; set; }
         public int? EdOrgCountryId { get; set; }
