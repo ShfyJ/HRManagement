@@ -48,7 +48,27 @@
             </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        
+
+
+        <v-list-item
+          active-class="border"
+          router
+          to="/add_reference_book"
+        >
+          <v-list-item-action>
+            <v-icon>
+              mdi-plus
+            </v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title class="myTitle"> 
+              Ma'lumotnomalar
+            </v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
+
+
         <v-list-group prepend-icon="mdi-book-open" color="white">
           <template v-slot:activator>
             <v-list-item-title class="myTitle">Shtatka</v-list-item-title>

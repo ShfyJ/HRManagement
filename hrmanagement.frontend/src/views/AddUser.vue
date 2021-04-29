@@ -17,7 +17,7 @@
             <v-container class="py-0">
               <v-row>
                 <v-col>
-                <v-card class="rounded-xl ">
+                <v-card>
                 <v-toolbar align="center" flat>
                     <v-toolbar-title>Asosiy ma'lumot</v-toolbar-title>
                 </v-toolbar>
@@ -195,7 +195,7 @@
               </v-row>
               <v-row>
                 <v-col>
-                  <v-card class="rounded-xl mt-n2">
+                  <v-card class="mt-n2">
                 <v-toolbar align="center" flat>
                         <v-toolbar-title>Umumiy ma'lumot</v-toolbar-title>
                 </v-toolbar>
@@ -252,12 +252,14 @@
                   md="4"
                 >
                 <v-select
-                v-model="millat"
+                v-model="millat.nationalityId"
                 :items="millatlar"
                   menu-props="auto"
                   label="Millati"
                   hide-details
                   single-line
+                  item-text='nationalityName'
+                  item-value='nationalityId'
                   ></v-select>
                 </v-col>
                 <v-col
@@ -286,12 +288,14 @@
                   md="4"
                 >
                 <v-select
-                v-model="malumoti"
+                v-model="malumoti.edInformationId"
                 :items="malumoti_inst"
                   menu-props="auto"
                   label="Ma'lumoti"
                   hide-details
                   single-line
+                  item-text='edInformationName'
+                  item-value='edInformationId'
                   ></v-select>
                 </v-col>
                   </v-row>
@@ -343,14 +347,16 @@
                     label="Chet tillarini bilishi"
                     multiple
                     chips
+                    item-text='languageName'
+                    item-value='languageId'
                     >
                       <template v-slot:selection="data">
                         <v-chip
-                          :key="JSON.stringify(data.item)"
+                          :key="JSON.stringify(data.item-text)"
                           v-bind="data.attrs"
                           :input-value="data.selected"
                           :disabled="data.disabled"
-                          @click:close="data.parent.selectItem(data.item)"
+                          @click:close="data.parent.selectItem(data.item-text)"
                         >
                           <v-avatar
                             class="accent white--text"
@@ -379,12 +385,14 @@
                 >
                 <v-select
                 clearable
-                v-model="army"
+                v-model="army.militaryServiceStatusId"
                 :items="select_armyType"
                   menu-props="auto"
                   label="Xarbiy xizmatga borganligi"
                   hide-details
                   single-line
+                  item-text='militaryServiceStatusName'
+                  item-value='militaryServiceStatusId'
                   ></v-select>
                 </v-col>
                 <v-col
@@ -402,12 +410,14 @@
                 >
                 <v-select
                 clearable
-                v-model="nogironlik"
+                v-model="nogironlik.disabilityId"
                 :items="nogironligi"
                   menu-props="auto"
                   label="Nogironligi"
                   hide-details
                   single-line
+                  item-text='disabilityName'
+                  item-value='disabilityId'
                   ></v-select>
                 </v-col>
                   </v-row>
@@ -428,12 +438,14 @@
                 <v-select
                 clearable
                 small-chips
-                v-model="partiyaviylik"
+                v-model="partiyaviylik.partisanshipId"
                 :items="partiyaviyligi"
                   menu-props="auto"
                   label="Partiyaviyligi"
                   hide-details
                   single-line
+                  item-text='partisanshipName'
+                  item-value='partisanshipId'
                   ></v-select>
                 </v-col>
                   </v-row>
@@ -443,7 +455,7 @@
               </v-row>
               <v-row>
                 <v-col>
-                  <v-card class="rounded-xl">
+                  <v-card>
                     <v-toolbar align="center" flat>
                                 <v-toolbar-title>Yashash joyi va aloqalar</v-toolbar-title>
                     </v-toolbar>
@@ -1108,33 +1120,19 @@ import axios from "axios"
 
       tuman_shaharlar:{ districtName: '', disrictId: null},
       tuman_shahar: [],
-        millat:'',
-        millatlar: [
-                'Rus', 'O\'zbek', 'Qozoq', 'Turkman',
-                'Tatar', 'Qoraqalpoq', 'Qirg\'iz','Tojik','Koreys','Yaxudiy','Ozarbayjon','Gruzin','Arman'
-        ],
+        millat:{ nationalityName: '', nationalityId: null},
+        millatlar: [],
         radios: null,
-        malumoti:'',
-        malumoti_inst: [
-                'Oliy', 'O\'rta maxsus', 'O\'rta'
-        ],
-        language: '',
-        languages: [
-                'Rus tili',
-                'Ingliz tili',
-                'Arab tili',
-                'Koreys tili',
-                'Xitoy tili',
-        ],
-        army:'',
-        select_armyType: [
-                'Xizmatga majbur', 'Xizmatni o\'tagan', 'Rezervga o\'tkazilgan', 'Xizmatga majbur emas'],
-        nogironlik:'',
-        nogironligi: [
-                '1-guruh', '2-guruh', '3-guruh','hisobga olinmagan'],
-        partiyaviylik: '',
-        partiyaviyligi: [
-                'Yo\'q', 'UzLiDep azosi', 'UzXDP azosi','Milliy tiklanish demokratik partiyasi a\'zosi', 'Adolat sotsial demokratik partiyasi azosi','Ekologik partiyasi azosi'],
+        malumoti:{ edInformationName: '', edInformationId: null},
+        malumoti_inst: [],
+        language: [],
+        languages: [],
+        army:{ militaryServiceStatusName: '', militaryServiceStatusId: null},
+        select_armyType: [],
+        nogironlik:{ disabilityName: '', disabilityId: null },
+        nogironligi: [],
+        partiyaviylik: { partisanshipName: '', partisanshipId: null },
+        partiyaviyligi: [],
         select_lavozim: '',
         current_country: { countryName: '', countryId: null },
         current_tuman: '',
@@ -1196,6 +1194,8 @@ import axios from "axios"
         this.tuman_shahar=response.data
         console.log(this.tuman_shahar)
       });
+
+      
     },
 
  
@@ -1220,7 +1220,7 @@ import axios from "axios"
 console.log(this.image)
       axios
       .post('https://localhost:44343/api/ApplicationUser/SignUP', {
-        username:  'ABCDEFGdAfd',
+        username:  'ABCDEFGdAfddaQa',
         email: this.email,
         emailConfirmed: true,
         phoneNumberConfirmed: true,
@@ -1242,13 +1242,13 @@ console.log(this.image)
         fullAddress: this.current_address,
         countryId: parseInt(this.Uzbekistan.countryId),
         districtId: parseInt(this.tuman.regionId),
-        nationalityId: 1,
-        partisanshipId: 1,
+        nationalityId: parseInt(this.millat.nationalityId),
+        partisanshipId: parseInt(this.partiyaviylik.partisanshipId),
         scienceDegreeId: 1,
-        edInformationId: 1,
-        militaryServiceStatusId:1,
+        edInformationId: parseInt(this.malumoti.edInformationId),
+        militaryServiceStatusId:parseInt(this.army.militaryServiceStatusId),
         militaryTitleId:1,
-        disabilityId:1
+        disabilityId:parseInt(this.nogironlik.disabilityId),
     },{
       "headers": {
       "content-type": "application/json",
@@ -1285,7 +1285,82 @@ console.log(this.image)
       .then(response =>{
         this.countries=response.data
       });
+
+      axios
+      .get('https://localhost:44343/Disabilities', {
+          },
+          {
+            "headers": {
+            "content-type": "application/json",
+          },
+      })
+      .then(response =>{
+        this.nogironligi=response.data
+      });
+
+      axios
+      .get('https://localhost:44343/Nationalities', {
+          },
+          {
+            "headers": {
+            "content-type": "application/json",
+          },
+      })
+      .then(response =>{
+        this.millatlar=response.data
+      });
+
+      axios
+      .get('https://localhost:44343/Languages', {
+          },
+          {
+            "headers": {
+            "content-type": "application/json",
+          },
+      })
+      .then(response =>{
+        this.languages=response.data
+      });
+
+      axios
+      .get('https://localhost:44343/MilitaryServiceStatuses', {
+          },
+          {
+            "headers": {
+            "content-type": "application/json",
+          },
+      })
+      .then(response =>{
+        this.select_armyType=response.data
+      });
+
+      axios
+      .get('https://localhost:44343/EdInfos', {
+          },
+          {
+            "headers": {
+            "content-type": "application/json",
+          },
+      })
+      .then(response =>{
+        this.malumoti_inst=response.data
+      });
+
+      axios
+      .get('https://localhost:44343/Partisanships', {
+          },
+          {
+            "headers": {
+            "content-type": "application/json",
+          },
+      })
+      .then(response =>{
+        this.partiyaviyligi=response.data
+      });
+
+      
   },
+  
 
   clear () {
         this.$v.$reset()
