@@ -33,6 +33,11 @@ namespace HRManagement.Web.Mapping
             CreateMap<EdInformation, EdInformationResource>();
             CreateMap<Passport, PassportResource>();
             CreateMap<Education, EducationResource>();
+            CreateMap<DeputyMembership, DeputyMembershipResource>();
+            CreateMap<Organization, OrganizationResource>();
+            CreateMap<Department, DepartmentResource>();
+            CreateMap<Section, SectionResource>();
+            CreateMap<Group, GroupResource>();
 
 
             //Resource To Domain
@@ -74,6 +79,16 @@ namespace HRManagement.Web.Mapping
             CreateMap<SavePassportResource, Passport>();
             CreateMap<EducationResource, Education>();
             CreateMap<SaveEducationResource, Education>();
+            CreateMap<DeputyMembershipResource, DeputyMembership>();
+            CreateMap<SaveDeputyMembershipResource, DeputyMembership>();
+            CreateMap<OrganizationResource, Organization>();
+            CreateMap<SaveOrganizationResource, Organization>();
+            CreateMap<DepartmentResource, Department>();
+            CreateMap<SaveDepartmentResource, Department>();
+            CreateMap<SectionResource, Section>();
+            CreateMap<SaveSectionResource, Section>();
+            CreateMap<GroupResource, Group>();
+            CreateMap<SaveGroupResource, Group>();
 
             //CreateMap<UserSignUpResource, User>()
             //    .ForMember(u => u.UserName, opt => opt.MapFrom(ur => ur.Email));

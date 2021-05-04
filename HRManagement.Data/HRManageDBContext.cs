@@ -37,7 +37,6 @@ namespace HRManagement.Data
         public virtual DbSet<Organization> Organizations { get; set; }
         public virtual DbSet<Department> Departments { get; set; }
         public virtual DbSet<Section> Sections { get; set; }
-        public virtual DbSet<IndependentSection> IndependentSections { get; set; }
         public virtual DbSet<Group> Groups { get; set; }
         public virtual DbSet<Disability> Disabilities { get; set; }
         public virtual DbSet<DisciplinaryActionType> DisciplinaryActionTypes { get; set; }
@@ -58,6 +57,7 @@ namespace HRManagement.Data
         public virtual DbSet<Vacancy> Vacancies { get; set; }
         public virtual DbSet<VacationType> VacationTypes { get; set; }
         public virtual DbSet<WorkingActivity> WorkingActivities { get; set; }
+        public virtual DbSet<DeputyMembership> DeputyMemberships { get; set; }
 
     }
 

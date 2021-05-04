@@ -13,7 +13,8 @@ namespace HRManagement.Models
         [Key]
         public int GroupId { get; set; }
         public string GroupName { get; set; }
-        public int SectionId { get; set; }
+        public int? SectionId { get; set; }
+        public bool Status { get; set; }
 
         [ForeignKey("SectionId")]
         public Section Section { get; set; }

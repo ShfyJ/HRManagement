@@ -122,6 +122,13 @@ namespace HRManagement.Services.DataBook
         Task<Models.EdInformation> AddEdInfo(Models.EdInformation newEdInfo);
         Task UpdateEdInfo(Models.EdInformation edInfoToBeUpdated, Models.EdInformation edInfo);
         Task DeleteEdInfo(int id);
-        
+
+        //DeputyMembership databook actions //Deputat kengashligiga a'zoligi
+        Task<IEnumerable<Models.DeputyMembership>> GetAllDeputyMemberships();
+        Task<Models.DeputyMembership> GetDeputyMembershipById(int id);
+        Task<Models.DeputyMembership> AddDeputyMembership(Models.DeputyMembership newEdInfo);
+        Task UpdateDeputyMembership(Models.DeputyMembership deputyMembershipToBeUpdated, Models.DeputyMembership deputyMembership);
+        Task DeleteDeputyMembership(int id);
+
     }
 }

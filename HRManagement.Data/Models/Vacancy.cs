@@ -18,9 +18,6 @@ namespace HRManagement.Models
         [ForeignKey("PositionId")]
         public Position Position { get; set; }
 
-        [ForeignKey("IndependentSectionId")]
-        public IndependentSection IndependentSection { get; set; }
-
         [ForeignKey("GroupId")]
         public Group Group { get; set; }
     }

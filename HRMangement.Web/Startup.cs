@@ -24,6 +24,7 @@ using AutoMapper;
 using HRManagement.Web.Settings;
 using HRManagement.Web.Extentions;
 using HRManagement.Services.DataBook;
+using HRManagement.Services.Organization;
 
 namespace HRMangement.Web
 {
@@ -55,6 +56,7 @@ namespace HRMangement.Web
 
             services.AddScoped<IApplicationUserService, ApplicationUserService>();
             services.AddScoped<IDataBookService, DataBookService>();
+            services.AddScoped<IOrganizationService, OrganizationService>();
             services.AddAutoMapper(typeof(Startup));
             services.AddHttpClient();
 

@@ -1,17 +1,12 @@
-﻿using Microsoft.AspNetCore.Identity;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace HRManagement.Models
+namespace HRManagement.Web.Resources
 {
-    public class Organization
+    public class SaveOrganizationResource
     {
-        [Key]   
-        public int OrganizationId { get; set; }
         public string OrganizationNameInKrillUz { get; set; }
         public string OrganizationNameInLatinUz { get; set; }
         public string OrganizationNameInRu { get; set; }
@@ -21,8 +16,5 @@ namespace HRManagement.Models
         public string OrganizationNameInRuShort { get; set; }
         public string OrganizationNameInEngShort { get; set; }
         public bool Status { get; set; }
-        public ICollection<Department>? Departments { get; set; }
-        public ICollection<Section>? Sections { get; set; } //mustaqil bo'linmalar
-
     }
 }

@@ -39,8 +39,10 @@ namespace HRManagement.Data.Models.Auth
         public string? CurrentAddress { get; set; } //Hozirgi yashash manzili: ko'cha, uy, xonadon kiritiladi
         public int? PassportId { get; set; }
         public int? BirthCountryId { get; set; }
+        public int? BirthRegionId { get; set; }
         public int? BirthDistrictId { get; set; }
         public int? CurrentCountryId { get; set; }
+        public int? CurrentRegionId { get; set; }
         public int? CurrentDistrictId { get; set; }
         public int? NationalityId { get; set; }
         public int? PartisanshipId { get; set; }
@@ -62,9 +64,6 @@ namespace HRManagement.Data.Models.Auth
         [ForeignKey("SectionId")]
         public Section Section { get; set; }
 
-        [ForeignKey("IndependentSectionId")]
-        public IndependentSection IndependentSection { get; set; }
-
         [ForeignKey("GroupId")]
         public Group Group { get; set; }
 
@@ -73,12 +72,18 @@ namespace HRManagement.Data.Models.Auth
 
         [ForeignKey("BirthCountryId")]
         public Country BirthCountry { get; set; }
-        
+
+        [ForeignKey("BirthRegionId")]
+        public Region BirthRegion { get; set; }
+
         [ForeignKey("BirthDistrictId")]
         public District BirthDistrict { get; set; }
 
         [ForeignKey("CurrentCountryId")]
         public Country CurrentCountry { get; set; }
+
+        [ForeignKey("CurrentRegionId")]
+        public Region CurrentRegion { get; set; }
 
         [ForeignKey("CurrentDistrictId")]
         public District CurrentDistrict { get; set; }

@@ -23,6 +23,7 @@ namespace HRManagement.Web.Controllers
             _logger = logger;
         }
 
+        #region Country APIs
         //Country Databook APIs starts here
         [HttpGet("Countries")]
         public async Task<ActionResult<IEnumerable<CountryResource>>> GetAllCountries()
@@ -90,7 +91,9 @@ namespace HRManagement.Web.Controllers
             return NoContent();
         }
         //Country Databook APIs ends here
+        #endregion
 
+        #region Region APIs
         //Region Databook APIs starts here
 
         [HttpGet("Regions")]
@@ -160,7 +163,9 @@ namespace HRManagement.Web.Controllers
             return Ok(updatedRegionResource);
         }
         //Region Databook APIs ends here
+        #endregion
 
+        #region District APIs
         //District Databook APIs starts here
         [HttpGet("Districts")]
         public async Task<ActionResult<IEnumerable<DistrictResource>>> GetAllDistricts()
@@ -226,7 +231,9 @@ namespace HRManagement.Web.Controllers
         }
 
         //District Databook APIs ends here
+        #endregion
 
+        #region Disability APIs
         //Disability Databook APIs starts here
         [HttpGet("Disabilities")]
         public async Task<ActionResult<IEnumerable<DisabilityResource>>> GetAllDisabilities()
@@ -283,7 +290,9 @@ namespace HRManagement.Web.Controllers
         }
 
         //Disability Databook APIs ends here
+        #endregion
 
+        #region EdInformation APIs
         //Edinfo Databook APIs starts here
         [HttpGet("EdInfos")]
         public async Task<ActionResult<IEnumerable<EdInformationResource>>> GetAllEdInfos()
@@ -340,7 +349,9 @@ namespace HRManagement.Web.Controllers
         }
 
         //EdInfo Databook APIs ends here
+        #endregion
 
+        #region Language APIs
         //Language Databook APIs starts here
         [HttpGet("Languages")]
         public async Task<ActionResult<IEnumerable<LanguageResource>>> GetAllLanguages()
@@ -406,7 +417,9 @@ namespace HRManagement.Web.Controllers
         }
 
         //Language Databook APIs ends here
+        #endregion
 
+        #region MilitaryServiceStatus APIs
         //MilitaryServiceStatus Databook APIs starts here
         [HttpGet("MilitaryServiceStatuses")]
         public async Task<ActionResult<IEnumerable<MilitaryServiceStatusResource>>> GetAllMSStatuses()
@@ -463,7 +476,9 @@ namespace HRManagement.Web.Controllers
         }
 
         //MilitaryServiceStatus Databook APIs ends here
+        #endregion
 
+        #region MilitaryTitle APIs
         //MilitaryTitle Databook APIs starts here
         [HttpGet("MilitaryTitles")]
         public async Task<ActionResult<IEnumerable<MilitaryTitleResource>>> GetAllMilitaryTitles()
@@ -520,7 +535,9 @@ namespace HRManagement.Web.Controllers
         }
 
         //MilitaryTitle Databook APIs ends here
+        #endregion
 
+        #region Nationality APIs
         //Nationality Databook APIs starts here
         [HttpGet("Nationalities")]
         public async Task<ActionResult<IEnumerable<NationalityResource>>> GetAllNationalities()
@@ -577,7 +594,9 @@ namespace HRManagement.Web.Controllers
         }
 
         //Nationality Databook APIs ends here
+        #endregion
 
+        #region Partisanship APIs
         //Partisanship Databook APIs starts here
         [HttpGet("Partisanships")]
         public async Task<ActionResult<IEnumerable<PartisanshipResource>>> GetAllPartisanships()
@@ -634,7 +653,9 @@ namespace HRManagement.Web.Controllers
         }
 
         //Partisanship Databook APIs ends here
+        #endregion
 
+        #region PositionDegree APIs
         //PositionDegree Databook APIs starts here
         [HttpGet("PositionDegrees")]
         public async Task<ActionResult<IEnumerable<PositionDegreeResource>>> GetAllPositionDegrees()
@@ -691,7 +712,9 @@ namespace HRManagement.Web.Controllers
         }
 
         //PositionDegree Databook APIs ends here
+        #endregion
 
+        #region User Relative APIs
         //Relative Databook APIs starts here
         [HttpGet("Relatives")]
         public async Task<ActionResult<IEnumerable<RelativeResource>>> GetAllRelatives()
@@ -748,7 +771,9 @@ namespace HRManagement.Web.Controllers
         }
 
         //Relative Databook APIs ends here
+        #endregion
 
+        #region RelativeWorkingStatus APIs
         //RelativeWorkingStatus Databook APIs starts here
         [HttpGet("RelativeWorkingStatuses")]
         public async Task<ActionResult<IEnumerable<RelativeWorkingStatusResource>>> GetAllRWStatuses()
@@ -805,7 +830,9 @@ namespace HRManagement.Web.Controllers
         }
 
         //RelativeWorkingStatus APIs ends here
+        #endregion
 
+        #region ScienceDegree APIs
         //ScienceDegree Databook APIs starts here
         [HttpGet("ScienceDegrees")]
         public async Task<ActionResult<IEnumerable<ScienceDegreeResource>>> GetAllScienceDegrees()
@@ -862,7 +889,9 @@ namespace HRManagement.Web.Controllers
         }
 
         //ScienceDegree APIs ends here
+        #endregion
 
+        #region VacationType APIs
         //Vacationtype Databook APIs starts here
         [HttpGet("VacationTypes")]
         public async Task<ActionResult<IEnumerable<VacationTypeResource>>> GetAllVacationTypes()
@@ -918,7 +947,67 @@ namespace HRManagement.Web.Controllers
             return Ok(updatedVacationTypeResource);
         }
 
-        //ScienceDegree APIs ends here
+        //Vacationtype APIs ends here
+        #endregion
+
+        #region DeputyMembership APIs
+        //DeputyMembership Databook APIs starts here
+        [HttpGet("DeputyMemberships")]
+        public async Task<ActionResult<IEnumerable<DeputyMembershipResource>>> GetAllDeputyMemberships()
+        {
+            _logger.LogInformation("Getting all deputyMemberships");
+            var deputyMemberships = await _dataBookService.GetAllDeputyMemberships();
+            var deputyMembershipResources = _mapper.Map<IEnumerable<Models.DeputyMembership>, IEnumerable<DeputyMembershipResource>>(deputyMemberships);
+
+            return Ok(deputyMembershipResources);
+        }
+
+        [HttpGet("DeputyMembership/{id}")]
+        public async Task<ActionResult<DeputyMembershipResource>> GetDeputyMembershipById(int id)
+        {
+            _logger.LogInformation("Getting deputyMembership by Id");
+            var deputyMembership = await _dataBookService.GetDeputyMembershipById(id);
+            var deputyMembershipResource = _mapper.Map<Models.DeputyMembership, DeputyMembershipResource>(deputyMembership);
+
+            return Ok(deputyMembershipResource);
+        }
+
+        [HttpPost("DeputyMembership")]
+        public async Task<ActionResult<DeputyMembershipResource>> AddDeputyMembership([FromBody] SaveDeputyMembershipResource saveDeputyMembershipResource)
+        {
+            _logger.LogInformation("Adding new deputyMembership to DB");
+            var deputyMembershipToAdd = _mapper.Map<SaveDeputyMembershipResource, Models.DeputyMembership>(saveDeputyMembershipResource);
+
+            var newDeputyMembership = await _dataBookService.AddDeputyMembership(deputyMembershipToAdd);
+
+            var deputyMembership = await _dataBookService.GetDeputyMembershipById(newDeputyMembership.DeputyMembershipId);
+
+            var deputyMembershipResource = _mapper.Map<Models.DeputyMembership, DeputyMembershipResource>(deputyMembership);
+
+            return Ok(deputyMembershipResource);
+        }
+
+        [HttpPut("DeputyMembership/{id}")]
+        public async Task<ActionResult<DeputyMembershipResource>> UpdateDeputyMembership(int id, [FromBody] SaveDeputyMembershipResource saveDeputyMembershipResource)
+        {
+            _logger.LogInformation("Editing a vacationType");
+            var vacationTypeToBeUpdate = await _dataBookService.GetDeputyMembershipById(id);
+
+            if (vacationTypeToBeUpdate == null)
+                return NotFound();
+
+            var vacationType = _mapper.Map<SaveDeputyMembershipResource, Models.DeputyMembership>(saveDeputyMembershipResource);
+
+            await _dataBookService.UpdateDeputyMembership(vacationTypeToBeUpdate, vacationType);
+
+            var updatedDeputyMembership = await _dataBookService.GetDeputyMembershipById(id);
+            var updatedDeputyMembershipResource = _mapper.Map<Models.DeputyMembership, DeputyMembershipResource>(updatedDeputyMembership);
+
+            return Ok(updatedDeputyMembershipResource);
+        }
+
+        //DeputyMembership APIs ends here
+        #endregion
     }
 
 }

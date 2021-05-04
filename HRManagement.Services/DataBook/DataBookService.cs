@@ -33,6 +33,13 @@ namespace HRManagement.Services.DataBook
             return newDAtype;
         }
 
+        public async Task<DeputyMembership> AddDeputyMembership(DeputyMembership newDeputyMembership)
+        {
+            await _db.DeputyMemberships.AddAsync(newDeputyMembership);
+            await _db.SaveChangesAsync();
+            return newDeputyMembership;
+        }
+
         public async Task<Disability> AddDisability(Disability newDisability)
         {
             await _db.Disabilities.AddAsync(newDisability);
@@ -152,6 +159,13 @@ namespace HRManagement.Services.DataBook
             await _db.SaveChangesAsync();
         }
 
+        public async Task DeleteDeputyMembership(int id)
+        {
+            var deputyMembership = _db.DeputyMemberships.Find(id);
+            deputyMembership.Status = false;
+            await _db.SaveChangesAsync();
+        }
+
         public async Task DeleteDisability(int id)
         {
             var disability= _db.Disabilities.Find(id);
@@ -246,18 +260,31 @@ namespace HRManagement.Services.DataBook
         public async Task<IEnumerable<Country>> GetAllCountries()
         {
             return await _db.Countries.Where(c => c.Status == true)
+                 .OrderBy(c => c.CountryId)
                  .ToListAsync();
         }
 
         public async Task<IEnumerable<DisciplinaryActionType>> GetAllDATypes()
         {
-            return await _db.DisciplinaryActionTypes.Where(c => c.Status == true)
+            return await _db.DisciplinaryActionTypes
+                 .Where(c => c.Status == true)
+                 .OrderBy(c => c.DisciplinaryActionTypeId)
                  .ToListAsync();
+        }
+
+        public async Task<IEnumerable<DeputyMembership>> GetAllDeputyMemberships()
+        {
+            return await _db.DeputyMemberships
+                .Where(c => c.Status == true)
+                .OrderBy(c => c.DeputyMembershipId)
+                .ToListAsync();
         }
 
         public async Task<IEnumerable<Disability>> GetAllDisabilities()
         {
-            return await _db.Disabilities.Where(c => c.Status == true)
+            return await _db.Disabilities
+                .Where(c => c.Status == true)
+                .OrderBy(c => c.DisabilityId)
                 .ToListAsync();
         }
 
@@ -267,6 +294,7 @@ namespace HRManagement.Services.DataBook
                 .Where(c => c.Status == true)
                 .Include(d => d.Region)
                 .ThenInclude(r => r.Country)
+                .OrderBy(c => c.DisrictId)
                 .ToListAsync();
         }
 
@@ -274,6 +302,7 @@ namespace HRManagement.Services.DataBook
         {
             return await _db.EdInformations
                 .Where(c => c.Status == true)
+                .OrderBy(c => c.EdInformationId)
                 .ToListAsync();
         }
 
@@ -289,6 +318,7 @@ namespace HRManagement.Services.DataBook
         {
             return await _db.MilitaryTitles
                 .Where(c => c.Status == true)
+                .OrderBy(c => c.MilitaryTitleId)
                 .ToListAsync();
         }
 
@@ -296,6 +326,7 @@ namespace HRManagement.Services.DataBook
         {
             return await _db.MilitaryServiceStatuses
                 .Where(c => c.Status == true)
+                .OrderBy(c => c.MilitaryServiceStatusId)
                 .ToListAsync();
         }
 
@@ -303,6 +334,7 @@ namespace HRManagement.Services.DataBook
         {
             return await _db.Nationalities
                 .Where(c => c.Status == true)
+                .OrderBy(c => c.NationalityId)
                 .ToListAsync();
         }
 
@@ -310,6 +342,7 @@ namespace HRManagement.Services.DataBook
         {
             return await _db.Partisanships
                 .Where(c => c.Status == true)
+                .OrderBy(c => c.PartisanshipId)
                 .ToListAsync();
         }
 
@@ -317,6 +350,7 @@ namespace HRManagement.Services.DataBook
         {
             return await _db.PositionDegrees
                 .Where(c => c.Status == true)
+                .OrderBy(c => c.PositionDegreeId)
                 .ToListAsync();
         }
 
@@ -325,6 +359,7 @@ namespace HRManagement.Services.DataBook
             return await _db.Regions
                 .Where(c => c.Status == true)
                 .Include(r => r.Country)
+                .OrderBy(c => c.RegionId)
                 .ToListAsync();
         }
 
@@ -332,6 +367,7 @@ namespace HRManagement.Services.DataBook
         {
             return await _db.Relatives
                 .Where(c => c.Status == true)
+                .OrderBy(c => c.RelativeId)
                 .ToListAsync();
         }
 
@@ -339,6 +375,7 @@ namespace HRManagement.Services.DataBook
         {
             return await _db.RelativeWorkingStatuses
                 .Where(c => c.Status == true)
+                .OrderBy(c => c.RelativeWorkingStatusId)
                 .ToListAsync();
         }
 
@@ -346,13 +383,15 @@ namespace HRManagement.Services.DataBook
         {
             return await _db.ScienceDegrees
                 .Where(c => c.Status == true)
-                 .ToListAsync();
+                .OrderBy(c => c.ScienceDegreeId)
+                .ToListAsync();
         }
 
         public async Task<IEnumerable<VacationType>> GetAllVacationtypes()
         {
             return await _db.VacationTypes
                 .Where(c => c.Status == true)
+                .OrderBy(c => c.VacationtypeId)
                 .ToListAsync();
         }
 
@@ -366,6 +405,12 @@ namespace HRManagement.Services.DataBook
         {
             return await _db.DisciplinaryActionTypes
                 .SingleOrDefaultAsync(d => d.DisciplinaryActionTypeId == id);
+        }
+
+        public async Task<DeputyMembership> GetDeputyMembershipById(int id)
+        {
+            return await _db.DeputyMemberships
+                .SingleOrDefaultAsync(d => d.DeputyMembershipId == id);
         }
 
         public async Task<Disability> GetDisabilityById(int id)
@@ -491,6 +536,14 @@ namespace HRManagement.Services.DataBook
         {
             daTypeToBeUpdated.DisciplinaryActionName = daType.DisciplinaryActionName;
             daTypeToBeUpdated.Status = daType.Status;
+
+            await _db.SaveChangesAsync();
+        }
+
+        public async Task UpdateDeputyMembership(DeputyMembership deputyMembershipToBeUpdated, DeputyMembership deputyMembership)
+        {
+            deputyMembershipToBeUpdated.DeputyMembershipName = deputyMembership.DeputyMembershipName;
+            deputyMembershipToBeUpdated.Status = deputyMembership.Status;
 
             await _db.SaveChangesAsync();
         }

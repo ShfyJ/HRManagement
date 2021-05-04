@@ -32,18 +32,22 @@ namespace HRManagement.Web.Resources
         public DateTime UpdatedOn { get; set; } //Foydalanuvchi shaxsiy malumotlari o'zgartirilgan vaqti
         public string FullBirthAddress { get; set; } //Agar Uz dan boshqa mamlakatdan bo'lsa, to'liq tug'ilgan joyi kiritiladi
         public string CurrentAddress { get; set; }
+        public DateTimeOffset LockoutEnd { get; set; }
+        public bool LockoutEnabled { get; set; }
 
         //public ICollection<Education> Educations { get; set; }
         public SavePassportResource Passport { get; set; }
         public ICollection<SaveEducationResource> Educations { get; set; }
         public int? BirthCountryId { get; set; }
+        public int? BirthRegionId { get; set; }
         public int? BirthDistrictId { get; set; }
         public int? CurrentCountryId { get; set; }
+        public int? CurrentRegionId { get; set; }
         public int? CurrentDistrictId { get; set; }
         public int? NationalityId { get; set; }
         public int? PartisanshipId { get; set; }
-        public int? ScienceDegreeId { get; set; }
-        public int? EdInformationId { get; set; }
+        //public int? ScienceDegreeId { get; set; }
+        //public int? EdInformationId { get; set; }
         public int? MilitaryServiceStatusId { get; set; }
         public int? MilitaryTitleId { get; set; }
         public int? DisabilityId { get; set; }

@@ -14,8 +14,11 @@ namespace HRManagement.Models
         public int DepartmentId { get; set; }
         public string DepartmentName { get; set; }
         public int OrganizationId { get; set; }
+        public bool Status { get; set; }
 
         [ForeignKey("OrganizationId")]
         public Organization Organization { get; set; }
+
+        public ICollection<Section> Sections { get; set; }
     }
 }
