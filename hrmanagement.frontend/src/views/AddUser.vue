@@ -214,6 +214,7 @@
                             item-value='countryId'
                             rounded: true
                             @input="selectedCountry"
+                            
                           ></v-select>
                   </v-col>
                   <v-col cols="12" md="4">
@@ -305,6 +306,7 @@
                   md="3"
                 >
                   <v-text-field
+                    v-model="edOrganizationName"
                     label="Tamomlagan ..."
                     class="purple-input"
                   />
@@ -314,6 +316,7 @@
                   md="3"
                 >
                   <v-text-field
+                    v-model="speciality"
                     label="Mutaxasisligi"
                     class="purple-input"
                   />
@@ -562,7 +565,148 @@
                   </v-card>
                 </v-col>
               </v-row>
-              <v-row class="mt-n1">
+
+              <v-row>
+                <v-col>
+                  <v-card>
+                    <v-toolbar align="center" flat>
+                                <v-toolbar-title>Passport ma'lumotlar</v-toolbar-title>
+                    </v-toolbar>
+                    <v-container
+                        id="user-profile"
+                        fluid
+                        tag="section"
+                    >
+                        <v-row justify="center">
+                        <v-col
+                            cols="12"
+                            md="11"
+                        >
+                        <v-row class="mt-n4">
+                  <v-col
+                      cols="12"
+                      md="3"
+                  >
+                    <v-text-field
+                              class="purple-input"
+                              label="Passport Raqami"
+                              :rules="passportRules"
+                              v-model="passport"
+                              required
+                            />
+                    </v-col>
+                <v-col cols="12"
+                  md="3">
+                <v-menu
+                  ref="menu"
+                  v-model="menu"
+                  :close-on-content-click="false"
+                  :return-value.sync="date"
+                  transition="scale-transition"
+                  offset-y
+                  min-width="auto"
+                  >
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-text-field
+                      v-model="date"
+                      label="Berilgan sanasi"
+                      prepend-icon="mdi-calendar"
+                      readonly
+                      v-bind="attrs"
+                      v-on="on"
+                    ></v-text-field>
+                  </template>
+                  <v-date-picker
+                    v-model="date"
+                    no-title
+                    scrollable
+                  >
+                    <v-spacer></v-spacer>
+                    <v-btn
+                      text
+                      color="primary"
+                      @click="menu = false"
+                    >
+                      Cancel
+                    </v-btn>
+                    <v-btn
+                      text
+                      color="primary"
+                      @click="$refs.menu.save(date)"
+                    >
+                      OK
+                    </v-btn>
+                  </v-date-picker>
+                </v-menu>
+                </v-col>
+                <v-col
+                  cols="12"
+                  md="3"
+                >
+                  <v-text-field
+                    class="purple-input"
+                    label="Kim tomonidan berilgan"
+                    v-model="givenBy"
+                  />
+                </v-col>
+                <v-col>
+                <v-menu
+                    ref="menu1"
+                    v-model="menu1"
+                    :close-on-content-click="false"
+                    :return-value.sync="date1"
+                    transition="scale-transition"
+                    offset-y
+                    min-width="auto"
+                >
+                    <template v-slot:activator="{ on, attrs }">
+                    <v-text-field
+                        v-model="date1"
+                        label="Amal qilishi"
+                        prepend-icon="mdi-calendar"
+                        readonly
+                        v-bind="attrs"
+                        v-on="on"
+                    ></v-text-field>
+                    </template>
+                    <v-date-picker
+                    v-model="date1"
+                    no-title
+                    scrollable
+                    >
+                    <v-spacer></v-spacer>
+                    <v-btn
+                        text
+                        color="primary"
+                        @click="menu1 = false"
+                    >
+                        Cancel
+                    </v-btn>
+                    <v-btn
+                        text
+                        color="primary"
+                        @click="$refs.menu1.save(date1)"
+                    >
+                        OK
+                    </v-btn>
+                    </v-date-picker>
+                </v-menu>
+            </v-col>
+                        </v-row>
+
+                        </v-col>
+                        <v-col
+                            cols="12"
+                            md="4"
+                        >
+                        </v-col>
+                        </v-row>
+                    </v-container>
+                  </v-card>
+                </v-col>
+              </v-row>
+
+          <v-row class="mt-n1">
                 <v-col
                   cols="12"
                   class="text-right"
@@ -613,19 +757,14 @@
 
 <script>
 import PictureInput from 'vue-picture-input'
+import moment from 'moment'
 import axios from "axios"
   export default {
     data: () => ({
       snackbar: false,
       text: 'Xodim muvaffaqiyatli qo\'shildi',
       timeout: 2000,
-      valid: true,
-      passport: '',
-      passportRules: [
-        v => !!v || 'Passport raqami kiritilishi shart',
-        v => (v && v.length >= 9) || 'Passport raqami 9 tadan kam bo\'lmasligi kerak',
-      ],
-      
+      valid: true,      
       name:'',
       nameRules: [
         v => !!v || 'Ism kiritilishi shart',
@@ -684,6 +823,17 @@ import axios from "axios"
         mexnat_daftarchasi:[],
         stir_nusxasi:[],
         buyruq_nusxasi: [],
+        edOrganizationName:'',
+        speciality: '',
+        
+        givenBy: '',
+        expirationDate: '',
+        givenDate: '',
+        passport: '',
+        passportRules: [
+          v => !!v || 'Passport raqami kiritilishi shart',
+          v => (v && v.length >= 9) || 'Passport raqami 9 tadan kam bo\'lmasligi kerak',
+        ],
 
 
 
@@ -784,7 +934,7 @@ import axios from "axios"
 
       axios
       .post('https://localhost:44343/api/ApplicationUser/SignUP', {
-        username:  'ABCDEFGdAfddaQa',
+        username:  this.lastName+this.passport,
         email: this.email,
         phoneNumber: this.phone,
         emailConfirmed: true,
@@ -802,23 +952,23 @@ import axios from "axios"
         stirUrl: "dsdasdad",
         orderUrl: "dadadad",
         isDismissed: false,
-        createdOn: "2021-04-13T05:40:09.549Z",
-        updatedOn: "2021-04-13T05:40:09.549Z",
+        createdOn: moment().format(),
+        updatedOn: moment().format(),
         //countryId: parseInt(this.Uzbekistan.countryId),
         //districtId: parseInt(this.tuman.regionId),
         fullBirthAddress: "string",
         currentAddress: this.current_address,
         passport: {
-        passportSeries: "string",
-        givenDate: "2021-04-29T09:28:06.688Z",
-        expirationDate: "2021-04-29T09:28:06.688Z",
-        givenBy: "string"
+        passportSeries: this.passport,
+        givenDate: this.date+"T06:33:32.593Z",
+        expirationDate: this.date1+"T06:33:32.593Z",
+        givenBy: this.givenBy
         },
       
         educations: [
         {
-          edOrganizationName: "string",
-          speciality: "string",
+          edOrganizationName: this.edOrganizationName,
+          speciality: this.speciality,
           diplomaUrl: "string",
           edOrgAddress: "string",
           enteredDate: "2021-04-29T09:28:06.688Z",
@@ -849,8 +999,6 @@ import axios from "axios"
       .then(response => (console.log(response)));
 
     },
-
-
 
       onChange () {
       console.log('New picture selected!')

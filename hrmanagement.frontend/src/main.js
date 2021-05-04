@@ -15,6 +15,7 @@ Vue.config.productionTip = false;
 Vue.use(VueHtmlToPaper);
 Vue.use(VueCookies);
 Vue.use(Notifications)
+Vue.use(moment)
 
 new Vue({
   router,
