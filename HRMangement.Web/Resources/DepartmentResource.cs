@@ -10,6 +10,7 @@ namespace HRManagement.Web.Resources
     {
         public int DepartmentId { get; set; }
         public string DepartmentName { get; set; }
+        public bool Status { get; set; }
         public Organization Organization { get; set; }
         public ICollection<SectionResource> SectionResources { get; set; }
     }

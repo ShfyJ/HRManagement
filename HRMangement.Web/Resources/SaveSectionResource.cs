@@ -9,5 +9,6 @@ namespace HRManagement.Web.Resources
     {
         public string SectionName { get; set; }
         public int? DepartmentId { get; set; }
+        public bool Status { get; set; }
     }
 }

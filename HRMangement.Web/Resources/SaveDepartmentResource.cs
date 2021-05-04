@@ -9,5 +9,6 @@ namespace HRManagement.Web.Resources
     {
         public string DepartmentName { get; set; }
         public int OrganizationId { get; set; }
+        public bool Status { get; set; }
     }
 }

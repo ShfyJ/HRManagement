@@ -11,6 +11,7 @@ namespace HRManagement.Web.Resources
         public int SectionId { get; set; }
         public string SectionName { get; set; }
         public Department Department { get; set; }
+        public bool Status { get; set; }
         public ICollection<GroupResource>? GroupResources { get; set; }
     }
 }
