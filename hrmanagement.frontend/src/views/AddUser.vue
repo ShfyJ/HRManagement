@@ -214,6 +214,7 @@
                             item-value='countryId'
                             rounded: true
                             @input="selectedCountry"
+                            
                           ></v-select>
                   </v-col>
                   <v-col cols="12" md="4">
@@ -305,6 +306,7 @@
                   md="3"
                 >
                   <v-text-field
+                    v-model="edOrganizationName"
                     label="Tamomlagan ..."
                     class="purple-input"
                   />
@@ -314,6 +316,7 @@
                   md="3"
                 >
                   <v-text-field
+                    v-model="speciality"
                     label="Mutaxasisligi"
                     class="purple-input"
                   />
@@ -472,36 +475,46 @@
                         <v-row class="mt-n4">
                         <v-col cols="12" md="2">
                         <v-select
-                        v-model="current_country.countryId"
-                        :items="countries"
-                        menu-props="auto"
-                        label="Mamlakat"
-                        hide-details
-                        prepend-icon="mdi-map"
-                        single-line
-                        item-text='countryName'
-                        item-value='countryId'
+                          v-model="current_country.countryId"
+                          :items="countries"
+                          menu-props="auto"
+                          label="Mamlakat"
+                          hide-details
+                          prepend-icon="mdi-map"
+                          single-line
+                          item-text='countryName'
+                          item-value='countryId'
+                          @input="selectedCurrentCountryAddress"
                         ></v-select>
                         </v-col>
                         <v-col cols="12" md="2">
                         <v-select
-                        v-model="current_tuman"
-                        :items="tumanlar"
-                        menu-props="auto"
-                        label="Viloyati"
-                        hide-details
-                        single-line
+                          v-model="current_tuman.regionId"
+                          :items="tumanlar1"
+                          menu-props="auto"
+                          label="Viloyati"
+                          hide-details
+                          single-line
+                          item-text='regionName'
+                          item-value='regionId'
+                          @input="selectedCurrentRegionyAddress"
                         ></v-select>
                         </v-col>
                         <v-col
                           cols="12"
                           md="2"
                         >
-                          <v-text-field
-                            v-model="current_city"
-                            label="Tuman/Shahar"
+                          <v-select
                             class="purple-input"
-                          />
+                            v-model="currentDistrict.disrictId"
+                            :items="tuman_shahar1"
+                            menu-props="auto"
+                            label="Tuman/Shahar"
+                            hide-details
+                            single-line
+                            item-text='districtName'
+                            item-value='disrictId'
+                          ></v-select>
                         </v-col>
                         <v-col
                           cols="12"
@@ -552,7 +565,148 @@
                   </v-card>
                 </v-col>
               </v-row>
-              <v-row class="mt-n1">
+
+              <v-row>
+                <v-col>
+                  <v-card>
+                    <v-toolbar align="center" flat>
+                                <v-toolbar-title>Passport ma'lumotlar</v-toolbar-title>
+                    </v-toolbar>
+                    <v-container
+                        id="user-profile"
+                        fluid
+                        tag="section"
+                    >
+                        <v-row justify="center">
+                        <v-col
+                            cols="12"
+                            md="11"
+                        >
+                        <v-row class="mt-n4">
+                  <v-col
+                      cols="12"
+                      md="3"
+                  >
+                    <v-text-field
+                              class="purple-input"
+                              label="Passport Raqami"
+                              :rules="passportRules"
+                              v-model="passport"
+                              required
+                            />
+                    </v-col>
+                <v-col cols="12"
+                  md="3">
+                <v-menu
+                  ref="menu"
+                  v-model="menu"
+                  :close-on-content-click="false"
+                  :return-value.sync="date"
+                  transition="scale-transition"
+                  offset-y
+                  min-width="auto"
+                  >
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-text-field
+                      v-model="date"
+                      label="Berilgan sanasi"
+                      prepend-icon="mdi-calendar"
+                      readonly
+                      v-bind="attrs"
+                      v-on="on"
+                    ></v-text-field>
+                  </template>
+                  <v-date-picker
+                    v-model="date"
+                    no-title
+                    scrollable
+                  >
+                    <v-spacer></v-spacer>
+                    <v-btn
+                      text
+                      color="primary"
+                      @click="menu = false"
+                    >
+                      Cancel
+                    </v-btn>
+                    <v-btn
+                      text
+                      color="primary"
+                      @click="$refs.menu.save(date)"
+                    >
+                      OK
+                    </v-btn>
+                  </v-date-picker>
+                </v-menu>
+                </v-col>
+                <v-col
+                  cols="12"
+                  md="3"
+                >
+                  <v-text-field
+                    class="purple-input"
+                    label="Kim tomonidan berilgan"
+                    v-model="givenBy"
+                  />
+                </v-col>
+                <v-col>
+                <v-menu
+                    ref="menu1"
+                    v-model="menu1"
+                    :close-on-content-click="false"
+                    :return-value.sync="date1"
+                    transition="scale-transition"
+                    offset-y
+                    min-width="auto"
+                >
+                    <template v-slot:activator="{ on, attrs }">
+                    <v-text-field
+                        v-model="date1"
+                        label="Amal qilishi"
+                        prepend-icon="mdi-calendar"
+                        readonly
+                        v-bind="attrs"
+                        v-on="on"
+                    ></v-text-field>
+                    </template>
+                    <v-date-picker
+                    v-model="date1"
+                    no-title
+                    scrollable
+                    >
+                    <v-spacer></v-spacer>
+                    <v-btn
+                        text
+                        color="primary"
+                        @click="menu1 = false"
+                    >
+                        Cancel
+                    </v-btn>
+                    <v-btn
+                        text
+                        color="primary"
+                        @click="$refs.menu1.save(date1)"
+                    >
+                        OK
+                    </v-btn>
+                    </v-date-picker>
+                </v-menu>
+            </v-col>
+                        </v-row>
+
+                        </v-col>
+                        <v-col
+                            cols="12"
+                            md="4"
+                        >
+                        </v-col>
+                        </v-row>
+                    </v-container>
+                  </v-card>
+                </v-col>
+              </v-row>
+
+          <v-row class="mt-n1">
                 <v-col
                   cols="12"
                   class="text-right"
@@ -580,485 +734,6 @@
                   </v-btn>
                 </v-col>
               </v-row>
-              <!--<v-row>
-
-              <v-col cols="12" md="4">
-              <v-select
-                        v-model="Uzbekistan"
-                        :items="countries"
-                        menu-props="auto"
-                        label="Tug'ilgan joyi"
-                        hide-details
-                        prepend-icon="mdi-map"
-                        single-line
-                      ></v-select>
-              </v-col>
-              <v-col cols="12" md="4">
-                <v-select
-                  v-model="tuman"
-                  :items="tumanlar"
-                  menu-props="auto"
-                  label="Viloyati"
-                  hide-details
-                  single-line
-                ></v-select>
-              </v-col>
-                <v-col
-                  cols="12"
-                  md="4"
-                >
-                  <v-text-field
-                    label="Tuman/Shahar"
-                    class="purple-input"
-                  />
-                </v-col>
-                <v-col
-                  cols="12"
-                  md="4"
-                >
-                <v-select
-                v-model="millat"
-                :items="millatlar"
-                  menu-props="auto"
-                  label="MIllati"
-                  hide-details
-                  single-line
-                  ></v-select>
-                </v-col>
-                <v-col
-                  cols="12"
-                  md="4">
-                  <v-row justify="center" >
-                  <v-radio-group
-                  v-model="radios"
-                  mandatory
-                  row
-                  label="Jinsi"
-                  >
-                  <v-radio
-                  label="Erkak"
-                  value="Male"
-                  ></v-radio>
-                  <v-radio
-                  label="Ayol"
-                  value="Female"
-                  ></v-radio>
-                  </v-radio-group>
-                  </v-row>
-                  </v-col>
-                <v-col
-                  cols="12"
-                  md="4"
-                >
-                <v-select
-                v-model="malumoti"
-                :items="malumoti_inst"
-                  menu-props="auto"
-                  label="Ma'lumoti"
-                  hide-details
-                  single-line
-                  ></v-select>
-                </v-col>
-                <v-col
-                  cols="12"
-                  md="3"
-                >
-                  <v-text-field
-                    label="Tamomlagan ..."
-                    class="purple-input"
-                  />
-                </v-col>
-                <v-col
-                  cols="12"
-                  md="3"
-                >
-                  <v-text-field
-                    label="Mutaxasisligi"
-                    class="purple-input"
-                  />
-                </v-col>
-                <v-col
-                  cols="12"
-                  md="3"
-                >
-                  <v-text-field
-                    label="Ilmiy darajasi"
-                    class="purple-input"
-                  />
-                </v-col>
-                <v-col
-                  cols="12"
-                  md="3"
-                >
-                  <v-text-field
-                    label="Ilmiy unvoni"
-                    class="purple-input"
-                  />
-                </v-col>
-
-                <v-col cols="12" md="4">
-                <v-combobox
-                clearable
-                v-model="language"
-                :items="languages"
-                label="Chet tillarini bilishi"
-                multiple
-                chips
-                >
-          <template v-slot:selection="data">
-            <v-chip
-              :key="JSON.stringify(data.item)"
-              v-bind="data.attrs"
-              :input-value="data.selected"
-              :disabled="data.disabled"
-              @click:close="data.parent.selectItem(data.item)"
-            >
-              <v-avatar
-                class="accent white--text"
-                left
-                v-text="data.item.slice(0, 1).toUpperCase()"
-              ></v-avatar>
-              {{ data.item }}
-            </v-chip>
-          </template>
-        </v-combobox>
-                </v-col>
-                <v-col
-                  cols="12"
-                  md="8"
-                >
-                  <v-text-field 
-                    label="Mukofotlari"
-                    class="purple-input mt-3"
-                  />
-                </v-col>
-                <v-col
-                  cols="12"
-                  md="4"
-                >
-                <v-select
-                clearable
-                v-model="army"
-                :items="select_armyType"
-                  menu-props="auto"
-                  label="Xarbiy xizmatga borganligi"
-                  hide-details
-                  single-line
-                  ></v-select>
-                </v-col>
-                <v-col
-                  cols="12"
-                  md="4"
-                >
-                  <v-text-field 
-                    label="Xarbiy (maxsus) unvoni"
-                    class="purple-input "
-                  />
-                </v-col>
-                <v-col
-                  cols="12"
-                  md="4"
-                >
-                <v-select
-                clearable
-                v-model="nogironlik"
-                :items="nogironligi"
-                  menu-props="auto"
-                  label="Nogironligi"
-                  hide-details
-                  single-line
-                  ></v-select>
-                </v-col>
-                <v-col
-                  cols="12"
-                  md="6"
-                >
-                  <v-text-field
-                    label="Kengash deputatligi ..."
-                    class="purple-input"
-                  />
-                </v-col>
-                <v-col
-                  cols="12"
-                  md="6"
-                >
-                <v-select
-                clearable
-                small-chips
-                v-model="partiyaviylik"
-                :items="partiyaviyligi"
-                  menu-props="auto"
-                  label="Partiyaviyligi"
-                  hide-details
-                  single-line
-                  ></v-select>
-                </v-col>
-                <v-col cols="12"
-                  md="4">
-                <v-menu
-                  ref="menu3"
-                  v-model="menu3"
-                  :close-on-content-click="false"
-                  :return-value.sync="date"
-                  transition="scale-transition"
-                  offset-y
-                  min-width="auto"
-                  >
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-text-field
-                      v-model="date"
-                      label="Ushbu sanadan buyon"
-                      prepend-icon="mdi-calendar"
-                      readonly
-                      v-bind="attrs"
-                      v-on="on"
-                    ></v-text-field>
-                  </template>
-                  <v-date-picker
-                    v-model="date3"
-                    no-title
-                    scrollable
-                  >
-                    <v-spacer></v-spacer>
-                    <v-btn
-                      text
-                      color="primary"
-                      @click="menu3 = false"
-                    >
-                      Cancel
-                    </v-btn>
-                    <v-btn
-                      text
-                      color="primary"
-                      @click="$refs.menu3.save(date3)"
-                    >
-                      OK
-                    </v-btn>
-                  </v-date-picker>
-                </v-menu>
-            </v-col>
-            <v-col cols="12" md="4">
-              <v-combobox
-              clearable
-              v-model="select_lavozim"
-              :items="items"
-              label="Lavozimni tanlash"
-              hide-selected
-              ></v-combobox>
-            </v-col>
-            <v-col
-                  cols="12"
-                  md="4"
-                >
-                  <v-text-field
-                    label="Lavozim"
-                    class="purple-input"
-                  />
-                </v-col>
-                <v-col cols="12" md="2">
-                <v-select
-                v-model="current_country"
-                :items="countries"
-                menu-props="auto"
-                label="Mamlakat"
-                hide-details
-                prepend-icon="mdi-map"
-                single-line
-                ></v-select>
-                </v-col>
-                <v-col cols="12" md="2">
-                <v-select
-                v-model="current_tuman"
-                :items="tumanlar"
-                menu-props="auto"
-                label="Viloyati"
-                hide-details
-                single-line
-                ></v-select>
-                </v-col>
-                <v-col
-                  cols="12"
-                  md="2"
-                >
-                  <v-text-field
-                    v-model="current_city"
-                    label="Tuman/Shahar"
-                    class="purple-input"
-                  />
-                </v-col>
-                <v-col
-                  cols="12"
-                  md="2"
-                >
-                  <v-text-field
-                    v-model="current_address"
-                    label="Manzil"
-                    class="purple-input"
-                  />
-                </v-col>
-                <v-col
-                cols="12"
-                md="2"
-                >
-                <v-text-field
-                v-model="email"
-                :rules="[
-                v => !!v || 'E-mail is required',
-                v => /.+@.+/.test(v) || 'E-mail must be valid',
-                ]"
-                label="E-mail"
-                required
-                ></v-text-field>
-                </v-col>
-                <v-col
-                  cols="12"
-                  md="2"
-                >
-                  <v-text-field
-                    phone
-                    label="Raqam"
-                    class="purple-input"
-                    v-model="phone"
-                    :rules="phoneRule"
-                  />
-                </v-col>
-                <v-col
-                  cols="12"
-                  class="text-right"
-                >
-                </v-col>
-                <v-col
-                  cols="12"
-                  class="text-right"
-                >
-                </v-col>
-                <v-row justify="center">
-                <v-col cols="12" md="2">
-                  
-  <v-file-input
-    v-model="passport_nusxasi"
-    label="Pasport nusxasi"
-    
-    prepend-icon="mdi-paperclip"
-  >
-    <template v-slot:selection="{ text }">
-      <v-chip
-        small
-        label
-        color="primary"
-      >
-        {{ text }}
-      </v-chip>
-    </template>
-  </v-file-input>
-                </v-col>
-                <v-col cols="12" md="2">
-  <v-file-input
-    v-model="diplom_nusxasi"
-    label="Diplom nusxasi"
-    
-    prepend-icon="mdi-paperclip"
-  >
-    <template v-slot:selection="{ text }">
-      <v-chip
-        small
-        label
-        color="primary"
-      >
-        {{ text }}
-      </v-chip>
-    </template>
-  </v-file-input>
-                </v-col>
-                <v-col cols="12" md="2">
-  <v-file-input
-    v-model="mexnat_daftarchasi"
-    label="Mexnat daftarchasi"
-    
-    prepend-icon="mdi-paperclip"
-  >
-    <template v-slot:selection="{ text }">
-      <v-chip
-        small
-        label
-        color="primary"
-      >
-        {{ text }}
-      </v-chip>
-    </template>
-  </v-file-input>
-                </v-col>
-                <v-col cols="12" md="2">
-  <v-file-input
-    v-model="stir_nusxasi"
-    label="STIR nusxasi"
-    
-    prepend-icon="mdi-paperclip"
-  >
-    <template v-slot:selection="{ text }">
-      <v-chip
-        small
-        label
-        color="primary"
-      >
-        {{ text }}
-      </v-chip>
-    </template>
-  </v-file-input>
-                </v-col>
-                <v-col cols="12" md="2">
-  <v-file-input
-    v-model="buyruq_nusxasi"
-    label="Buyruq nusxasi"
-    
-    prepend-icon="mdi-paperclip"
-  >
-    <template v-slot:selection="{ text }">
-      <v-chip
-        small
-        label
-        color="primary"
-      >
-        {{ text }}
-      </v-chip>
-    </template>
-  </v-file-input>
-                </v-col>
-                </v-row>
-
-
-                <v-col
-                  cols="12"
-                  class="text-right"
-                >
-                </v-col>
-                <v-col
-                  cols="12"
-                  class="text-right"
-                >
-                <v-btn
-                    @click="reset"
-                    color="primary"
-                    class="mr-2"
-                  >
-                    Tozalash
-                  </v-btn>
-                  <v-btn
-                    color="success"
-                    class="mr-2"
-                    @click="submit"
-                  >
-                    Saqlash
-                  </v-btn>
-                  <v-btn
-                    @click="chiqish"
-                    color="danger"
-                    class="mr-0"
-                  >
-                    Chiqish
-                  </v-btn>
-                </v-col>
-              </v-row>-->
             </v-container>
           </v-form>
           <v-snackbar
@@ -1082,19 +757,14 @@
 
 <script>
 import PictureInput from 'vue-picture-input'
+import moment from 'moment'
 import axios from "axios"
   export default {
     data: () => ({
       snackbar: false,
       text: 'Xodim muvaffaqiyatli qo\'shildi',
       timeout: 2000,
-      valid: true,
-      passport: '',
-      passportRules: [
-        v => !!v || 'Passport raqami kiritilishi shart',
-        v => (v && v.length >= 9) || 'Passport raqami 9 tadan kam bo\'lmasligi kerak',
-      ],
-      
+      valid: true,      
       name:'',
       nameRules: [
         v => !!v || 'Ism kiritilishi shart',
@@ -1112,14 +782,17 @@ import axios from "axios"
       Uzbekistan:{ countryName: '', countryId: null },
       countries: [],
       country:null,
+      CurrentCountry:null,
       
       tuman:{ regionName: '', regionId: null },
       tumanlar:  [],
+      tumanlar1:  [],
       tuman_id_for_districts: null,
 
 
       tuman_shaharlar:{ districtName: '', disrictId: null},
       tuman_shahar: [],
+      tuman_shahar1: [],
         millat:{ nationalityName: '', nationalityId: null},
         millatlar: [],
         radios: null,
@@ -1135,8 +808,8 @@ import axios from "axios"
         partiyaviyligi: [],
         select_lavozim: '',
         current_country: { countryName: '', countryId: null },
-        current_tuman: '',
-        current_city: '',
+        current_tuman: { regionName: '', regionId: null },
+        currentDistrict: { districtName: '', districtId: null },
         current_address: '',
         email: '',
         phone: '',
@@ -1150,6 +823,17 @@ import axios from "axios"
         mexnat_daftarchasi:[],
         stir_nusxasi:[],
         buyruq_nusxasi: [],
+        edOrganizationName:'',
+        speciality: '',
+        
+        givenBy: '',
+        expirationDate: '',
+        givenDate: '',
+        passport: '',
+        passportRules: [
+          v => !!v || 'Passport raqami kiritilishi shart',
+          v => (v && v.length >= 9) || 'Passport raqami 9 tadan kam bo\'lmasligi kerak',
+        ],
 
 
 
@@ -1165,6 +849,20 @@ import axios from "axios"
       modal: false,
     }),
   methods: {
+    
+    selectedCurrentCountryAddress(event){
+       this.CurrentCountry = event;
+      axios
+      .get(`https://localhost:44343/Regions/${this.CurrentCountry}`, {
+          },{
+            "headers": {
+            "content-type": "application/json",
+      },
+      })
+      .then(response =>{
+        this.tumanlar1=response.data
+      });
+    },
     selectedCountry(event){
        this.country = event;
       axios
@@ -1176,9 +874,26 @@ import axios from "axios"
       })
       .then(response =>{
         this.tumanlar=response.data
-        console.log(this.tumanlar)
       });
     },
+
+    selectedCurrentRegionyAddress(event){
+      this.tuman_id_for_districts = event;
+
+      axios
+      .get(`https://localhost:44343/Districts/${this.tuman_id_for_districts}`, {
+          },{
+            "headers": {
+            "content-type": "application/json",
+      },
+      })
+      .then(response =>{
+        this.tuman_shahar1=response.data
+      });
+
+      
+    },
+
 
     selectedTuman(event){
       this.tuman_id_for_districts = event;
@@ -1192,7 +907,6 @@ import axios from "axios"
       })
       .then(response =>{
         this.tuman_shahar=response.data
-        console.log(this.tuman_shahar)
       });
 
       
@@ -1217,11 +931,12 @@ import axios from "axios"
 
 }); 
 //this.date2+"T06:33:32.593Z"
-console.log(this.image)
+
       axios
       .post('https://localhost:44343/api/ApplicationUser/SignUP', {
-        username:  'ABCDEFGdAfddaQa',
+        username:  this.lastName+this.passport,
         email: this.email,
+        phoneNumber: this.phone,
         emailConfirmed: true,
         phoneNumberConfirmed: true,
         password: "User@123",
@@ -1236,12 +951,39 @@ console.log(this.image)
         workbookURL: "kajndjan",
         stirUrl: "dsdasdad",
         orderUrl: "dadadad",
-        isDismissed: true,
-        createdOn: "2021-04-13T05:40:09.549Z",
-        updatedOn: "2021-04-13T05:40:09.549Z",
-        fullAddress: this.current_address,
-        countryId: parseInt(this.Uzbekistan.countryId),
-        districtId: parseInt(this.tuman.regionId),
+        isDismissed: false,
+        createdOn: moment().format(),
+        updatedOn: moment().format(),
+        //countryId: parseInt(this.Uzbekistan.countryId),
+        //districtId: parseInt(this.tuman.regionId),
+        fullBirthAddress: "string",
+        currentAddress: this.current_address,
+        passport: {
+        passportSeries: this.passport,
+        givenDate: this.date+"T06:33:32.593Z",
+        expirationDate: this.date1+"T06:33:32.593Z",
+        givenBy: this.givenBy
+        },
+      
+        educations: [
+        {
+          edOrganizationName: this.edOrganizationName,
+          speciality: this.speciality,
+          diplomaUrl: "string",
+          edOrgAddress: "string",
+          enteredDate: "2021-04-29T09:28:06.688Z",
+          graduatedDate: "2021-04-29T09:28:06.688Z",
+          scienceDegreeId: 1,
+          edInformationId: 0,
+          edOrgCountryId: 0,
+          edOrgDistrictId: 0,
+          employeeId: "string"
+        }
+        ],
+        birthCountryId: parseInt(this.Uzbekistan.countryId),
+        birthDistrictId: parseInt(this.tuman.regionId),
+        currentCountryId:  parseInt(this.current_country.countryId),
+        currentDistrictId: parseInt(this.currentDistrict.districtId),
         nationalityId: parseInt(this.millat.nationalityId),
         partisanshipId: parseInt(this.partiyaviylik.partisanshipId),
         scienceDegreeId: 1,
@@ -1249,15 +991,14 @@ console.log(this.image)
         militaryServiceStatusId:parseInt(this.army.militaryServiceStatusId),
         militaryTitleId:1,
         disabilityId:parseInt(this.nogironlik.disabilityId),
-    },{
+        },{
       "headers": {
       "content-type": "application/json",
-},
-})
+      },
+    })
       .then(response => (console.log(response)));
+
     },
-
-
 
       onChange () {
       console.log('New picture selected!')
@@ -1371,27 +1112,3 @@ console.log(this.image)
       }
   }
 </script>
-<!--
-
-      data:() => ({
-select: { state: 'Florida', abbr: 'FL' },
-        items: [
-          { state: 'Florida', abbr: 'FL' },
-          { state: 'Georgia', abbr: 'GA' },
-          { state: 'Nebraska', abbr: 'NE' },
-          { state: 'California', abbr: 'CA' },
-          { state: 'New York', abbr: 'NY' },
-        ],
-    dialog: false,
-    content: "",
-    date: new Date().toDateString.substr(0, 10),
-    dateFormatted: this.formatDate(new Date().toISOString().substr(0, 10)),
-    menu1: false,
-    
-    rules: [
-        value => !value || value.size < 2000000 || 'Avatar size should be less than 2 MB!',
-    ],
-
-    email: '',
-    files: [],
-  }),-->

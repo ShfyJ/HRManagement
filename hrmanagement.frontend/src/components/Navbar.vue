@@ -7,6 +7,7 @@
         <img class="mr-3 mt-2" :src="require('../assets/logo3.png')" height="120"/>
       </v-toolbar-title>
       <v-spacer></v-spacer>
+      {{time}}
       <LocaleSwitcher/>
       <v-btn text 
         v-for="item in items"
@@ -157,17 +158,13 @@
 </template>
 <script>
 import LocaleSwitcher from "@/components/LocaleSwitcher";
-
+import moment from 'moment'
 export default {
-  methods: {
-    profileChange(){
-      this.$router.push({ name: 'profile_assistant_info' });
-      
-    }
-  },
+
 
 data: () => ({
     drawer: true,
+    time: null,
     items: [
         {
           icon: 'exit_to_app',   
@@ -202,6 +199,22 @@ data: () => ({
   }),
   components: {
     LocaleSwitcher
+  },
+    ready: function () {
+    this.loadData();
+
+    setInterval(function () {
+      this.loadData();
+    }.bind(this), 1000); 
+  },
+  methods: {
+    loadData: function () {
+      this.time=moment().format('LTS')
+    },
+    profileChange(){
+      this.$router.push({ name: 'profile_assistant_info' });
+      
+    }
   },
   
 };
