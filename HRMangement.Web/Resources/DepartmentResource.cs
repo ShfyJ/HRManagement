@@ -11,6 +11,8 @@ namespace HRManagement.Web.Resources
         public int DepartmentId { get; set; }
         public string DepartmentName { get; set; }
         public bool Status { get; set; }
+        public bool IsIndependentSection { get; set; }
+        public int OrganizationId { get; set; }
         public OrganizationResource Organization { get; set; }
       //  public ICollection<Section> Sections { get; set; }
     }
