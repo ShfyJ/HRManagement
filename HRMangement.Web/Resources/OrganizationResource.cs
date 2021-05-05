@@ -18,7 +18,7 @@ namespace HRManagement.Web.Resources
         public string OrganizationNameInRuShort { get; set; }
         public string OrganizationNameInEngShort { get; set; }
         public bool Status { get; set; }
-        public ICollection<DepartmentResource>? DepartmentResources { get; set; }
-        public ICollection<SectionResource> SectionResources { get; set; }
+        //public ICollection<DepartmentResource>? Departments { get; set; }
+        //public ICollection<SectionResource> Sections { get; set; }
     }
 }

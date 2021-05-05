@@ -53,7 +53,6 @@ namespace HRManagement.Data.Models.Auth
         public int? MilitaryTitleId { get; set; }
         public int? DisabilityId { get; set; }
         public int? SectionId { get; set; } //bo'lim Id 
-        public int? IndependentSectionId { get; set; }
         public int? GroupId { get; set; }
         public int? PositionId { get; set; } //Lavozim Id
         

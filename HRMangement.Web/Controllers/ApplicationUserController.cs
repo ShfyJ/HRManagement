@@ -46,8 +46,9 @@ namespace HRMangement.Web.Controllers
         {
             _logger.LogInformation("Getting all users");
             var applicationUsers = await _applicationUserService.GetAllUsersWithAllInfos();
+            var applicationUserResources = _mapper.Map<IEnumerable<ApplicationUser>, IEnumerable<ApplicationUserResource>>(applicationUsers);
 
-            return Ok(applicationUsers);
+            return Ok(applicationUserResources);
         }
 
         [HttpGet("{id}")]

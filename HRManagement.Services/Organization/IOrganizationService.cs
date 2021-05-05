@@ -19,6 +19,7 @@ namespace HRManagement.Services.Organization
         #region Department methods ...
         Task<IEnumerable<Models.Department>> GetAllDepartmentsWithAllInfos();
         Task<Models.Department> GetDepartmentById(int id);
+        Task<IEnumerable<Models.Department>> GetDepartmentsByOrganizationId(int id);
         Task<ServiceResponse<Models.Department>> AddDepartment(Models.Department newDepartment);
         Task<ServiceResponse<Models.Department>> UpdateDepartmentInfo(Models.Department departmentToBeUpdated, Models.Department department);
         Task<ServiceResponse<Models.Department>> DeleteDepartment(int id);
@@ -27,6 +28,7 @@ namespace HRManagement.Services.Organization
         #region Section methods ...
         Task<IEnumerable<Models.Section>> GetAllSectionsWithAllInfos();
         Task<Models.Section> GetSectionById(int id);
+        Task<IEnumerable<Models.Section>> GetSectionsByDepartmentId(int id);
         Task<ServiceResponse<Models.Section>> AddSection(Models.Section newSection);
         Task<ServiceResponse<Models.Section>> UpdateSectionInfo(Models.Section sectionToBeUpdated, Models.Section section);
         Task<ServiceResponse<Models.Section>> DeleteSection(int id);
@@ -35,6 +37,8 @@ namespace HRManagement.Services.Organization
         #region Group methods ...
         Task<IEnumerable<Models.Group>> GetAllGroupsWithAllInfos();
         Task<Models.Group> GetGroupById(int id);
+        Task<IEnumerable<Models.Group>> GetGroupsBySectionId(int id);
+        Task<IEnumerable<Models.Group>> GetGroupsByDepartmentId(int id);
         Task<ServiceResponse<Models.Group>> AddGroup(Models.Group newGroup);
         Task<ServiceResponse<Models.Group>> UpdateGroupInfo(Models.Group groupToBeUpdated, Models.Group group);
         Task<ServiceResponse<Models.Group>> DeleteGroup(int id);

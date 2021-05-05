@@ -294,8 +294,7 @@ namespace HRManagement.Services.Organization
         {
             return await _db.Departments
                 .Where(d => d.Status == true)
-                .Include(d => d.Sections)
-                .ThenInclude(s => s.Groups)
+                .Include(d => d.Organization)
                 .OrderBy(d => d.DepartmentId)
                 .ToListAsync();
         }
@@ -304,6 +303,8 @@ namespace HRManagement.Services.Organization
         {
             return await _db.Groups
                 .Where(g => g.Status == true)
+                .Include(g => g.Section)
+                .Include(g => g.Department)
                 .OrderBy(g => g.GroupId)
                 .ToListAsync();
         }
@@ -313,10 +314,6 @@ namespace HRManagement.Services.Organization
         {
             return await _db.Organizations
                 .Where(o => o.Status == true)
-                .Include(o => o.Departments)
-                .ThenInclude(d => d.Sections)
-                .ThenInclude(s => s.Groups)
-                .Include(o => o.Sections)
                 .OrderBy(o => o.OrganizationId)
                 .ToListAsync();
         }
@@ -325,7 +322,7 @@ namespace HRManagement.Services.Organization
         {
             return await _db.Sections
                  .Where(s => s.Status == true)
-                 .Include(s => s.Groups)
+                 .Include(s => s.Department)
                  .OrderBy(s => s.SectionId)
                  .ToListAsync();
         }
@@ -333,24 +330,45 @@ namespace HRManagement.Services.Organization
         public async Task<Models.Department> GetDepartmentById(int id)
         {
             return await _db.Departments
-                .Include(d => d.Sections)
-                .ThenInclude(s => s.Groups)
+                .Include(d => d.Organization)
                 .FirstOrDefaultAsync(d => d.DepartmentId == id);
+        }
+
+        public async Task<IEnumerable<Models.Department>> GetDepartmentsByOrganizationId(int id)
+        {
+            return await _db.Departments
+                .Where(d => d.Status == true && d.OrganizationId == id)
+                .OrderBy(d => d.DepartmentId)
+                .ToListAsync();
         }
 
         public async Task<Models.Group> GetGroupById(int id)
         {
             return await _db.Groups
+                .Include(g => g.Section)
+                .Include(g => g.Department)
                 .FirstOrDefaultAsync(g => g.GroupId == id);
+        }
+
+        public async Task<IEnumerable<Models.Group>> GetGroupsByDepartmentId(int id)
+        {
+            return await _db.Groups                
+                .Where(g => g.Status == true && g.DepartmentId == id)
+                .OrderBy(g => g.GroupId)
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<Models.Group>> GetGroupsBySectionId(int id)
+        {
+            return await _db.Groups
+                .Where(g => g.Status == true && g.SectionId == id)
+                .OrderBy(g => g.GroupId)
+                .ToListAsync();
         }
 
         public async Task<Models.Organization> GetOrganizationById(int id)
         {
             return await _db.Organizations
-                .Include(o => o.Departments)
-                .ThenInclude(d => d.Sections)
-                .ThenInclude(s => s.Groups)
-                .Include(o => o.Sections)
                 .FirstOrDefaultAsync(o => o.OrganizationId == id);
 
 
@@ -359,8 +377,16 @@ namespace HRManagement.Services.Organization
         public async Task<Models.Section> GetSectionById(int id)
         {
             return await _db.Sections
-                .Include(s => s.Groups)
+                .Include(s => s.Department)
                 .FirstOrDefaultAsync(s => s.SectionId == id);
+        }
+
+        public async Task<IEnumerable<Models.Section>> GetSectionsByDepartmentId(int id)
+        {
+            return await _db.Sections
+                .Where(s => s.Status == true && s.DepartmentId == id)
+                .OrderBy(s => s.SectionId)
+                .ToListAsync();
         }
 
         public async Task<ServiceResponse<Models.Department>> UpdateDepartmentInfo(Models.Department departmentToBeUpdated, Models.Department department)
@@ -379,6 +405,8 @@ namespace HRManagement.Services.Organization
             try
             {
                 departmentToBeUpdated.DepartmentName = department.DepartmentName;
+                departmentToBeUpdated.IsDepartment = department.IsDepartment;
+                departmentToBeUpdated.IsIndependentSection = department.IsIndependentSection;
                 departmentToBeUpdated.OrganizationId = department.OrganizationId;
                 departmentToBeUpdated.Status = department.Status;
 
@@ -421,6 +449,7 @@ namespace HRManagement.Services.Organization
             {
                 groupToBeUpdated.GroupName = group.GroupName;
                 groupToBeUpdated.SectionId = group.SectionId;
+                groupToBeUpdated.DepartmentId = group.DepartmentId;
                 groupToBeUpdated.Status = group.Status;
 
                 await _db.SaveChangesAsync();
@@ -509,9 +538,6 @@ namespace HRManagement.Services.Organization
             {
                 sectionToBeUpdated.SectionName = section.SectionName;
                 sectionToBeUpdated.DepartmentId = section.DepartmentId;
-                sectionToBeUpdated.OrganizationId = section.OrganizationId;
-                sectionToBeUpdated.IsDepartmentSection = section.IsDepartmentSection;
-                sectionToBeUpdated.IsIndependentSection = section.IsIndependentSection;
                 sectionToBeUpdated.Status = section.Status;
 
                 await _db.SaveChangesAsync();

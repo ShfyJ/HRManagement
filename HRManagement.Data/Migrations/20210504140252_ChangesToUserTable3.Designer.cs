@@ -3,15 +3,17 @@ using System;
 using HRManagement.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace HRManagement.Data.Migrations
 {
     [DbContext(typeof(HRManageDBContext))]
-    partial class HRManageDBContextModelSnapshot : ModelSnapshot
+    [Migration("20210504140252_ChangesToUserTable3")]
+    partial class ChangesToUserTable3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -87,12 +89,6 @@ namespace HRManagement.Data.Migrations
 
                     b.Property<string>("DepartmentName")
                         .HasColumnType("text");
-
-                    b.Property<bool>("IsDepartment")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool>("IsIndependentSection")
-                        .HasColumnType("boolean");
 
                     b.Property<int>("OrganizationId")
                         .HasColumnType("integer");
@@ -343,9 +339,6 @@ namespace HRManagement.Data.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<int?>("DepartmentId")
-                        .HasColumnType("integer");
-
                     b.Property<string>("GroupName")
                         .HasColumnType("text");
 
@@ -356,8 +349,6 @@ namespace HRManagement.Data.Migrations
                         .HasColumnType("boolean");
 
                     b.HasKey("GroupId");
-
-                    b.HasIndex("DepartmentId");
 
                     b.HasIndex("SectionId");
 
@@ -671,6 +662,15 @@ namespace HRManagement.Data.Migrations
                     b.Property<int?>("DepartmentId")
                         .HasColumnType("integer");
 
+                    b.Property<bool>("IsDepartmentSection")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsIndependentSection")
+                        .HasColumnType("boolean");
+
+                    b.Property<int?>("OrganizationId")
+                        .HasColumnType("integer");
+
                     b.Property<string>("SectionName")
                         .HasColumnType("text");
 
@@ -680,6 +680,8 @@ namespace HRManagement.Data.Migrations
                     b.HasKey("SectionId");
 
                     b.HasIndex("DepartmentId");
+
+                    b.HasIndex("OrganizationId");
 
                     b.ToTable("Sections");
                 });
@@ -1104,6 +1106,9 @@ namespace HRManagement.Data.Migrations
                     b.Property<int?>("GroupId")
                         .HasColumnType("integer");
 
+                    b.Property<int?>("IndependentSectionId")
+                        .HasColumnType("integer");
+
                     b.Property<bool>("IsDismissed")
                         .HasColumnType("boolean");
 
@@ -1292,15 +1297,9 @@ namespace HRManagement.Data.Migrations
 
             modelBuilder.Entity("HRManagement.Models.Group", b =>
                 {
-                    b.HasOne("HRManagement.Models.Department", "Department")
-                        .WithMany("Groups")
-                        .HasForeignKey("DepartmentId");
-
                     b.HasOne("HRManagement.Models.Section", "Section")
                         .WithMany("Groups")
                         .HasForeignKey("SectionId");
-
-                    b.Navigation("Department");
 
                     b.Navigation("Section");
                 });
@@ -1342,7 +1341,13 @@ namespace HRManagement.Data.Migrations
                         .WithMany("Sections")
                         .HasForeignKey("DepartmentId");
 
+                    b.HasOne("HRManagement.Models.Organization", "Organization")
+                        .WithMany("Sections")
+                        .HasForeignKey("OrganizationId");
+
                     b.Navigation("Department");
+
+                    b.Navigation("Organization");
                 });
 
             modelBuilder.Entity("HRManagement.Models.UserBusinessTrips", b =>
@@ -1596,14 +1601,14 @@ namespace HRManagement.Data.Migrations
 
             modelBuilder.Entity("HRManagement.Models.Department", b =>
                 {
-                    b.Navigation("Groups");
-
                     b.Navigation("Sections");
                 });
 
             modelBuilder.Entity("HRManagement.Models.Organization", b =>
                 {
                     b.Navigation("Departments");
+
+                    b.Navigation("Sections");
                 });
 
             modelBuilder.Entity("HRManagement.Models.Section", b =>

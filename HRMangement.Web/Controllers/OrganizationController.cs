@@ -24,7 +24,7 @@ namespace HRManagement.Web.Controllers
         }
 
         #region Organization APIs starts here ...
-        [HttpGet("organization")]
+        [HttpGet("organizations")]
         public async Task<ActionResult<IEnumerable<OrganizationResource>>> GetAllOrganizationsWithAllInfos()
         {
             _logger.LogInformation("Getting all organizations");
@@ -99,7 +99,7 @@ namespace HRManagement.Web.Controllers
         #endregion
 
         #region Department APIs starts here ...
-        [HttpGet("Department")]
+        [HttpGet("Departments")]
         public async Task<ActionResult<IEnumerable<DepartmentResource>>> GetAllDepartmentsWithAllInfos()
         {
             _logger.LogInformation("Getting all departments");
@@ -117,6 +117,16 @@ namespace HRManagement.Web.Controllers
             var departmentResource = _mapper.Map<Models.Department, DepartmentResource>(department);
 
             return Ok(departmentResource);
+        }
+
+        [HttpGet("Departments/{id}")]
+        public async Task<ActionResult<IEnumerable<DepartmentResource>>> GetDepartmentsByOrganizationId(int id)
+        {
+            _logger.LogInformation("Getting all departments by OrganizationId");
+            var departments = await _organizationService.GetDepartmentsByOrganizationId(id);
+            var departmentResources = _mapper.Map<IEnumerable<Models.Department>, IEnumerable<DepartmentResource>>(departments);
+
+            return Ok(departmentResources);
         }
 
         [HttpPost("Department")]
@@ -174,7 +184,7 @@ namespace HRManagement.Web.Controllers
         #endregion
 
         #region Section APIs starts here ...
-        [HttpGet("Section")]
+        [HttpGet("Sections")]
         public async Task<ActionResult<IEnumerable<SectionResource>>> GetAllSectionsWithAllInfos()
         {
             _logger.LogInformation("Getting all Sections");
@@ -192,6 +202,16 @@ namespace HRManagement.Web.Controllers
             var sectionResource = _mapper.Map<Models.Section, SectionResource>(section);
 
             return Ok(sectionResource);
+        }
+
+        [HttpGet("Sections/{id}")]
+        public async Task<ActionResult<IEnumerable<SectionResource>>> GetSectionsByDepartmentId(int id)
+        {
+            _logger.LogInformation("Getting all Sections by DepartmentId");
+            var sections = await _organizationService.GetSectionsByDepartmentId(id);
+            var sectionResources = _mapper.Map<IEnumerable<Models.Section>, IEnumerable<SectionResource>>(sections);
+
+            return Ok(sectionResources);
         }
 
         [HttpPost("Section")]
@@ -249,7 +269,7 @@ namespace HRManagement.Web.Controllers
         #endregion
 
         #region Group APIs starts here ...
-        [HttpGet("Group")]
+        [HttpGet("Groups")]
         public async Task<ActionResult<IEnumerable<GroupResource>>> GetAllGroupsWithAllInfos()
         {
             _logger.LogInformation("Getting all Groups");
@@ -267,6 +287,26 @@ namespace HRManagement.Web.Controllers
             var groupResource = _mapper.Map<Models.Group, GroupResource>(group);
 
             return Ok(groupResource);
+        }
+
+        [HttpGet("GroupsByDepartment/{id}")]
+        public async Task<ActionResult<IEnumerable<GroupResource>>> GetGroupsByDepartmentId(int id)
+        {
+            _logger.LogInformation("Getting all Groups by IdependentSectionId");
+            var groups = await _organizationService.GetGroupsByDepartmentId(id);
+            var groupResources = _mapper.Map<IEnumerable<Models.Group>, IEnumerable<GroupResource>>(groups);
+
+            return Ok(groupResources);
+        }
+
+        [HttpGet("GroupsBySection/{id}")]
+        public async Task<ActionResult<IEnumerable<GroupResource>>> GetGroupsBySectionId(int id)
+        {
+            _logger.LogInformation("Getting all Groups by SectionId");
+            var groups = await _organizationService.GetGroupsBySectionId(id);
+            var groupResources = _mapper.Map<IEnumerable<Models.Group>, IEnumerable<GroupResource>>(groups);
+
+            return Ok(groupResources);
         }
 
         [HttpPost("Group")]

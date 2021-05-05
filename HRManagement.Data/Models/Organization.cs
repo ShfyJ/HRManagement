@@ -22,7 +22,6 @@ namespace HRManagement.Models
         public string OrganizationNameInEngShort { get; set; }
         public bool Status { get; set; }
         public ICollection<Department>? Departments { get; set; }
-        public ICollection<Section>? Sections { get; set; } //mustaqil bo'linmalar
 
     }
 }

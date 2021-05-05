@@ -9,6 +9,8 @@ namespace HRManagement.Web.Resources
     {
         public string DepartmentName { get; set; }
         public int OrganizationId { get; set; }
+        public bool IsDepartment { get; set; }
+        public bool IsIndependentSection { get; set; }
         public bool Status { get; set; }
     }
 }
