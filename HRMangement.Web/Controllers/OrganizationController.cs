@@ -235,7 +235,7 @@ namespace HRManagement.Web.Controllers
 
         }
 
-        [HttpPut("Section{id}")]
+        [HttpPut("Section/{id}")]
         public async Task<ActionResult<SectionResource>> UpdateSection(int id, [FromBody] SaveSectionResource saveSectionResource)
         {
             _logger.LogInformation("Editing a Section");

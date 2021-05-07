@@ -38,6 +38,8 @@ namespace HRManagement.Web.Mapping
             CreateMap<Department, DepartmentResource>();
             CreateMap<Section, SectionResource>();
             CreateMap<Group, GroupResource>();
+            CreateMap<Department, DepartmentForSectionResource>();
+            CreateMap<Section, SectionForGroupResource>();
 
 
             //Resource To Domain

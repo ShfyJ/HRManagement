@@ -35,7 +35,7 @@ namespace HRManagement.Web.Resources
         public DateTimeOffset LockoutEnd { get; set; }
         public bool LockoutEnabled { get; set; }
 
-        //public ICollection<Education> Educations { get; set; }
+        public ICollection<Language> Languages { get; set; }
         public SavePassportResource Passport { get; set; }
         public ICollection<SaveEducationResource> Educations { get; set; }
         public int? BirthCountryId { get; set; }
