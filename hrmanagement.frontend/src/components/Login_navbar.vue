@@ -65,7 +65,10 @@
                 :filter="filter"
                 rounded
                 hoverable
-                class="myTitle"
+                open-on-click
+                
+                :active.sync="active"
+
               >
                 <template v-slot:prepend="{ item }">
                   <v-icon

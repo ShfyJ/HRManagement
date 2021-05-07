@@ -32,6 +32,9 @@ import Partisanship from '../views/spravochnik/add_partisanships.vue'
 import Relativity from '../views/spravochnik/add_relativity.vue'
 import ScienceDegree from '../views/spravochnik/science_degree.vue'
 import VacationType from '../views/spravochnik/add_vacation.vue'
+import AddDepartment from '../views/tarkibiy_tuzilma/add_department.vue'
+import section from '../views/tarkibiy_tuzilma/section.vue'
+
 
 Vue.use(VueRouter);
 
@@ -64,7 +67,15 @@ const routes = [
   },
   {
     path: "/projects/:id",
-    component: Add_tashkilot
+    component: Add_tashkilot,
+  },
+  {
+    path: "/projects/:id/:id",
+    component: AddDepartment,
+  },
+  {
+    path: "/projects/:id/:id/:id",
+    component: section,
   },
   {
     path: "/team",

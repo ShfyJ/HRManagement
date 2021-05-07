@@ -6,15 +6,13 @@
         "O'ZBEKNEFTGAZ" AKTSIONERLIK JAMIYATINING
         </v-card-title>
         <v-card-title class="justify-center mt-n7 myTitle">
-        {{this.items.organizationNameInKrillUz.toUpperCase()}} TO'G'RISIDA MA'LUMOT
+        "O'ZBEKNEFTGAZ" AKTSIYADORLIK JAMIYATI TO'G'RISIDA MA'LUMOT
         </v-card-title>
-        <v-card-title>
-        
+        <v-card-title>  
         <v-row>
           <v-col cols-12 md-4>
           </v-col>
           <v-col cols-12 md-4>
-
           </v-col>
           <v-col cols-12 md-4>
             <v-text-field
@@ -33,9 +31,8 @@
                             :search="search"
                             >
                             <template justify-center
-                              v-slot:item.departmentName="{ item }">
-                              <router-link style="text-decoration: none; color: inherit;" :to="`/projects/${id}/${ item.departmentId}`" :key="item.departmentId"><td>{{ item.departmentName }}</td>
-                              </router-link>
+                              v-slot:item.groupName="{ item }">
+                              <td>{{ item.groupName }}</td>
                             </template>
                             <template v-slot:top>
                             <v-toolbar
@@ -68,31 +65,14 @@
                                             cols="12"
                                         >
                                             <v-text-field
-                                            v-model="editedItem.departmentName"
-                                            label="Bo'linma"
+                                            v-model="editedItem.groupName"
+                                            label="Guruh"
                                             ></v-text-field>
                                         </v-col>
-                                        <v-row class="justify-center myTitle">
                                         <v-col
                                             cols="12"
-                                            md="4"
-                                            class="justify-center myTitle"
                                         >
-                                        <v-checkbox
-                                          v-model="checkbox"
-                                          :label="`Departament`"
-                                        ></v-checkbox>
                                         </v-col>
-                                        <v-col
-                                            cols="12"
-                                            md="4"
-                                        >
-                                        <v-checkbox
-                                          v-model="checkbox1"
-                                          :label="`Mustaqil bo'lim`"
-                                        ></v-checkbox>
-                                        </v-col>
-                                        </v-row>
                                         </v-row>
                                     </v-container>
                                     </v-card-text>
@@ -130,7 +110,7 @@
                             </v-data-table>
                         </v-card>
                         <v-btn
-                                @click="$router.go(-1)" 
+                                @click="$router.go(-1)"  
                                 class="ma-2 btn btn-primary"
                                 outlined
                                 color="indigo"
@@ -139,44 +119,37 @@
                         </v-btn>
     </div>
 </template>
-
-
 <script>
 import axios from "axios"
   export default {
         data(){
         return{
-            checkbox: false,
-            checkbox1: false,
             id: this.$route.params['id'],
             items: [],
-            selected_organization: { organizationNameInKrillUz: '', organizationId: null},
             search: '',
             headers: [
             {
               text: 'No',
               align: 'start',
               sortable: false,
-              value: 'departmentId',
+              value: 'groupId',
             },
-            { text: 'Tuzilma nomi', value: 'departmentName' },
+            { text: 'Tuzilma nomi', value: 'groupName' },
             { text: 'Status', value: 'status' },
             { text: 'Taxrir', value: 'actions', sortable: false },
-
         ],
         desserts: [],
         editedIndex: -1,
         editedItem: {
-            departmentName: '',
+            groupName: '',
             status: true    
         },
         defaultItem: {
-            departmentId : 0,
-            departmentName: '',
+            groupId : 0,
+            groupName: '',
             status: false
       },
-      }
-        
+      }      
     },
     computed: {
       formTitle () {
@@ -194,9 +167,9 @@ import axios from "axios"
             val || this.closeDelete()
           },
         },
-            mounted(){
+        mounted(){
             axios
-            .get(`https://localhost:44343/Departments/${this.$route.params['id']}`, {
+            .get(`https://localhost:44343/GroupsBySection/${this.$route.params['id']}`, {
                 },{
                     "headers": {
                     "content-type": "application/json",
@@ -208,17 +181,7 @@ import axios from "axios"
 
             });
 
-
-            axios
-            .get(`https://localhost:44343/Organization/${this.$route.params['id']}`, {
-                },{
-                    "headers": {
-                    "content-type": "application/json",
-            },
-            })
-            .then(response =>{
-                this.items=response.data
-            });
+            
         },
       methods: {
             editItem (item) {
@@ -247,13 +210,14 @@ import axios from "axios"
 
       
       save () {
-
         if (this.editedIndex > -1) {
           Object.assign(this.desserts[this.editedIndex], this.editedItem)
           console.log(this.desserts[this.editedIndex])
           axios
-            .put(`https://localhost:44343/Country/${this.getCountry[this.editedIndex].countryId}`, {
-                countryName:  this.editedItem.countryName,
+            .put(`https://localhost:44343/Group${this.$route.params['id']}`, {
+                groupName:  this.editedItem.groupName,
+                sectionId: this.$route.params['id'],
+                departmentId: parseInt(window.location.pathname.split('/').slice(3)[0]),
                 status: this.editedItem.status,
             },{
                     "headers": {
@@ -265,12 +229,11 @@ import axios from "axios"
                 });
         } else {
           this.desserts.push(this.editedItem)
-          axios
-            .post(`https://localhost:44343/Department`, {
-                departmentName:  this.editedItem.departmentName,
-                organizationId: this.$route.params['id'],
-                isDepartment: this.checkbox,
-                isIndependentSection: this.checkbox1,
+           axios
+            .post(`https://localhost:44343/Group`, {
+                groupName:  this.editedItem.groupName,
+                sectionId: this.$route.params['id'],
+                departmentId: parseInt(window.location.pathname.split('/').slice(3)[0]),
                 status: true,
             },{
                     "headers": {
@@ -283,36 +246,13 @@ import axios from "axios"
         }
         this.close()
       },
-
-
-
-
     reset () {
             this.$refs.form.reset()
     },
     chiqish(){
       this.$router.push({ name: 'team' });
     },
-    submit(){
-    axios
-      .post('https://localhost:44343/Country', {
-        countryName:  this.addCountry,
-        status: true,
-    },
-    {
-      "headers": {
-      "content-type": "application/json",
-    },
-    })
-      .then(response => (console.log(response)));
-    },
-
-
   },
-  components: {
-    
-  },
-
   clear () {
         this.$v.$reset()
         this.addCountry = ''

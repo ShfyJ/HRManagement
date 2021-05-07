@@ -345,7 +345,7 @@
                     <v-col cols="12" md="4">
                     <v-combobox
                     clearable
-                    v-model="language"
+                    v-model="language.languageId"
                     :items="languages"
                     label="Chet tillarini bilishi"
                     multiple
@@ -353,22 +353,6 @@
                     item-text='languageName'
                     item-value='languageId'
                     >
-                      <template v-slot:selection="data">
-                        <v-chip
-                          :key="JSON.stringify(data.item-text)"
-                          v-bind="data.attrs"
-                          :input-value="data.selected"
-                          :disabled="data.disabled"
-                          @click:close="data.parent.selectItem(data.item-text)"
-                        >
-                          <v-avatar
-                            class="accent white--text"
-                            left
-                            v-text="data.item.slice(0, 1).toUpperCase()"
-                          ></v-avatar>
-                          {{ data.item }}
-                        </v-chip>
-                      </template>
                     </v-combobox>
                     </v-col>
                     <v-col
@@ -798,7 +782,7 @@ import axios from "axios"
         radios: null,
         malumoti:{ edInformationName: '', edInformationId: null},
         malumoti_inst: [],
-        language: [],
+        language: [{ languageName: '', languageId: null}],
         languages: [],
         army:{ militaryServiceStatusName: '', militaryServiceStatusId: null},
         select_armyType: [],
@@ -912,7 +896,6 @@ import axios from "axios"
       
     },
 
- 
     reset () {
             this.$refs.form.reset()
             this.$refs.pictureInput.removeImage()   
@@ -934,64 +917,489 @@ import axios from "axios"
 
       axios
       .post('https://localhost:44343/api/ApplicationUser/SignUP', {
-        username:  this.lastName+this.passport,
-        email: this.email,
-        phoneNumber: this.phone,
+  userName: this.name+this.passport,
+  email: this.email,
+  phoneNumber: this.phone,
+  emailConfirmed: true,
+  phoneNumberConfirmed: true,
+  password: "User@123",
+  firstName: this.name,
+  middleName: this.surname,
+  lastName: this.lastName,
+  fiO_short: this.fio_qisqa,
+  fI_short: this.fi_qisqa,
+  gender: this.radios,
+  birthDate: this.date2+"T06:33:32.593Z",
+  photoUrl: "string",
+  workbookURL: "string",
+  stirUrl: "string",
+  orderUrl: "string",
+  isDismissed: false,
+  createdOn: moment().format(),
+  updatedOn: moment().format(),
+  fullBirthAddress: "string",
+  currentAddress: this.current_address,
+  lockoutEnd: "2021-05-07T08:03:57.590Z",
+  lockoutEnabled: true,
+  languages: [
+    {
+      languageId: 0,
+      languageName: "string",
+      status: true,
+      userId: "string",
+      applicationUser: {
+        id: "string",
+        userName: "string",
+        normalizedUserName: "string",
+        email: "string",
+        normalizedEmail: "string",
         emailConfirmed: true,
+        passwordHash: "string",
+        securityStamp: "string",
+        concurrencyStamp: "string",
+        phoneNumber: "string",
         phoneNumberConfirmed: true,
-        password: "User@123",
-        firstName: this.name,
-        middleName: this.surname,
-        lastName: this.lastName,
-        fiO_short: this.fio_qisqa,
-        fI_short: this.fi_qisqa,
-        gender: this.radios,
-        birthDate:  this.date2+"T06:33:32.593Z",
-        photoUrl: this.image,
-        workbookURL: "kajndjan",
-        stirUrl: "dsdasdad",
-        orderUrl: "dadadad",
-        isDismissed: false,
-        createdOn: moment().format(),
-        updatedOn: moment().format(),
-        //countryId: parseInt(this.Uzbekistan.countryId),
-        //districtId: parseInt(this.tuman.regionId),
-        fullBirthAddress: "string",
-        currentAddress: this.current_address,
-        passport: {
-        passportSeries: this.passport,
-        givenDate: this.date+"T06:33:32.593Z",
-        expirationDate: this.date1+"T06:33:32.593Z",
-        givenBy: this.givenBy
-        },
-      
+        twoFactorEnabled: true,
+        lockoutEnd: "2021-05-07T08:03:57.590Z",
+        lockoutEnabled: true,
+        accessFailedCount: 0,
+        firstName: "string",
+        middleName: "string",
+        lastName: "string",
+        fiO_short: "string",
+        fI_short: "string",
+        gender: "string",
+        birthDate: "2021-05-07T08:03:57.590Z",
+        photoUrl: "string",
+        workbookURL: "string",
+        stirUrl: "string",
+        orderUrl: "string",
+        isDismissed: true,
+        createdOn: "2021-05-07T08:03:57.590Z",
+        updatedOn: "2021-05-07T08:03:57.590Z",
         educations: [
-        {
-          edOrganizationName: this.edOrganizationName,
-          speciality: this.speciality,
-          diplomaUrl: "string",
-          edOrgAddress: "string",
-          enteredDate: "2021-04-29T09:28:06.688Z",
-          graduatedDate: "2021-04-29T09:28:06.688Z",
-          scienceDegreeId: 1,
-          edInformationId: 0,
-          edOrgCountryId: 0,
-          edOrgDistrictId: 0,
-          employeeId: "string"
-        }
+          {
+            educationId: 0,
+            edOrganizationName: "string",
+            speciality: "string",
+            diplomaUrl: "string",
+            edOrgAddress: "string",
+            enteredDate: "2021-05-07T08:03:57.592Z",
+            graduatedDate: "2021-05-07T08:03:57.592Z",
+            scienceDegreeId: 0,
+            edInformationId: 0,
+            edOrgCountryId: 0,
+            edOrgDistrictId: 0,
+            employeeId: "string",
+            scienceDegree: {
+              scienceDegreeId: 0,
+              scienceDegreeName: "string",
+              status: true
+            },
+            edInformation: {
+              edInformationId: 0,
+              edInformationName: "string",
+              status: true
+            },
+            edOrgCountry: {
+              countryId: 0,
+              countryName: "string",
+              status: true
+            },
+            edOrgDistrict: {
+              disrictId: 0,
+              districtName: "string",
+              status: true,
+              regionId: 0,
+              region: {
+                regionId: 0,
+                regionName: "string",
+                status: true,
+                countryId: 0,
+                country: {
+                  countryId: 0,
+                  countryName: "string",
+                  status: true
+                }
+              }
+            }
+          }
         ],
-        birthCountryId: parseInt(this.Uzbekistan.countryId),
-        birthDistrictId: parseInt(this.tuman.regionId),
-        currentCountryId:  parseInt(this.current_country.countryId),
-        currentDistrictId: parseInt(this.currentDistrict.districtId),
-        nationalityId: parseInt(this.millat.nationalityId),
-        partisanshipId: parseInt(this.partiyaviylik.partisanshipId),
-        scienceDegreeId: 1,
-        edInformationId: parseInt(this.malumoti.edInformationId),
-        militaryServiceStatusId:parseInt(this.army.militaryServiceStatusId),
-        militaryTitleId:1,
-        disabilityId:parseInt(this.nogironlik.disabilityId),
-        },{
+        workingActivities: [
+          {
+            workingActivityId: 0,
+            organizationName: "string",
+            positionName: "string",
+            positionNameInFull: "string",
+            positionType: "string",
+            isNetworkExperience: true,
+            startDate: "2021-05-07T08:03:57.592Z",
+            endDate: "2021-05-07T08:03:57.592Z",
+            employeeId: "string"
+          }
+        ],
+        languages: [
+          null
+        ],
+        disciplinaryActions: [
+          {
+            employeeDisciplinaryActionId: 0,
+            orderDateForAction: "2021-05-07T08:03:57.592Z",
+            orderNumber: "string",
+            orderFileUrl: "string",
+            reasonForAction: "string",
+            disciplinaryActionTypeId: 0,
+            employeeId: "string",
+            disciplinaryActionType: {
+              disciplinaryActionTypeId: 0,
+              disciplinaryActionName: "string",
+              status: true
+            }
+          }
+        ],
+        vacations: [
+          {
+            employeeVacationId: 0,
+            vacationPeriod: "string",
+            vacationStartDate: "2021-05-07T08:03:57.592Z",
+            vacationEndDate: "2021-05-07T08:03:57.592Z",
+            applicationUrl: "string",
+            comment: "string",
+            vacationtypeId: 0,
+            employeeId: "string",
+            vacationtype: {
+              vacationtypeId: 0,
+              vacationTypeName: "string",
+              status: true
+            }
+          }
+        ],
+        userBusinessTrips: [
+          {
+            employeeId: "string",
+            businessTripId: 0,
+            businessTrip: {
+              businessTripId: 0,
+              startDate: "2021-05-07T08:03:57.594Z",
+              endTime: "2021-05-07T08:03:57.594Z",
+              businessTripMission: "string",
+              businessTripAddress: "string",
+              businessTripProgramFileUrl: "string",
+              comment: "string",
+              businessTripCountryId: 0,
+              businessTripDistrictId: 0,
+              userBusinessTrips: [
+                null
+              ],
+              businessTripCountry: {
+                countryId: 0,
+                countryName: "string",
+                status: true
+              },
+              businessTripDistrict: {
+                disrictId: 0,
+                districtName: "string",
+                status: true,
+                regionId: 0,
+                region: {
+                  regionId: 0,
+                  regionName: "string",
+                  status: true,
+                  countryId: 0,
+                  country: {
+                    countryId: 0,
+                    countryName: "string",
+                    status: true
+                  }
+                }
+              }
+            },
+            isSubstitute: true
+          }
+        ],
+        fullBirthAddress: "string",
+        currentAddress: "string",
+        passportId: 0,
+        birthCountryId: 0,
+        birthRegionId: 0,
+        birthDistrictId: 0,
+        currentCountryId: 0,
+        currentRegionId: 0,
+        currentDistrictId: 0,
+        nationalityId: 0,
+        partisanshipId: 0,
+        deputyMembershipId: 0,
+        militaryServiceStatusId: 0,
+        militaryTitleId: 0,
+        disabilityId: 0,
+        sectionId: 0,
+        groupId: 0,
+        positionId: 0,
+        position: {
+          positionId: 0,
+          positionTypeInKrillUz: "string",
+          positionTypeInLatinUz: "string",
+          positionTypeInRu: "string",
+          positionTypeInEng: "string",
+          status: true,
+          sequenceNumber: 0,
+          positionDegreeId: 0,
+          positionDegree: {
+            positionDegreeId: 0,
+            positionDegreeName: "string",
+            status: true
+          }
+        },
+        section: {
+          sectionId: 0,
+          sectionName: "string",
+          departmentId: 0,
+          status: true,
+          department: {
+            departmentId: 0,
+            departmentName: "string",
+            isDepartment: true,
+            isIndependentSection: true,
+            organizationId: 0,
+            status: true,
+            organization: {
+              organizationId: 0,
+              organizationNameInKrillUz: "string",
+              organizationNameInLatinUz: "string",
+              organizationNameInRu: "string",
+              organizationNameInEng: "string",
+              organizationNameInKrillUzShort: "string",
+              organizationNameInLatinUzShort: "string",
+              organizationNameInRuShort: "string",
+              organizationNameInEngShort: "string",
+              status: true,
+              departments: [
+                null
+              ]
+            },
+            sections: [
+              null
+            ],
+            groups: [
+              null
+            ]
+          },
+          groups: [
+            {
+              groupId: 0,
+              groupName: "string",
+              sectionId: 0,
+              departmentId: 0,
+              status: true,
+              department: {
+                departmentId: 0,
+                departmentName: "string",
+                isDepartment: true,
+                isIndependentSection: true,
+                organizationId: 0,
+                status: true,
+                organization: {
+                  organizationId: 0,
+                  organizationNameInKrillUz: "string",
+                  organizationNameInLatinUz: "string",
+                  organizationNameInRu: "string",
+                  organizationNameInEng: "string",
+                  organizationNameInKrillUzShort: "string",
+                  organizationNameInLatinUzShort: "string",
+                  organizationNameInRuShort: "string",
+                  organizationNameInEngShort: "string",
+                  status: true,
+                  departments: [
+                    null
+                  ]
+                },
+                sections: [
+                  null
+                ],
+                groups: [
+                  null
+                ]
+              }
+            }
+          ]
+        },
+        group: {
+          groupId: 0,
+          groupName: "string",
+          sectionId: 0,
+          departmentId: 0,
+          status: true,
+          department: {
+            departmentId: 0,
+            departmentName: "string",
+            isDepartment: true,
+            isIndependentSection: true,
+            organizationId: 0,
+            status: true,
+            organization: {
+              organizationId: 0,
+              organizationNameInKrillUz: "string",
+              organizationNameInLatinUz: "string",
+              organizationNameInRu: "string",
+              organizationNameInEng: "string",
+              organizationNameInKrillUzShort: "string",
+              organizationNameInLatinUzShort: "string",
+              organizationNameInRuShort: "string",
+              organizationNameInEngShort: "string",
+              status: true,
+              departments: [
+                null
+              ]
+            },
+            sections: [
+              null
+            ],
+            groups: [
+              null
+            ]
+          }
+        },
+        passport: {
+          passportId: 0,
+          passportSeries: "string",
+          givenDate: "2021-05-07T08:03:57.595Z",
+          expirationDate: "2021-05-07T08:03:57.595Z",
+          givenBy: "string"
+        },
+        birthCountry: {
+          countryId: 0,
+          countryName: "string",
+          status: true
+        },
+        birthRegion: {
+          regionId: 0,
+          regionName: "string",
+          status: true,
+          countryId: 0,
+          country: {
+            countryId: 0,
+            countryName: "string",
+            status: true
+          }
+        },
+        birthDistrict: {
+          disrictId: 0,
+          districtName: "string",
+          status: true,
+          regionId: 0,
+          region: {
+            regionId: 0,
+            regionName: "string",
+            status: true,
+            countryId: 0,
+            country: {
+              countryId: 0,
+              countryName: "string",
+              status: true
+            }
+          }
+        },
+        currentCountry: {
+          countryId: 0,
+          countryName: "string",
+          status: true
+        },
+        currentRegion: {
+          regionId: 0,
+          regionName: "string",
+          status: true,
+          countryId: 0,
+          country: {
+            countryId: 0,
+            countryName: "string",
+            status: true
+          }
+        },
+        currentDistrict: {
+          disrictId: 0,
+          districtName: "string",
+          status: true,
+          regionId: 0,
+          region: {
+            regionId: 0,
+            regionName: "string",
+            status: true,
+            countryId: 0,
+            country: {
+              countryId: 0,
+              countryName: "string",
+              status: true
+            }
+          }
+        },
+        nationality: {
+          nationalityId: 0,
+          nationalityName: "string",
+          status: true
+        },
+        partisanship: {
+          partisanshipId: 0,
+          partisanshipName: "string",
+          status: true
+        },
+        deputyMembership: {
+          deputyMembershipId: 0,
+          deputyMembershipName: "string",
+          status: true
+        },
+        militaryServiceStatus: {
+          militaryServiceStatusId: 0,
+          militaryServiceStatusName: "string",
+          status: true
+        },
+        militaryTitle: {
+          militaryTitleId: 0,
+          militaryTitleName: "string",
+          status: true
+        },
+        disability: {
+          disabilityId: 0,
+          disabilityName: "string",
+          status: true
+        },
+        role: "string"
+      }
+    }
+  ],
+  passport: {
+    passportSeries: this.passport,
+    givenDate: this.date+"T06:33:32.593Z",
+    expirationDate: this.date1+"T06:33:32.593Z",
+    givenBy: this.givenBy
+  },
+  educations: [
+    {
+      edOrganizationName: this.edOrganizationName,
+      speciality: this.speciality,
+      diplomaUrl: "string",
+      edOrgAddress: "string",
+      enteredDate: "2021-05-07T08:03:57.595Z",
+      graduatedDate: "2021-05-07T08:03:57.595Z",
+      scienceDegreeId: 1,
+      edInformationId: 1,
+      edOrgCountryId: 1,
+      edOrgDistrictId: 1,
+      employeeId: "string"
+    }
+  ],
+  birthCountryId: parseInt(this.Uzbekistan.countryId),
+  birthRegionId: parseInt(this.tuman.regionId),
+  birthDistrictId: parseInt(this.currentDistrict.districtId),
+  currentCountryId: parseInt(this.current_country.countryId),
+  currentRegionId: 1,
+  currentDistrictId: parseInt(this.currentDistrict.districtId),
+  nationalityId: parseInt(this.millat.nationalityId),
+  partisanshipId: parseInt(this.partiyaviylik.partisanshipId),
+  militaryServiceStatusId: parseInt(this.army.militaryServiceStatusId),
+  militaryTitleId: 0,
+  disabilityId: parseInt(this.nogironlik.disabilityId),
+}
+,{
       "headers": {
       "content-type": "application/json",
       },

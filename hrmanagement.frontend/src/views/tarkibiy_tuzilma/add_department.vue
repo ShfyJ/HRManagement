@@ -6,26 +6,25 @@
         "O'ZBEKNEFTGAZ" AKTSIONERLIK JAMIYATINING
         </v-card-title>
         <v-card-title class="justify-center mt-n7 myTitle">
-        {{this.items.organizationNameInKrillUz.toUpperCase()}} TO'G'RISIDA MA'LUMOT
+        {{this.items.departmentName.toUpperCase()}} TO'G'RISIDA MA'LUMOT
         </v-card-title>
         <v-card-title>
-        
-        <v-row>
-          <v-col cols-12 md-4>
-          </v-col>
-          <v-col cols-12 md-4>
+                <v-row>
+                <v-col cols-12 md-4>
+                </v-col>
+                <v-col cols-12 md-4>
 
-          </v-col>
-          <v-col cols-12 md-4>
-            <v-text-field
-            v-model="search"
-            append-icon="mdi-magnify"
-            label="Search"
-            single-line
-            hide-details
-        ></v-text-field>
-          </v-col>
-        </v-row>
+                </v-col>
+                <v-col cols-12 md-4>
+                    <v-text-field
+                    v-model="search"
+                    append-icon="mdi-magnify"
+                    label="Search"
+                    single-line
+                    hide-details
+                ></v-text-field>
+                </v-col>
+                </v-row>
         </v-card-title>
                             <v-data-table
                             :headers="headers"
@@ -33,8 +32,8 @@
                             :search="search"
                             >
                             <template justify-center
-                              v-slot:item.departmentName="{ item }">
-                              <router-link style="text-decoration: none; color: inherit;" :to="`/projects/${id}/${ item.departmentId}`" :key="item.departmentId"><td>{{ item.departmentName }}</td>
+                              v-slot:item.sectionName="{ item }">
+                              <router-link style="text-decoration: none; color: inherit;" :to="`/projects/${id}/${id}/${item.sectionId}`" :key="item.sectionId"><td>{{ item.sectionName }}</td>
                               </router-link>
                             </template>
                             <template v-slot:top>
@@ -68,31 +67,14 @@
                                             cols="12"
                                         >
                                             <v-text-field
-                                            v-model="editedItem.departmentName"
+                                            v-model="editedItem.sectionName"
                                             label="Bo'linma"
                                             ></v-text-field>
                                         </v-col>
-                                        <v-row class="justify-center myTitle">
                                         <v-col
                                             cols="12"
-                                            md="4"
-                                            class="justify-center myTitle"
                                         >
-                                        <v-checkbox
-                                          v-model="checkbox"
-                                          :label="`Departament`"
-                                        ></v-checkbox>
                                         </v-col>
-                                        <v-col
-                                            cols="12"
-                                            md="4"
-                                        >
-                                        <v-checkbox
-                                          v-model="checkbox1"
-                                          :label="`Mustaqil bo'lim`"
-                                        ></v-checkbox>
-                                        </v-col>
-                                        </v-row>
                                         </v-row>
                                     </v-container>
                                     </v-card-text>
@@ -135,48 +117,41 @@
                                 outlined
                                 color="indigo"
                         >
-                            Ortga
+                                Ortga
                         </v-btn>
     </div>
 </template>
-
-
 <script>
 import axios from "axios"
   export default {
         data(){
         return{
-            checkbox: false,
-            checkbox1: false,
             id: this.$route.params['id'],
             items: [],
-            selected_organization: { organizationNameInKrillUz: '', organizationId: null},
             search: '',
             headers: [
             {
               text: 'No',
               align: 'start',
               sortable: false,
-              value: 'departmentId',
+              value: 'sectionId',
             },
-            { text: 'Tuzilma nomi', value: 'departmentName' },
+            { text: 'Tuzilma nomi', value: 'sectionName' },
             { text: 'Status', value: 'status' },
             { text: 'Taxrir', value: 'actions', sortable: false },
-
         ],
         desserts: [],
         editedIndex: -1,
         editedItem: {
-            departmentName: '',
+            sectionName: '',
             status: true    
         },
         defaultItem: {
             departmentId : 0,
-            departmentName: '',
+            sectionName: '',
             status: false
       },
-      }
-        
+      }      
     },
     computed: {
       formTitle () {
@@ -196,7 +171,7 @@ import axios from "axios"
         },
             mounted(){
             axios
-            .get(`https://localhost:44343/Departments/${this.$route.params['id']}`, {
+            .get(`https://localhost:44343/Sections/${this.$route.params['id']}`, {
                 },{
                     "headers": {
                     "content-type": "application/json",
@@ -205,12 +180,10 @@ import axios from "axios"
             .then(response =>{
                 console.log(response.data)
                 this.desserts=response.data
-
             });
 
-
             axios
-            .get(`https://localhost:44343/Organization/${this.$route.params['id']}`, {
+            .get(`https://localhost:44343/Department/${this.$route.params['id']}`, {
                 },{
                     "headers": {
                     "content-type": "application/json",
@@ -247,13 +220,13 @@ import axios from "axios"
 
       
       save () {
-
         if (this.editedIndex > -1) {
           Object.assign(this.desserts[this.editedIndex], this.editedItem)
           console.log(this.desserts[this.editedIndex])
           axios
-            .put(`https://localhost:44343/Country/${this.getCountry[this.editedIndex].countryId}`, {
-                countryName:  this.editedItem.countryName,
+            .put(`https://localhost:44343/Section/${this.desserts[this.editedIndex].sectionId}`, {
+                sectionName:  this.editedItem.sectionName,
+                departmentId: this.$route.params['id'],
                 status: this.editedItem.status,
             },{
                     "headers": {
@@ -266,11 +239,9 @@ import axios from "axios"
         } else {
           this.desserts.push(this.editedItem)
           axios
-            .post(`https://localhost:44343/Department`, {
-                departmentName:  this.editedItem.departmentName,
-                organizationId: this.$route.params['id'],
-                isDepartment: this.checkbox,
-                isIndependentSection: this.checkbox1,
+            .post(`https://localhost:44343/Section`, {
+                sectionName:  this.editedItem.sectionName,
+                departmentId: this.$route.params['id'],
                 status: true,
             },{
                     "headers": {
@@ -283,31 +254,12 @@ import axios from "axios"
         }
         this.close()
       },
-
-
-
-
     reset () {
             this.$refs.form.reset()
     },
     chiqish(){
       this.$router.push({ name: 'team' });
     },
-    submit(){
-    axios
-      .post('https://localhost:44343/Country', {
-        countryName:  this.addCountry,
-        status: true,
-    },
-    {
-      "headers": {
-      "content-type": "application/json",
-    },
-    })
-      .then(response => (console.log(response)));
-    },
-
-
   },
   components: {
     

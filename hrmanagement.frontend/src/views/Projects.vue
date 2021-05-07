@@ -213,8 +213,8 @@
       </v-icon>
     </template>
       <template justify-center
-        v-slot:item.tuzilma_nomi="{ item }">
-        <router-link style="text-decoration: none; color: inherit;" :to="`/projects/${ item.ID}`" :key="item.ID"><td class="myTitle">{{ item.tuzilma_nomi }}</td>
+        v-slot:item.organizationNameInLatinUz="{ item }">
+        <router-link style="text-decoration: none; color: inherit;" :to="`/projects/${ item.organizationId}`" :key="item.organizationId"><td class="myTitle">{{ item.organizationNameInLatinUz }}</td>
         </router-link>
       </template>
       <template justify-center
@@ -256,6 +256,7 @@
 
 
 <script>
+import axios from 'axios'
   export default {
     data: () => ({
       dialog: false,
@@ -267,15 +268,11 @@
           text: "ID",
           align: "start",
           sortable: false,
-          value: "ID"
+          value: "organizationId"
         },
-        { text: "Tuzilma nomi", value: "tuzilma_nomi" },
-        { text: "Jami shtatlar soni", value: "shtat" },
-        { text: "Ishlayotgan hodimlar soni", value: "hodimlar_soni" },
-        { text: "%", value: "foiz" },
-        { text: "Vakant lavozimlar soni", value: "lavozim_soni" },
-        { text: "%", value: "foizda" },
-        { text: 'Actions', value: 'actions', sortable: false },
+        { text: "Tashkilot nomi", value: "organizationNameInLatinUz" },
+        { text: "Tashkilot qisqa nomi", value: "organizationNameInLatinUzShort" },
+        { text: "Status", value: "status" },
       ],
       desserts: [],
 
@@ -322,7 +319,20 @@
     created () {
       this.initialize()
     },
-
+        
+    mounted(){
+            axios
+            .get('https://localhost:44343/organizations', {
+                },{
+                    "headers": {
+                    "content-type": "application/json",
+            },
+            })
+            .then(response =>{
+                console.log(response.data)
+                this.desserts=response.data
+            });
+        },
     methods: {
       addTuzilma() {
       this.$router.push("addTuzilma")
@@ -330,20 +340,7 @@
       addLavozim(){
         this.$router.push("addLavozim")
       },
-      initialize () {
-        this.desserts = [
-        {
-          ID: "1",
-          tuzilma_nomi: "Uzbekneftgaz",
-          shtat: "Jami shtatlar soni",
-          hodimlar_soni: "Hodimlar soni",
-          foiz: "23%",
-          lavozim_soni: "5ta",
-          foizda: "25%",
-        },
-        
-      ]
-      },
+
   
 /// crud 
       editItem (item) {

@@ -26,6 +26,7 @@
           md="6"
         >
           <v-text-field
+            v-model="organizationNameInKrillUz"
             label="тўлиқ номи (ўзбек тилида)*:"
             outlined
           ></v-text-field>
@@ -37,6 +38,7 @@
           md="6"
         >
           <v-text-field
+            v-model="organizationNameInKrillUzShort"
             label="қисқа номи (ўзбек тилида)*:"
             outlined
           ></v-text-field>
@@ -48,6 +50,7 @@
           md="6"
         >
           <v-text-field
+            v-model="organizationNameInRu"
             label="тўлиқ номи (рус тилида):"
             outlined
           ></v-text-field>
@@ -59,6 +62,7 @@
           md="6"
         >
           <v-text-field
+            v-model="organizationNameInRuShort"
             label="қисқа номи (рус тилида):"
             outlined
           ></v-text-field>
@@ -69,6 +73,7 @@
           md="6"
         >
           <v-text-field
+            v-model="organizationNameInLatinUz"
             label="тўлиқ номи (лотин ёзувида):"
             outlined
           ></v-text-field>
@@ -79,6 +84,7 @@
           md="6"
         >
           <v-text-field
+            v-model="organizationNameInLatinUzShort"
             label="қисқа номи (лотин ёзувида):"
             outlined
           ></v-text-field>
@@ -104,7 +110,7 @@
           ></v-text-field>
         </v-col>
       </v-row>
-        <v-btn color="primary">
+        <v-btn @click="submit" color="primary">
             Saqlash
         </v-btn>
         <v-btn @click="chiqish" class="ml-2" color="error">
@@ -125,35 +131,43 @@
   </v-container>
 </template>
 <script>
+import axios from "axios"
+
 export default {
+      data: () => ({
+      organizationNameInLatinUz: '',
+      organizationNameInKrillUz: '',
+      organizationNameInRu: '',
+      organizationNameInKrillUzShort: '',
+      organizationNameInLatinUzShort: '',
+      organizationNameInRuShort: '',
+
+    }),
     methods:{
         chiqish(){
-        this.$router.push({ name: 'projects' });
+        this.$router.push({ name: 'projects' })
+        },
+
+        submit(){
+        axios
+          .post('https://localhost:44343/organization', {
+            organizationNameInKrillUz:  this.organizationNameInKrillUz,
+            organizationNameInLatinUz: this.organizationNameInLatinUz,
+            organizationNameInRu: this.organizationNameInRu,
+            organizationNameInEng: '',
+            organizationNameInKrillUzShort: this.organizationNameInKrillUzShort,
+            organizationNameInLatinUzShort: this.organizationNameInLatinUzShort,
+            organizationNameInRuShort: this.organizationNameInRuShort,
+            status: true
+        },
+        {
+          "headers": {
+          "content-type": "application/json",
+        },
+        })
+          .then(response => (console.log(response)));
+        },
     },
     }
-}
+
 </script>
-<!--
-
-      data:() => ({
-select: { state: 'Florida', abbr: 'FL' },
-        items: [
-          { state: 'Florida', abbr: 'FL' },
-          { state: 'Georgia', abbr: 'GA' },
-          { state: 'Nebraska', abbr: 'NE' },
-          { state: 'California', abbr: 'CA' },
-          { state: 'New York', abbr: 'NY' },
-        ],
-    dialog: false,
-    content: "",
-    date: new Date().toDateString.substr(0, 10),
-    dateFormatted: this.formatDate(new Date().toISOString().substr(0, 10)),
-    menu1: false,
-    
-    rules: [
-        value => !value || value.size < 2000000 || 'Avatar size should be less than 2 MB!',
-    ],
-
-    email: '',
-    files: [],
-  }),-->
